@@ -25,9 +25,6 @@ class BST{
         Node* kthSmallestHelper(Node* currNode, int* counter, int k);
         void destroyNode(Node *root);
 
-       
-
-
     public:
         Node* getRoot();                // Returns the root of the tree;
         void addNode(int);              // function to insert a node in the tree.
