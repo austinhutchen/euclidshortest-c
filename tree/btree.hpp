@@ -1,5 +1,5 @@
 #pragma ONCE
-
+#include <stack>
 using namespace std;
 
 struct Node{
@@ -15,8 +15,10 @@ class BST{
         /** since root is a private member we need helper functions
          to access root for insertion, searching and printing.
          These helper functions is used for performing recursion **/
-
+        void traverse(Node* root, std::stack<int> &st);
+        bool isSameTree(Node *p, Node *q);
         Node* addNodeHelper(Node*, int);
+        bool isomorphic(std::stack<int> n1, std::stack<int> n2);
         void printTreeHelper(Node*);
         void print2DUtilHelper(Node *, int);
 
