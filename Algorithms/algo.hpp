@@ -35,7 +35,7 @@ public:
   }
 
   int removeDuplicatesconstant(vector<int> &nums) {
-    // bubble up non-duplicates using fixed index iterator
+    // bubble up unique integers in numsß using fixed index iterator
     int index = 0;
     for (int y = 1; y < nums.size(); y++) {
       if (nums[y] != nums[y - 1]) {
@@ -45,59 +45,21 @@ public:
     }
     return index + 1;
   }
+  int removeElement(vector<int> &nums, int val) {
+    // bubble up unique integers in numsß using fixed index iterator
+    int k = 0;
+    for (int i = 0; i < nums.size(); i++) {
+      if (nums[i] == val) {
+        // start point for search on rest of elements in array
+        nums.erase(nums.begin() + i);
+      } else {
+        k++;
+      }
+    }
+    return k;
+  }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  private:
-  time_t *usrtime;
+private:
+time_t *usrtime;
 };
