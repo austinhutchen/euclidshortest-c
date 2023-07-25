@@ -33,8 +33,18 @@ ans.push_back(nums[fix]);
         }
         }
     return ans.size();
-     
-       
-                
+    }
+
+    int removeDuplicatesconstant(vector<int>& nums) {
+        // bubble sort method
+   int index=0;
+// sorts using a fixed in-place variable index that iterates up to store non-duplicates
+        for(int y=1;y<nums.size();y++){
+            if(nums[y]!=nums[y-1]){
+              nums[index+1]=nums[y];
+              index++;
+            }
+        }
+        return index+1;
     }
 };
