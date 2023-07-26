@@ -1,6 +1,7 @@
 #pragma ONCE
 #include <iostream>
 #include <queue>
+#include <stack>
 #include <vector>
 using namespace std;
 class Solution {
@@ -58,8 +59,22 @@ public:
     }
     return k;
   }
-
+  struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+  };
+  ListNode *deleteDuplicates(ListNode *head) {
+    // use stack, and check for dupes
+    std::stack<int> vals;
+    ListNode *temp = head;
+    while (temp != NULL) {
+     
+    }
+  }
 
 private:
-time_t *usrtime;
+  time_t *usrtime;
 };
