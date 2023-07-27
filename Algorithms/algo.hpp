@@ -1,6 +1,6 @@
 #pragma ONCE
-#include <iostream>
 #include "algo.h"
+#include <iostream>
 #include <queue>
 #include <stack>
 #include <vector>
@@ -61,29 +61,38 @@ public:
     return k;
   }
 
-
   void deletenode(ListNode *head, int val) {
+    if (head == 0x0) {
+      return;
+    }
     ListNode *temp = head;
-    ListNode *prev = 0x0;
-    while (temp->val != val) {
+    ListNode *prev;
+    while (temp->next != 0x0 && temp->val != val) {
       prev = temp;
       temp = temp->next;
     }
-    prev->next = temp->next;
+    if (prev != 0x0 && temp != 0x0) {
+      prev->next = temp->next;
+    }
     delete temp;
     temp = 0x0;
     return;
   }
-  ListNode *deleteDuplicates(ListNode *head) {
-    // use stack in future
-    std::vector<int> vals;
+  void populate(std::vector<int> &vals, ListNode *head) {
     ListNode *temp = head;
-    while (temp != NULL) {
+    while (temp && temp->next) {
       vals.push_back(temp->val);
       temp = temp->next;
     }
+  }
+  ListNode *deleteDuplicates(ListNode *head) {
+    if (head == 0x0) {
+      return 0x0;
+    }
+    std::vector<int> vals;
+    populate(vals, head);
     int src = removeDuplicatesconstant(vals);
-    for (int k = src; k < vals.size(); k++) {
+    for (int k = src - 1; k < vals.size(); k++) {
       // duplicates to remove in LL
       deletenode(head, vals[k]);
     }
