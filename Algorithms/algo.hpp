@@ -37,16 +37,19 @@ public:
   }
 
   int removeDuplicatesconstant(vector<int> &nums) {
-    // bubble up unique integers in numsß using fixed index iterator
-    int index = 0;
+    // bubble sort method
+    int index = 1;
+    // sorts using a fixed in-place variable index that iterates up to store
+    // non-duplicates
     for (int y = 1; y < nums.size(); y++) {
       if (nums[y] != nums[y - 1]) {
-        nums[index + 1] = nums[y];
+        nums[index] = nums[y];
         index++;
       }
     }
-    return index + 1;
+    return index;
   }
+
   int removeElement(vector<int> &nums, int val) {
     // bubble up unique integers in numsß using fixed index iterator
     int k = 0;
@@ -66,35 +69,37 @@ public:
       return;
     }
     ListNode *temp = head;
-    ListNode *prev;
-    while (temp->next != 0x0 && temp->val != val) {
+    ListNode *prev = temp;
+    while (prev != 0x0 && temp->val != val) {
       prev = temp;
       temp = temp->next;
     }
-    if (prev != 0x0 && temp != 0x0) {
-      prev->next = temp->next;
-    }
+
+    prev->next = temp->next;
     delete temp;
     temp = 0x0;
     return;
   }
-  void populate(std::vector<int> &vals, ListNode *head) {
+
+  void populate(ListNode *head, std::vector<int> &vals) {
     ListNode *temp = head;
     while (temp && temp->next) {
       vals.push_back(temp->val);
       temp = temp->next;
     }
+    return;
   }
+
   ListNode *deleteDuplicates(ListNode *head) {
     if (head == 0x0) {
       return 0x0;
     }
     std::vector<int> vals;
-    populate(vals, head);
+    populate(head, vals);
     int src = removeDuplicatesconstant(vals);
-    for (int k = src - 1; k < vals.size(); k++) {
+    for (int k = src; k < vals.size(); k++) {
       // duplicates to remove in LL
-      deletenode(head, vals[k]);
+      deletenode(head, vals[k - 1]);
     }
     return head;
   }
