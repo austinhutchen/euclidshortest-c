@@ -66,13 +66,32 @@ public:
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
   };
+  void deletenode(ListNode *head, int val) {
+    ListNode *temp = head;
+    ListNode *prev = 0x0;
+    while (temp->val != val) {
+      prev = temp;
+      temp = temp->next;
+    }
+    prev->next = temp->next;
+    delete temp;
+    temp = 0x0;
+    return;
+  }
   ListNode *deleteDuplicates(ListNode *head) {
-    // use stack, and check for dupes
-    std::stack<int> vals;
+    // use stack in future
+    std::vector<int> vals;
     ListNode *temp = head;
     while (temp != NULL) {
-     
+      vals.push_back(temp->val);
+      temp = temp->next;
     }
+    int src = removeDuplicatesconstant(vals);
+    for (int k = src; k < vals.size(); k++) {
+      // duplicates to remove in LL
+      deletenode(head, vals[k]);
+    }
+    return head;
   }
 
 private:
