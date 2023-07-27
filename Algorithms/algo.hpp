@@ -1,13 +1,20 @@
+#include <cstddef>
+#include <ctime>
 #pragma ONCE
 #include "algo.h"
 #include <iostream>
 #include <queue>
 #include <stack>
 #include <vector>
+#include <chrono>
 using namespace std;
 class Solution {
 public:
-  int removeDuplicates(vector<int> &nums) {
+
+  Solution(){
+    start= time(NULL);
+  }
+  vector<int> removeDuplicates(vector<int> &nums) {
     // use queue and loop through entire array??
     std::queue<int> q;
     vector<int> ans;
@@ -33,7 +40,7 @@ public:
         continue;
       }
     }
-    return ans.size();
+    return ans;
   }
 
   int removeDuplicatesconstant(vector<int> &nums) {
@@ -105,5 +112,8 @@ public:
   }
 
 private:
-  time_t *usrtime;
+
+  time_t start;
+  time_t end;
+  time_t usrtime=start-end;
 };
