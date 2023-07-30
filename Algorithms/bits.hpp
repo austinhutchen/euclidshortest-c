@@ -220,7 +220,8 @@ int allEvenBits(int x) {
 int getByte(int x, int n) {
   // (8 bits = 1 byte)
   // multiplies x by a factor of 1/8n ,dividing bitwise x by n sets of 8 bits ==
-  // n bytes then user masking to grab the resultant byte
+  // n bytes then user masking to grab the resultant full word
+  // x/(n*8)
   int ans = x >> (n << 3);
   // pulls out lower 8 bits using 0xff, a mask of 8 ones
   return (ans & 0xFF);
@@ -332,7 +333,7 @@ int leftBitCount(int x) {
   // given byte string has consecutive ones. the given window MUST be equal to
   // -1 (ALL ONES) to be added to the total consecutive bits
   // !~(-1)=1 = TRUE (ONES IN GIVEN WINDOW ARE CONSECUTIVE)
-  int tempx = x;
+  int tempx = x;  
   int ans;
   int shift;
   // check if x==-1
@@ -378,8 +379,8 @@ int trueThreeFourths(int x) {
   // 3 because 3 in binary is 0011
   int rmdr = x & 3;
   int sign = x >> 31;
-  x = x >> 2;
-  x = x + (x << 1);
+  x = x >> 2; // x/4
+  x = x + (x << 1);   // x* 3
   // let the overflow happen first with x.
   // THEN
   //---->rmdr=(rmdr *3 + 3(if negative))/4
