@@ -2,18 +2,15 @@
 #include <ctime>
 #pragma ONCE
 #include "algo.h"
+#include <chrono>
 #include <iostream>
 #include <queue>
 #include <stack>
 #include <vector>
-#include <chrono>
 using namespace std;
 class Solution {
 public:
-
-  Solution(){
-    start= time(NULL);
-  }
+  Solution() { start = time(NULL); }
   vector<int> removeDuplicates(vector<int> &nums) {
     // use queue and loop through entire array??
     std::queue<int> q;
@@ -111,17 +108,44 @@ public:
     return head;
   }
 
- string restoreString(string s, vector<int>& indices) {
-        string ans(s.size(),'.');
-        for(int i=0;i<s.size();i++){
-            ans[indices[i]]=s[i];
-        }
-        return ans;
+  string restoreString(string s, vector<int> &indices) {
+    string ans(s.size(), '.');
+    for (int i = 0; i < s.size(); i++) {
+      ans[indices[i]] = s[i];
     }
-    
-private:
+    return ans;
+  }
 
+  void removeclosestoccurences(char a) {
+    // use pointer to a to increment and decrement for nearest occurences
+    if (&a == 0x0) {
+      return;
+    }
+    char *p = &a;
+    char *q = &a;
+    char temp = a;
+    while (p != 0x0 && q != 0x0) {
+      if (*p == temp) {
+        // remove the occurence of p in string
+        *p = ' ';
+      } else if (*q == temp) {
+        // remove the occurence of q in string
+        *q = ' ';
+      } else {
+        p++;
+        q--;
+      }
+    }
+  }
+  int minimizedStringLength(string s) {
+    for (int i = 0; i < s.size(); i++) {
+      removeclosestoccurences(s[i]);
+    }
+    return s.size();
+  }
+
+private:
   time_t start;
   time_t end;
-  time_t usrtime=start-end;
+  time_t usrtime = start - end;
 };
