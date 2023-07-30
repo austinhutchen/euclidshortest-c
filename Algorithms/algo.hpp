@@ -146,6 +146,5 @@ public:
 
 private:
   time_t start;
-  time_t end;
-  time_t usrtime = start - end;
+  time_t usrtime = start - time(NULL);
 };
