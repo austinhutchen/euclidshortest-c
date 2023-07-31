@@ -116,12 +116,11 @@ public:
     return ans;
   }
 
-  void removeclosestoccurences(char a, int arr[2]) {
+  void removeclosestoccurences(char a) {
     // use pointer to a to increment and decrement for nearest occurences
   // assume input is a char* with "I am unwell\" \"We need to go..."
 // rewrite string with pointers
 char *src, *dest;
-
 src = dest = &a;    // both pointers point to the first char of input
 while(*src != '\0')    // exit loop when null terminator reached
 {
@@ -135,8 +134,8 @@ while(*src != '\0')    // exit loop when null terminator reached
 *dest = '\0';          // terminate string with null terminator              
 
 // input now contains "I am unwell We need to go..."
-
   }
+
   int minimizedStringLength(string s) {
     for (int i = 0; i < s.size(); i++) {
      // removeclosestoccurences(s[i]);
@@ -144,6 +143,26 @@ while(*src != '\0')    // exit loop when null terminator reached
     return s.size();
   }
 
+ string makeGood(string s) {
+        std::stack<int>ans;
+        short int prev;
+        string final;
+        for(int i=0;i<s.size();i++){
+            ans.push(s[i]);
+        }
+        while(ans.top()){
+            if(ans.top()==prev +32 || ans.top() == prev-32){
+            // dont add these to new string;
+            continue;
+            }
+            else{
+            final.push_back(ans.top());
+            }
+            prev = ans.top();
+            ans.pop();
+        }
+        return final;
+    }
 private:
   time_t start;
   time_t usrtime = start - time(NULL);
