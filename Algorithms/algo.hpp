@@ -118,51 +118,52 @@ public:
 
   void removeclosestoccurences(char a) {
     // use pointer to a to increment and decrement for nearest occurences
-  // assume input is a char* with "I am unwell\" \"We need to go..."
-// rewrite string with pointers
-char *src, *dest;
-src = dest = &a;    // both pointers point to the first char of input
-while(*src != '\0')    // exit loop when null terminator reached
-{
-    if (*src != '\"')  // if source is not a " char
+    // assume input is a char* with "I am unwell\" \"We need to go..."
+    // rewrite string with pointers
+    char *src, *dest;
+    src = dest = &a;     // both pointers point to the first char of input
+    while (*src != '\0') // exit loop when null terminator reached
     {
-        *dest = *src;  // copy the char at source to destination
-        dest++;        // increment destination pointer
+      if (*src != '\"') // if source is not a " char
+      {
+        *dest = *src; // copy the char at source to destination
+        dest++;       // increment destination pointer
+      }
+      src++; // increment source pointer
     }
-    src++;             // increment source pointer
-}
-*dest = '\0';          // terminate string with null terminator              
+    *dest = '\0'; // terminate string with null terminator
 
-// input now contains "I am unwell We need to go..."
+    // input now contains "I am unwell We need to go..."
   }
 
   int minimizedStringLength(string s) {
     for (int i = 0; i < s.size(); i++) {
-     // removeclosestoccurences(s[i]);
+      // removeclosestoccurences(s[i]);
     }
     return s.size();
   }
 
- string makeGood(string s) {
-        std::stack<int>ans;
-        short int prev;
-        string final;
-        for(int i=0;i<s.size();i++){
-            ans.push(s[i]);
-        }
-        while(ans.top()){
-            if(ans.top()==prev +32 || ans.top() == prev-32){
-            // dont add these to new string;
-            continue;
-            }
-            else{
-            final.push_back(ans.top());
-            }
-            prev = ans.top();
-            ans.pop();
-        }
-        return final;
+  string makeGood(string s) {
+    std::stack<int> ans;
+    string final(s.size(), 'a'); // initialize string ans with size = s.size()
+                                 // and all char of it as 'a'
+    short int prev;
+    for (int i = 0; i < s.size(); i++) {
+      ans.push(s[i]);
     }
+    while (ans.top()) {
+      if (ans.top() == prev + 32 || ans.top() == prev - 32) {
+        // dont add these to new string;
+        continue;
+      } else {
+        final.push_back(ans.top());
+      }
+      prev = ans.top();
+      ans.pop();
+    }
+    return final;
+  }
+
 private:
   time_t start;
   time_t usrtime = start - time(NULL);
