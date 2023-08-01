@@ -4,6 +4,7 @@
 #include "algo.h"
 #include <chrono>
 #include <iostream>
+#include <cstring>
 #include <queue>
 #include <stack>
 #include <vector>
@@ -54,6 +55,17 @@ public:
     return index;
   }
 
+  void lowercase(char start) {
+    // convert all characters in c string to lowercasew with pointers;
+    char *p = &start;
+    while (*p != '\0') {
+      if (*p >= 97 && *p <= 122) {
+        *p -= 32;
+      }
+      p++;
+    }
+  }
+
   int removeElement(vector<int> &nums, int val) {
     // bubble up unique integers in numsß using fixed index iterator
     int k = 0;
@@ -87,7 +99,7 @@ public:
 
   void populate(ListNode *head, std::vector<int> &vals) {
     ListNode *temp = head;
-    while (temp && temp->next) {
+    while (temp->next != 0x0) {
       vals.push_back(temp->val);
       temp = temp->next;
     }
@@ -101,7 +113,7 @@ public:
     std::vector<int> vals;
     populate(head, vals);
     int src = removeDuplicatesconstant(vals);
-    for (int k = src; k < vals.size(); k++) {
+    for (int k = 0; k < vals.size(); k++) {
       // duplicates to remove in LL
       deletenode(head, vals[k - 1]);
     }
@@ -116,18 +128,21 @@ public:
     return ans;
   }
 
-  void removeclosestoccurences(char a) {
-    // use pointer to a to increment and decrement for nearest occurences
-    // assume input is a char* with "I am unwell\" \"We need to go..."
-    // rewrite string with pointers
+  void removeclosestoccurences(char in) {
+    // use pointer to a to increment and decrement for nearest occurences near
+    // index in str of a assume input is a char* with "I am unwell\" \"We need
+    // to go..." rewrite string with pointers
     char *src, *dest;
-    src = dest = &a;     // both pointers point to the first char of input
-    while (*src != '\0') // exit loop when null terminator reached
+    src = dest = &in;    // both pointers point to the first char of input
+    while (*src != '\0' && src) // exit loop when null terminator reached
     {
-      if (*src != '\"') // if source is not a " char
+      if (in != *src ) // if source is not a " char
       {
         *dest = *src; // copy the char at source to destination
         dest++;       // increment destination pointer
+      } else {
+        *dest = ' ';
+        dest++;
       }
       src++; // increment source pointer
     }
@@ -137,16 +152,16 @@ public:
   }
 
   int minimizedStringLength(string s) {
-    for (int i = 0; i < s.size(); i++) {
-      // removeclosestoccurences(s[i]);
+    int size = s.size();
+    for (int i = 0; i < size; i++) {
+      removeclosestoccurences(s[i]);
     }
     return s.size();
   }
 
   string makeGood(string s) {
     std::stack<int> ans;
-    string final(s.size(), 'a'); // initialize string ans with size = s.size()
-                                 // and all char of it as 'a'
+    string final(s.size(), ' '); // initialize string ans with size = s.size()
     short int prev;
     for (int i = 0; i < s.size(); i++) {
       ans.push(s[i]);

@@ -1,4 +1,4 @@
- #define nullptr 0x0
+ #define nullptr __nullptr
  struct ListNode {
     int val;
     ListNode *next;
