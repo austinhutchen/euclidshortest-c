@@ -141,7 +141,6 @@ public:
         *dest = *src; // copy the char at source to destination
         dest++;       // increment destination pointer
       } else {
-        *dest = ' ';
         dest++;
       }
       src++; // increment source pointer
@@ -178,6 +177,19 @@ public:
     }
     return final;
   }
+
+    void bubsort(string &unsorted){
+      for(int i=0;i<unsorted.size();i++){
+        for(int j=i+1;j<unsorted.size();j++){
+          if(unsorted[i]>unsorted[j]){
+          char t = unsorted[j];
+          unsorted[j]=unsorted[i];
+          unsorted[i]=t;
+        }
+        }
+      
+      }
+    }
 
 private:
   time_t start;
