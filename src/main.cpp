@@ -17,7 +17,9 @@ if(strcmp(argv[1], "string")==0){
   cout << "AFTER EXCAVATION:" <<endl;
   cout << in << endl;
 }
-
+else {
+cout << "No input given." <<endl;
+}
 
 
 }
