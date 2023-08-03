@@ -4,22 +4,24 @@
 
 using namespace std;
 
+int main(int argc, char **argv) {
 
-
-int main(int argc, char ** argv){
-
-if(strcmp(argv[1], "string")==0){
-  cout << "Enter your input below." << endl;
-  string in;
-  cin>> in;
-  Solution *algo= new Solution();
-  algo->minimizedStringLength(in);
-  cout << "AFTER EXCAVATION:" <<endl;
-  cout << in << endl;
-}
-else {
-cout << "No input given." <<endl;
-}
-
-
+  if (strcmp(argv[1], "string") == 0) {
+    cout << "Enter your input below." << endl;
+    string in;
+    vector<char> invec;
+    cin >> in;
+    for (int i = 0; i < in.size(); i++) {
+      invec.push_back(in[i]);
+    }
+    Solution *algo = new Solution();
+    algo->msort(invec, 0, round(invec.size() / 2), invec.size());
+    cout << "AFTER EXCAVATION:" << endl;
+    for (int i = 0; i < invec.size(); i++) {
+      cout << invec[i];
+    }
+    cout << endl;
+  } else {
+    cout << "No input given." << endl;
+  }
 }

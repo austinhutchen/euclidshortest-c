@@ -260,7 +260,29 @@ public:
       }
     }
   }
-
+  void msort(vector<char> &unsorted, unsigned a, unsigned p, unsigned q) {
+    // MERGE SORT from INTRO ALGORITHMS SECOND ED
+    // works so long as a<=p<q
+    vector<int> subarr1;
+    vector<int> subarr2;
+    if (a <= p && p < q) {
+      unsigned n1 = q - p + 1;
+      unsigned n2 = a - p;
+      unsigned j = 1;
+      unsigned i = 1;
+      for (; i < n1 && j < n2; i++ && j++) {
+        subarr1.push_back(unsorted[i + a - 1]);
+        subarr2.push_back(unsorted[j + p]);
+      }
+      for (unsigned k = a; k < q; k++) {
+        if (subarr1[k] <= subarr2[k]) {
+          unsorted[k] = subarr1[k];
+        } else {
+          unsorted[k] = subarr2[k];
+        }
+      }
+    }
+  }
   int findClosestNumber(vector<int> &nums) {
     // find closest number to 0 within an array of integers nums
     if (nums.size() == 0) {
