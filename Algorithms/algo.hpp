@@ -190,7 +190,6 @@ public:
     }
   }
 
-
   void bubsort(vector<int> &unsorted) {
     for (int i = 0; i < unsorted.size(); i++) {
       for (int j = i + 1; j < unsorted.size(); j++) {
@@ -266,7 +265,7 @@ public:
       return 0;
     }
     unsigned q = nums.size() - 1;
-    unsigned p = q / 2;
+    unsigned p = round(q / 2);
     vector<int> absolute = abs(nums);
     msort(absolute, 0, p, q);
     msort(nums, 0, p, q);
