@@ -3,8 +3,8 @@
 #pragma ONCE
 #include "algo.h"
 #include <chrono>
-#include <iostream>
 #include <cstring>
+#include <iostream>
 #include <queue>
 #include <stack>
 #include <vector>
@@ -133,10 +133,10 @@ public:
     // index in str of a assume input is a char* with "I am unwell\" \"We need
     // to go..." rewrite string with pointers
     char *src, *dest;
-    src = dest = &in;    // both pointers point to the first char of input
+    src = dest = &in; // both pointers point to the first char of input
     while (*src != '\0' && src) // exit loop when null terminator reached
     {
-      if (in != *src ) // if source is not a " char
+      if (in != *src) // if source is not a " char
       {
         *dest = *src; // copy the char at source to destination
         dest++;       // increment destination pointer
@@ -178,18 +178,48 @@ public:
     return final;
   }
 
-    void bubsort(string &unsorted){
-      for(int i=0;i<unsorted.size();i++){
-        for(int j=i+1;j<unsorted.size();j++){
-          if(unsorted[i]>unsorted[j]){
+  void bubsort(string &unsorted) {
+    for (int i = 0; i < unsorted.size(); i++) {
+      for (int j = i + 1; j < unsorted.size(); j++) {
+        if (unsorted[i] > unsorted[j]) {
           char t = unsorted[j];
-          unsorted[j]=unsorted[i];
-          unsorted[i]=t;
+          unsorted[j] = unsorted[i];
+          unsorted[i] = t;
         }
-        }
-      
       }
     }
+  }
+
+  void abs(vector<int> &nums) {
+    vector<int> ans;
+    for (int i = 0; i < nums.size(); i++) {
+      if (nums[i] < 0) {
+        nums[i] = ~nums[i] + 1;
+      } else {
+        continue;
+      }
+    }
+  }
+  void bubsort(vector<int> &unsorted) {
+    for (int i = 0; i < unsorted.size(); i++) {
+      for (int j = i + 1; j < unsorted.size(); j++) {
+        if (unsorted[i] > unsorted[j]) {
+          char t = unsorted[j];
+          unsorted[j] = unsorted[i];
+          unsorted[i] = t;
+        }
+      }
+    }
+  }
+
+  int findClosestNumber(vector<int> &nums) {
+    if (nums.size() == 0) {
+      return 0;
+    }
+    abs(nums);
+    bubsort(nums);
+    return nums[0];
+  }
 
 private:
   time_t start;
