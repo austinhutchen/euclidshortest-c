@@ -238,57 +238,40 @@ public:
   }
 
   void msort(vector<int> &unsorted, unsigned a, unsigned p, unsigned q) {
-    // MERGE SORT from INTRO ALGORITHMS SECOND ED
     // works so long as a<=p<q
-    vector<int> subarr1;
-    vector<int> subarr2;
+    unsigned n1 = q - p + 1;
+    unsigned n2 = a - p;
+    unsigned j = 1;
+    unsigned i = 1;
+    unsigned k = a;
+    vector<int> L;
+    vector<int> R;
     if (a <= p && p < q) {
-      unsigned n1 = q - p + 1;
-      unsigned n2 = a - p;
-      unsigned j = 1;
-      unsigned i = 1;
+      L = *new vector<int>(n1);
+      R = *new vector<int>(n2);
       for (; i < n1 && j < n2; i++ && j++) {
-        subarr1.push_back(unsorted[i + a - 1]);
-        subarr2.push_back(unsorted[j + p]);
+        L[i] = (unsorted[i + a - 1]);
+        R[j] = (unsorted[j + p]);
       }
-      for (unsigned k = a; k < q; k++) {
-        if (subarr1[k] <= subarr2[k]) {
-          unsorted[k] = subarr1[k];
+      for (; k < q; k++) {
+        if (L[k] <= R[k]) {
+          unsorted[k] = L[k];
         } else {
-          unsorted[k] = subarr2[k];
+          unsorted[k] = R[k];
         }
       }
+    } else {
+      cout << "FAILED INDICES" << std::endl;
     }
+
   }
-  void msort(vector<char> &unsorted, unsigned a, unsigned p, unsigned q) {
-    // MERGE SORT from INTRO ALGORITHMS SECOND ED
-    // works so long as a<=p<q
-    vector<int> subarr1;
-    vector<int> subarr2;
-    if (a <= p && p < q) {
-      unsigned n1 = q - p + 1;
-      unsigned n2 = a - p;
-      unsigned j = 1;
-      unsigned i = 1;
-      for (; i < n1 && j < n2; i++ && j++) {
-        subarr1.push_back(unsorted[i + a - 1]);
-        subarr2.push_back(unsorted[j + p]);
-      }
-      for (unsigned k = a; k < q; k++) {
-        if (subarr1[k] <= subarr2[k]) {
-          unsorted[k] = subarr1[k];
-        } else {
-          unsorted[k] = subarr2[k];
-        }
-      }
-    }
-  }
+
   int findClosestNumber(vector<int> &nums) {
     // find closest number to 0 within an array of integers nums
     if (nums.size() == 0) {
       return 0;
     }
-    unsigned q = nums.size() - 1;
+    unsigned q = nums.size();
     unsigned p = round(q / 2);
     vector<int> absolute = abs(nums);
     msort(absolute, 0, p, q);
