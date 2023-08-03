@@ -202,29 +202,6 @@ public:
     }
   }
 
-  void mergesort(vector<int> &unsorted, int a, int p, int q) {
-    // works so long as a<=p<q
-    // mergesort(nums,0,nums.size()/2,nums.size()-1);
-    vector<int> subarr1;
-    vector<int> subarr2;
-    if (a <= p && p < q) {
-      int n1 = q - p + 1;
-      int n2 = a - p;
-      for (int i = 1; i < n1; i++) {
-        subarr1.push_back(unsorted[i + a - 1]);
-      }
-      for (int j = 1; j < n2; j++) {
-        subarr2.push_back(unsorted[j + p]);
-      }
-      for (int k = a; k < q; k++) {
-        if (subarr1[k] <= subarr2[k]) {
-          unsorted[k] = subarr1[k];
-        } else {
-          unsorted[k] = subarr2[k];
-        }
-      }
-    }
-  }
   vector<int> abs(vector<int> &nums) {
     vector<int> ans;
     for (int i = 0; i < nums.size(); i++) {
@@ -239,19 +216,17 @@ public:
 
   void msort(vector<int> &unsorted, unsigned a, unsigned p, unsigned q) {
     // works so long as a<=p<q
-    unsigned n1 = q - p + 1;
-    unsigned n2 = a - p;
+    unsigned n1 = q - a + 1;
+    unsigned n2 = q - p;
     unsigned j = 1;
     unsigned i = 1;
     unsigned k = a;
     vector<int> L;
     vector<int> R;
     if (a <= p && p < q) {
-      L = *new vector<int>(n1);
-      R = *new vector<int>(n2);
       for (; i < n1 && j < n2; i++ && j++) {
-        L[i] = (unsorted[i + a - 1]);
-        R[j] = (unsorted[j + p]);
+        L.push_back(unsorted[i + a - 1]);
+        R.push_back(unsorted[j + p]);
       }
       for (; k < q; k++) {
         if (L[k] <= R[k]) {
@@ -263,7 +238,6 @@ public:
     } else {
       cout << "FAILED INDICES" << std::endl;
     }
-
   }
 
   int findClosestNumber(vector<int> &nums) {
