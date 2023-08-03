@@ -212,6 +212,30 @@ public:
     }
   }
 
+  vector<int> mergesort(vector<int> &unsorted, int a, int p, int q) {
+    // works so long as a<=p<q
+    vector<int> subarr1;
+    vector<int> subarr2;
+    if (a <= p && p < q) {
+      int n1 = q - p + 1;
+      int n2 = a - p;
+      for (int i = 1; i < n1; i++) {
+        subarr1.push_back(unsorted[i + a - 1]);
+      }
+      for (int j; j < n2; j++) {
+        subarr2.push_back(unsorted[j + p]);
+      }
+      for (int k = a; k < q; k++) {
+        if (subarr1[k] <= subarr2[k]) {
+          unsorted[k] = subarr1[k];
+        } else {
+          unsorted[k] = subarr2[k];
+        }
+      }
+    }
+    return unsorted;
+  }
+
   int findClosestNumber(vector<int> &nums) {
     if (nums.size() == 0) {
       return 0;
