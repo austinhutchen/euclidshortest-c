@@ -1,6 +1,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <ctime>
+#include <iterator>
 #pragma ONCE
 #include "algo.h"
 #include <chrono>
@@ -12,7 +13,7 @@
 using namespace std;
 class Solution {
 public:
-  Solution() { start = time(NULL); }
+  Solution() {}
   vector<int> removeDuplicates(vector<int> &nums) {
     // use queue and loop through entire array??
     std::queue<int> q;
@@ -215,28 +216,28 @@ public:
     return ans;
   }
 
-void msort(vector<char> &unsorted, unsigned a, unsigned p, unsigned q) {
+  void msort_char(vector<char> &unsorted, unsigned a, unsigned p, unsigned q) {
     // works so long as a<=p<q
-    unsigned n1 = p - a + 1;
-    unsigned n2 = q - p;
-    unsigned j = 0;
-    unsigned i = 0;
-    vector<int> L(n1+1);
-    vector<int> R(n2+1);
+    size_t n1 = p - a + 1;
+    size_t n2 = q - p;
+    size_t j = 0;
+    size_t i = 0;
+    vector<int> *L = new vector<int>(n1 + 1);
+    vector<int> *R = new vector<int>(n2 + 1);
     if (a <= p && p < q) {
       for (; i < n1 && j < n2; i++ && j++) {
-        L[i]=(unsorted[i + a - 1]);
-        R[j]=(unsorted[j + p]);
+        L->at(i) = (unsorted[i + a - 1]);
+        R->at(j) = (unsorted[j + p]);
       }
-        L[n1]= INT16_MAX;
-        R[n2]=INT16_MAX;
-        i=j=0;
-      for (unsigned k=a; k < q && i<n1 && j<n2; k++) {
-        if (L[i] <= R[j]) {
-          unsorted[k] = L[i];
+      L->at(n1) = INT16_MAX;
+      R->at(n2) = INT16_MAX;
+      i = j = 0;
+      for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
+        if (L->at(i) <= R->at(j)) {
+          unsorted[k] = L->at(i);
           i++;
         } else {
-          unsorted[k] = R[j];
+          unsorted[k] = R->at(j);
           j++;
         }
       }
@@ -244,28 +245,32 @@ void msort(vector<char> &unsorted, unsigned a, unsigned p, unsigned q) {
       cout << "FAILED INDICES" << std::endl;
     }
   }
-void msort(vector<int> &unsorted, unsigned a, unsigned p, unsigned q) {
+  void msort(vector<int> &unsorted, unsigned a, unsigned p, unsigned q) {
     // works so long as a<=p<q
-    unsigned n1 = p - a + 1;
-    unsigned n2 = q - p;
-    unsigned j = 0;
-    unsigned i = 0;
-    vector<int> L(n1+1);
-    vector<int> R(n2+1);
+    size_t n1 = p - a + 1;
+    size_t n2 = q - p;
+    size_t i = 0;
+    size_t j = 0;
+    vector<int> *L = new vector<int>(n1 + 1);
+    vector<int> *R = new vector<int>(n2 + 1);
+    std::vector<int>::iterator L_ptr = L->begin();
+    std::vector<int>::iterator R_ptr = R->begin();
     if (a <= p && p < q) {
-      for (; i < n1 && j < n2; i++ && j++) {
-        L[i]=(unsorted[i + a - 1]);
-        R[j]=(unsorted[j + p]);
+      for (; L_ptr != L->end() && R_ptr != R->end(); i++ && j++) {
+        *L_ptr = (unsorted[i + a]);
+        *R_ptr = (unsorted[j + p + 1]);
+        L_ptr++;
+        R_ptr++;
       }
-        L[n1]= INT16_MAX;
-        R[n2]=INT16_MAX;
-        i=j=0;
-      for (unsigned k=a; k < q && i<n1 && j<n2; k++) {
-        if (L[i] <= R[j]) {
-          unsorted[k] = L[i];
+      L->at(n1) = INT_MAX;
+      R->at(n2) = INT_MAX;
+      i = j = 0;
+      for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
+        if (L->at(i) <= R->at(j)) {
+          unsorted[k] = L->at(i);
           i++;
         } else {
-          unsorted[k] = R[j];
+          unsorted[k] = R->at(j);
           j++;
         }
       }
@@ -273,13 +278,15 @@ void msort(vector<int> &unsorted, unsigned a, unsigned p, unsigned q) {
       cout << "FAILED INDICES" << std::endl;
     }
   }
+
+
   int findClosestNumber(vector<int> &nums) {
     // find closest number to 0 within an array of integers nums
     if (nums.size() == 0) {
       return 0;
     }
-    unsigned q = nums.size();
-    unsigned p = round(q / 2);
+    size_t q = nums.size();
+    size_t p = q / 2;
     vector<int> absolute = abs(nums);
     msort(absolute, 0, p, q);
     msort(nums, 0, p, q);
@@ -292,6 +299,5 @@ void msort(vector<int> &unsorted, unsigned a, unsigned p, unsigned q) {
   }
 
 private:
-  time_t start;
-  time_t usrtime = start - time(NULL);
+
 };
