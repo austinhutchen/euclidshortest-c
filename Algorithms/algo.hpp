@@ -219,50 +219,19 @@ public:
     // works so long as a<=p<q
     unsigned n1 = p - a + 1;
     unsigned n2 = q - p;
-    unsigned j = 1;
-    unsigned i = 1;
+    unsigned j = 0;
+    unsigned i = 0;
     unsigned k = a;
-    vector<int> L(n1+1);
-    vector<int> R(n2+1);
+    vector<int> L(n1 + 1);
+    vector<int> R(n2 + 1);
     if (a <= p && p < q) {
       for (; i < n1 && j < n2; i++ && j++) {
-        L[i]=(unsorted[i + a - 1]);
-        R[j]=(unsorted[j + p]);
+        L[i] = (unsorted[i + a - 1]);
+        R[j] = (unsorted[j + p]);
       }
-        L[n1]= INT16_MAX;
-        R[n2]=INT16_MAX;
-        i=j=1;
-      for (; k < q; k++) {
-        if (L[i] <= R[j]) {
-          unsorted[k] = L[i];
-          i++;
-        } else {
-          unsorted[k] = R[j];
-          j++;
-        }
-      }
-    } else {
-      cout << "FAILED INDICES" << std::endl;
-    }
-  }
-
-  void msort(vector<char> &unsorted, unsigned a, unsigned p, unsigned q) {
-    // works so long as a<=p<q
-    unsigned n1 = p - a + 1;
-    unsigned n2 = q - p;
-    unsigned j = 1;
-    unsigned i = 1;
-    unsigned k = a;
-    vector<int> L(n1+1);
-    vector<int> R(n2+1);
-    if (a <= p && p < q) {
-      for (; i < n1 && j < n2; i++ && j++) {
-        L[i]=(unsorted[i + a - 1]);
-        R[j]=(unsorted[j + p]);
-      }
-        L[n1]= INT16_MAX;
-        R[n2]=INT16_MAX;
-        i=j=1;
+      L[n1] = INT16_MAX;
+      R[n2] = INT16_MAX;
+      i = j = 0;
       for (; k < q; k++) {
         if (L[i] <= R[j]) {
           unsorted[k] = L[i];
