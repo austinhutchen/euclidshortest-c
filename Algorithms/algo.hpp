@@ -229,8 +229,8 @@ public:
         L->at(i) = (unsorted[i + a - 1]);
         R->at(j) = (unsorted[j + p]);
       }
-      L->at(n1) = INT16_MAX;
-      R->at(n2) = INT16_MAX;
+      L->at(n1) = CHAR_MAX;
+      R->at(n2) = CHAR_MAX;
       i = j = 0;
       for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
         if (L->at(i) <= R->at(j)) {
