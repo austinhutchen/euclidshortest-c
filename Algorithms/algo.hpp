@@ -226,7 +226,7 @@ public:
     vector<int> *R = new vector<int>(n2 + 1);
     if (a <= p && p < q) {
       for (; i < n1 && j < n2; i++ && j++) {
-        L->at(i) = (unsorted[i + a - 1]);
+        L->at(i) = (unsorted[i + a ]);
         R->at(j) = (unsorted[j + p]);
       }
       *L->end() = CHAR_MAX;
