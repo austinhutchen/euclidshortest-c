@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <cstdint>
 #include <ctime>
 #pragma ONCE
 #include "algo.h"
@@ -216,23 +217,28 @@ public:
 
   void msort(vector<int> &unsorted, unsigned a, unsigned p, unsigned q) {
     // works so long as a<=p<q
-    unsigned n1 = q - a + 1;
+    unsigned n1 = p - a + 1;
     unsigned n2 = q - p;
     unsigned j = 1;
     unsigned i = 1;
     unsigned k = a;
-    vector<int> L;
-    vector<int> R;
+    vector<int> L(n1+1);
+    vector<int> R(n2+1);
     if (a <= p && p < q) {
       for (; i < n1 && j < n2; i++ && j++) {
-        L.push_back(unsorted[i + a - 1]);
-        R.push_back(unsorted[j + p]);
+        L[i]=(unsorted[i + a - 1]);
+        R[j]=(unsorted[j + p]);
       }
+        L[n1]= INT16_MAX;
+        R[n2]=INT16_MAX;
+        i=j=1;
       for (; k < q; k++) {
-        if (L[k] <= R[k]) {
-          unsorted[k] = L[k];
+        if (L[i] <= R[j]) {
+          unsorted[k] = L[i];
+          i++;
         } else {
-          unsorted[k] = R[k];
+          unsorted[k] = R[j];
+          j++;
         }
       }
     } else {
@@ -240,6 +246,36 @@ public:
     }
   }
 
+  void msort(vector<char> &unsorted, unsigned a, unsigned p, unsigned q) {
+    // works so long as a<=p<q
+    unsigned n1 = p - a + 1;
+    unsigned n2 = q - p;
+    unsigned j = 1;
+    unsigned i = 1;
+    unsigned k = a;
+    vector<int> L(n1+1);
+    vector<int> R(n2+1);
+    if (a <= p && p < q) {
+      for (; i < n1 && j < n2; i++ && j++) {
+        L[i]=(unsorted[i + a - 1]);
+        R[j]=(unsorted[j + p]);
+      }
+        L[n1]= INT16_MAX;
+        R[n2]=INT16_MAX;
+        i=j=1;
+      for (; k < q; k++) {
+        if (L[i] <= R[j]) {
+          unsorted[k] = L[i];
+          i++;
+        } else {
+          unsorted[k] = R[j];
+          j++;
+        }
+      }
+    } else {
+      cout << "FAILED INDICES" << std::endl;
+    }
+  }
   int findClosestNumber(vector<int> &nums) {
     // find closest number to 0 within an array of integers nums
     if (nums.size() == 0) {
