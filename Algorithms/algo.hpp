@@ -256,7 +256,7 @@ public:
     std::vector<int>::iterator L_ptr = L->begin();
     std::vector<int>::iterator R_ptr = R->begin();
     if (a <= p && p < q) {
-      for (; L_ptr != L->end() && R_ptr != R->end(); i++ && j++) {
+      for (; L_ptr != --L->end() && R_ptr != --R->end(); i++ && j++) {
         *L_ptr = (unsorted[i + a]);
         *R_ptr = (unsorted[j + p + 1]);
         L_ptr++;
