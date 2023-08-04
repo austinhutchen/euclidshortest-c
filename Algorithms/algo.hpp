@@ -229,8 +229,8 @@ public:
         L->at(i) = (unsorted[i + a - 1]);
         R->at(j) = (unsorted[j + p]);
       }
-      L->at(n1) = CHAR_MAX;
-      R->at(n2) = CHAR_MAX;
+      *L->end() = CHAR_MAX;
+      *R->end() = CHAR_MAX;
       i = j = 0;
       for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
         if (L->at(i) <= R->at(j)) {
@@ -245,6 +245,7 @@ public:
       cout << "FAILED INDICES" << std::endl;
     }
   }
+
   void msort(vector<int> &unsorted, unsigned a, unsigned p, unsigned q) {
     // works so long as a<=p<q
     size_t n1 = p - a + 1;
@@ -262,8 +263,8 @@ public:
         L_ptr++;
         R_ptr++;
       }
-      L->at(n1) = INT_MAX;
-      R->at(n2) = INT_MAX;
+      *L->end() = INT_MAX;
+      *R->end() = INT_MAX;
       i = j = 0;
       for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
         if (L->at(i) <= R->at(j)) {
