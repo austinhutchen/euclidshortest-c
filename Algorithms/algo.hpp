@@ -215,24 +215,23 @@ public:
     return ans;
   }
 
-  void msort(vector<int> &unsorted, unsigned a, unsigned p, unsigned q) {
+void msort(vector<int> &unsorted, unsigned a, unsigned p, unsigned q) {
     // works so long as a<=p<q
     unsigned n1 = p - a + 1;
     unsigned n2 = q - p;
     unsigned j = 0;
     unsigned i = 0;
-    unsigned k = a;
-    vector<int> L(n1 + 1);
-    vector<int> R(n2 + 1);
+    vector<int> L(n1+1);
+    vector<int> R(n2+1);
     if (a <= p && p < q) {
       for (; i < n1 && j < n2; i++ && j++) {
-        L[i] = (unsorted[i + a - 1]);
-        R[j] = (unsorted[j + p]);
+        L[i]=(unsorted[i + a - 1]);
+        R[j]=(unsorted[j + p]);
       }
-      L[n1] = INT16_MAX;
-      R[n2] = INT16_MAX;
-      i = j = 0;
-      for (; k < q; k++) {
+        L[n1]= INT16_MAX;
+        R[n2]=INT16_MAX;
+        i=j=0;
+      for (unsigned k=a; k < q && i<n1 && j<n2; k++) {
         if (L[i] <= R[j]) {
           unsorted[k] = L[i];
           i++;
@@ -245,6 +244,7 @@ public:
       cout << "FAILED INDICES" << std::endl;
     }
   }
+  
   int findClosestNumber(vector<int> &nums) {
     // find closest number to 0 within an array of integers nums
     if (nums.size() == 0) {
