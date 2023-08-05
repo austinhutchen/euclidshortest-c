@@ -254,14 +254,15 @@ public:
     // works so long as a<=p<q
     size_t n1 = p - a + 1;
     size_t n2 = q - p;
-    size_t i = 0;
-    size_t j = 0;
+    unsigned i = 0;
+    unsigned j = 0;
     vector<int> L(n1 + 1);
     vector<int> R(n2 + 1);
 
-    for (; i < n1 && j < n2; i++ && j++) {
-      // MEMORY OVERFLOW IS HERE INDICES ARE PROBABLY NOT PASSED CORRECTLY
+    for (; i < n1; i++) {
       L[i] = (unsorted[i + a]);
+    }
+    for (; j < n2; j++) {
       R[j] = (unsorted[j + p]);
     }
     R[n1] = INT_MAX;
