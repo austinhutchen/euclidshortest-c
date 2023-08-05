@@ -226,29 +226,27 @@ public:
     vector<int> *R = new vector<int>(n2 + 1);
     std::vector<int>::iterator L_ptr = L->begin();
     std::vector<int>::iterator R_ptr = R->begin();
-    if (a <= p && p < q) {
-      for (; L_ptr < L->end() && R_ptr < R->end(); i++ && j++) {
-        *L_ptr = (unsorted[i + a]);
-        *R_ptr = (unsorted[j + p + 1]);
+    *L->end() = INT_MAX;
+    *R->end() = INT_MAX;
+    for (; L_ptr != L->end() && R_ptr != R->end(); i++ && j++) {
+      *L_ptr = (unsorted[i]);
+      *R_ptr = (unsorted[j + p + 1]);
+      L_ptr++;
+      R_ptr++;
+    }
+    i = j = 0;
+    L_ptr = L->begin();
+    R_ptr = R->begin();
+    auto Rend = R->end();
+    auto Lend = L->end();
+    for (unsigned k = a; k < q && L_ptr != Lend && R_ptr != Rend; k++) {
+      if (*L_ptr <= *R_ptr) {
+        unsorted[k] = *L_ptr;
         L_ptr++;
+      } else {
+        unsorted[k] = *R_ptr;
         R_ptr++;
       }
-      *L->end() = INT_MAX;
-
-      i = j = 0;
-      L_ptr = L->end();
-
-      for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
-        if (L->at(i) <= R->at(j)) {
-          unsorted[k] = L->at(i);
-          i++;
-        } else {
-          unsorted[k] = R->at(j);
-          j++;
-        }
-      }
-    } else {
-      cout << "FAILED INDICES" << std::endl;
     }
   }
 
@@ -264,16 +262,20 @@ public:
     std::vector<int>::iterator R_ptr = R->begin();
     *L->end() = INT_MAX;
     *R->end() = INT_MAX;
-    for (; L_ptr != L->end() && R_ptr != R->end(); i++ && j++) {
-      *L_ptr = (unsorted[i]);
-      *R_ptr = (unsorted[j + p + 1]);
+    for (; L_ptr != L->end() && R_ptr != R->end() && i < n1 && j < n2;
+         i++ && j++) {
+      // MEMORY OVERFLOW IS HERE INDICES ARE PROBABLY NOT PASSED CORRECTLY
+      *L_ptr = (unsorted[i + a]);
+      *R_ptr = (unsorted[j + p]);
       L_ptr++;
       R_ptr++;
     }
     i = j = 0;
     L_ptr = L->begin();
     R_ptr = R->begin();
-    for (unsigned k = a; k < q && L_ptr != L->end() && R_ptr != R->end(); k++) {
+    auto Rend = R->end();
+    auto Lend = L->end();
+    for (unsigned k = a; k < q && L_ptr != Lend && R_ptr != Rend; k++) {
       if (*L_ptr <= *R_ptr) {
         unsorted[k] = *L_ptr;
         L_ptr++;
@@ -283,10 +285,10 @@ public:
       }
     }
   }
+
   int findClosestNumber(vector<int> &nums) {
-    size_t len = sizeof(nums) / sizeof(nums[0]);
     // find closest number to 0 within an array of integers nums
-    switch (len) {
+    switch (nums.size()) {
     case 0: {
       return 0;
       break;
@@ -297,8 +299,8 @@ public:
     }
     default: {
       vector<int> absolute = abs(nums);
-      msort(absolute, 0, len / 2, len);
-      msort(nums, 0, len / 2, len);
+      msort(absolute, 0, (nums.size() - 1) / 2, nums.size()-1);
+      msort(nums, 0, (nums.size() - 1) / 2, nums.size()-1);
       if (absolute[0] != nums[0]) {
         // closest number to 0 is negative
         return nums[0];
