@@ -271,13 +271,15 @@ public:
       R_ptr++;
     }
     i = j = 0;
-    for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
-      if (L->at(i) <= R->at(j)) {
-        unsorted[k] = L->at(i);
-        i++;
+    L_ptr = L->begin();
+    R_ptr = R->begin();
+    for (unsigned k = a; k < q && L_ptr != L->end() && R_ptr != R->end(); k++) {
+      if (*L_ptr <= *R_ptr) {
+        unsorted[k] = *L_ptr;
+        L_ptr++;
       } else {
-        unsorted[k] = R->at(j);
-        j++;
+        unsorted[k] = *R_ptr;
+        R_ptr++;
       }
     }
   }
