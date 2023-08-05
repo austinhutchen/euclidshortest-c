@@ -220,18 +220,24 @@ public:
     // works so long as a<=p<q
     size_t n1 = p - a + 1;
     size_t n2 = q - p;
-    size_t j = 0;
     size_t i = 0;
+    size_t j = 0;
     vector<int> *L = new vector<int>(n1 + 1);
     vector<int> *R = new vector<int>(n2 + 1);
+    std::vector<int>::iterator L_ptr = L->begin();
+    std::vector<int>::iterator R_ptr = R->begin();
     if (a <= p && p < q) {
-      for (; i < n1 && j < n2; i++ && j++) {
-        L->at(i) = (unsorted[i + a ]);
-        R->at(j) = (unsorted[j + p]);
+      for (; L_ptr < L->end() && R_ptr < R->end(); i++ && j++) {
+        *L_ptr = (unsorted[i + a]);
+        *R_ptr = (unsorted[j + p + 1]);
+        L_ptr++;
+        R_ptr++;
       }
-      *L->end() = CHAR_MAX;
-      *R->end() = CHAR_MAX;
+      *L->end() = INT_MAX;
+
       i = j = 0;
+      L_ptr = L->end();
+
       for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
         if (L->at(i) <= R->at(j)) {
           unsorted[k] = L->at(i);
@@ -256,49 +262,50 @@ public:
     vector<int> *R = new vector<int>(n2 + 1);
     std::vector<int>::iterator L_ptr = L->begin();
     std::vector<int>::iterator R_ptr = R->begin();
-    if (a <= p && p < q) {
-      for (; L_ptr < L->end() && R_ptr < R->end(); i++ && j++) {
-        *L_ptr = (unsorted[i + a]);
-        *R_ptr = (unsorted[j + p + 1]);
-        L_ptr++;
-        R_ptr++;
+    *L->end() = INT_MAX;
+    *R->end() = INT_MAX;
+    for (; L_ptr != L->end() && R_ptr != R->end(); i++ && j++) {
+      *L_ptr = (unsorted[i]);
+      *R_ptr = (unsorted[j + p + 1]);
+      L_ptr++;
+      R_ptr++;
+    }
+    i = j = 0;
+    for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
+      if (L->at(i) <= R->at(j)) {
+        unsorted[k] = L->at(i);
+        i++;
+      } else {
+        unsorted[k] = R->at(j);
+        j++;
       }
-      *L->end() = INT_MAX;
-      *R->end() = INT_MAX;
-      i = j = 0;
-      for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
-        if (L->at(i) <= R->at(j)) {
-          unsorted[k] = L->at(i);
-          i++;
-        } else {
-          unsorted[k] = R->at(j);
-          j++;
-        }
-      }
-    } else {
-      cout << "FAILED INDICES" << std::endl;
     }
   }
-
-
   int findClosestNumber(vector<int> &nums) {
+    size_t len = sizeof(nums) / sizeof(nums[0]);
     // find closest number to 0 within an array of integers nums
-    if (nums.size() == 0) {
+    switch (len) {
+    case 0: {
       return 0;
+      break;
     }
-    size_t q = nums.size();
-    size_t p = q / 2;
-    vector<int> absolute = abs(nums);
-    msort(absolute, 0, p, q);
-    msort(nums, 0, p, q);
-    if (absolute[0] != nums[0]) {
-      // closest number to 0 is negative
+    case 1: {
       return nums[0];
-    } else {
-      return absolute[0];
+      break;
+    }
+    default: {
+      vector<int> absolute = abs(nums);
+      msort(absolute, 0, len / 2, len);
+      msort(nums, 0, len / 2, len);
+      if (absolute[0] != nums[0]) {
+        // closest number to 0 is negative
+        return nums[0];
+      } else {
+        return absolute[0];
+      }
+    }
     }
   }
 
 private:
-
 };
