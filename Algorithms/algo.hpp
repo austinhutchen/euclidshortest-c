@@ -256,25 +256,21 @@ public:
     size_t n2 = q - p;
     size_t i = 0;
     size_t j = 0;
-    vector<int> *L = new vector<int>(n1 + 1);
-    vector<int> *R = new vector<int>(n2 + 1);
-    std::vector<int>::iterator L_ptr = L->begin();
-    std::vector<int>::iterator R_ptr = R->begin();
-    *L->end() = INT_MAX;
-    *R->end() = INT_MAX;
-    for (; L_ptr != L->end() && R_ptr != R->end() && i < n1 && j < n2;
-         i++ && j++) {
+    vector<int> L(n1 + 1);
+    vector<int> R(n2 + 1);
+
+    for (; i < n1 && j < n2; i++ && j++) {
       // MEMORY OVERFLOW IS HERE INDICES ARE PROBABLY NOT PASSED CORRECTLY
-      *L_ptr = (unsorted[i + a]);
-      *R_ptr = (unsorted[j + p]);
-      L_ptr++;
-      R_ptr++;
+      L[i] = (unsorted[i + a]);
+      R[j] = (unsorted[j + p]);
     }
+    R[n1] = INT_MAX;
+    L[n2] = INT_MAX;
     i = j = 0;
-    L_ptr = L->begin();
-    R_ptr = R->begin();
-    auto Rend = R->end();
-    auto Lend = L->end();
+    std::vector<int>::iterator L_ptr = L.begin();
+    std::vector<int>::iterator R_ptr = R.begin();
+    auto Rend = R.end();
+    auto Lend = L.end();
     for (unsigned k = a; k < q && L_ptr != Lend && R_ptr != Rend; k++) {
       if (*L_ptr <= *R_ptr) {
         unsorted[k] = *L_ptr;
@@ -299,8 +295,8 @@ public:
     }
     default: {
       vector<int> absolute = abs(nums);
-      msort(absolute, 0, (nums.size() - 1) / 2, nums.size()-1);
-      msort(nums, 0, (nums.size() - 1) / 2, nums.size()-1);
+      msort(absolute, 0, (nums.size() - 1) / 2, nums.size() - 1);
+      msort(nums, 0, (nums.size() - 1) / 2, nums.size() - 1);
       if (absolute[0] != nums[0]) {
         // closest number to 0 is negative
         return nums[0];
