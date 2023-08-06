@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     invec.push_back(in[i]);
   }
   int middle= int((invec.size()) / 2)-1;
-  algo->msort_char(invec, 0, middle, invec.size()-1);
+  algo->msort_itr(invec, 0, middle, invec.size()-1);
   cout << "AFTER EXCAVATION:" << endl;
   for (int i = 0; i < invec.size(); i++) {
     cout << invec[i];

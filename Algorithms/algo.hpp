@@ -216,7 +216,7 @@ public:
     return ans;
   }
 
-  void msort_char(vector<char> &unsorted, unsigned a, unsigned p, unsigned q) {
+  void msort_itr(vector<char> &unsorted, unsigned a, unsigned p, unsigned q) {
     // works so long as a<=p<q
     size_t n1 = p - a + 1;
     size_t n2 = q - p;
@@ -268,17 +268,13 @@ public:
     R[n1] = INT_MAX;
     L[n2] = INT_MAX;
     i = j = 0;
-    std::vector<int>::iterator L_ptr = L.begin();
-    std::vector<int>::iterator R_ptr = R.begin();
-    auto Rend = R.end();
-    auto Lend = L.end();
-    for (unsigned k = a; k < q && L_ptr != Lend && R_ptr != Rend; k++) {
-      if (*L_ptr <= *R_ptr) {
-        unsorted[k] = *L_ptr;
-        L_ptr++;
+    for (unsigned k = a; k < q && i < n1 && j < n2; k++) {
+      if (L[i] <= R[j]) {
+        unsorted[k] = L[i];
+        i++;
       } else {
-        unsorted[k] = *R_ptr;
-        R_ptr++;
+        unsorted[k] = R[j];
+        j++;
       }
     }
   }
