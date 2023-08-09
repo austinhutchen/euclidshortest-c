@@ -315,12 +315,13 @@ public:
 
   bool strPal(string check) {
     std::stack<char> ans;
-    int i=0;
+    int i = 0;
     for (; i < check.size(); i++) {
       ans.push(check[i]);
     }
     i = 0;
-    while (!ans.empty()) {
+
+    while (!ans.empty() && i < check.size()) {
       if (ans.top() == check[i]) {
         i++;
         ans.pop();
@@ -329,7 +330,23 @@ public:
         return false;
       }
     }
-    return true;
+    if (i != check.size() - 1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  bool isLLPalindrome(ListNode *head) {
+    if (head == NULL) {
+      return true;
+    }
+    string result;
+    ListNode *temp = head;
+    while (temp->next != NULL) {
+      result += to_string(temp->val);
+      temp = temp->next;
+    }
+    return strPal(result);
   }
 
 private:
