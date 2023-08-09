@@ -229,7 +229,7 @@ public:
     *L->end() = INT_MAX;
     *R->end() = INT_MAX;
     for (; L_ptr != L->end() && R_ptr != R->end(); i++ && j++) {
-      *L_ptr = (unsorted[i]);
+      *L_ptr = (unsorted[i + a]);
       *R_ptr = (unsorted[j + p + 1]);
       L_ptr++;
       R_ptr++;
@@ -311,6 +311,25 @@ public:
       n = fib(n - 1) + fib(n - 2);
     }
     return n;
+  }
+
+  bool strPal(string check) {
+    std::stack<char> ans;
+    int i=0;
+    for (; i < check.size(); i++) {
+      ans.push(check[i]);
+    }
+    i = 0;
+    while (!ans.empty()) {
+      if (ans.top() == check[i]) {
+        i++;
+        ans.pop();
+        continue;
+      } else {
+        return false;
+      }
+    }
+    return true;
   }
 
 private:
