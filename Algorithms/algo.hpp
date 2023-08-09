@@ -321,7 +321,7 @@ public:
     }
     i = 0;
 
-    while (!ans.empty() && i < check.size()) {
+    while (!ans.empty()) {
       if (ans.top() == check[i]) {
         i++;
         ans.pop();
@@ -336,14 +336,14 @@ public:
       return true;
     }
   }
-  bool isLLPalindrome(ListNode *head) {
+  bool isPalindrome(ListNode *head) {
     if (head == NULL) {
       return true;
     }
     string result;
     ListNode *temp = head;
-    while (temp->next != NULL) {
-      result += to_string(temp->val);
+    while (temp != NULL) {
+      result.push_back(char(temp->val));
       temp = temp->next;
     }
     return strPal(result);
