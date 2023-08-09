@@ -330,11 +330,7 @@ public:
         return false;
       }
     }
-    if (i != check.size() - 1) {
-      return false;
-    } else {
-      return true;
-    }
+    return true;
   }
   bool isPalindrome(ListNode *head) {
     if (head == NULL) {
