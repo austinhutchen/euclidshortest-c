@@ -345,5 +345,25 @@ public:
     return strPal(result);
   }
 
+  void merge(vector<int> &nums1, int m, vector<int> &nums2, int n) {
+ // merge sorted array
+    std::vector<int>::iterator L_ptr = nums1.begin();
+    std::vector<int>::iterator R_ptr = nums2.begin();
+    if (L_ptr == nums1.end() || R_ptr == nums2.end()) {
+      return;
+    }
+    auto Lend = nums2.end();
+    size_t size = nums1.size();
+    unsigned i = 0;
+    for (unsigned k = 0; k < size && L_ptr != Lend && i != m; k++) {
+      if (*L_ptr <= *R_ptr) {
+        nums1[k] = *L_ptr;
+        L_ptr++;
+      } else {
+        continue;
+      }
+    }
+  }
+
 private:
 };
