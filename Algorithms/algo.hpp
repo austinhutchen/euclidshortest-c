@@ -192,16 +192,6 @@ public:
     }
   }
 
-  void bubsort(vector<int> &unsorted) {
-    for (int i = 0; i < unsorted.size(); i++) {
-      for (int j = i + 1; j < unsorted.size(); j++) {
-        if (unsorted[i] > unsorted[j]) {
-          this->swap(unsorted[i],unsorted[j]);
-        }
-      }
-    }
-  }
-
   vector<int> abs(vector<int> &nums) {
     vector<int> ans;
     for (int i = 0; i < nums.size(); i++) {
@@ -366,12 +356,20 @@ public:
     }
   }
 
-  void swap( char a, char b){
-  char * ptr = &a;
-    char * ptr2 = &b;
-    char temp=b;
-   *ptr2=*ptr;
-    *ptr= temp;
+  void swap( int *a, int *b){
+    int temp=*b;
+   *b=*a;
+    *a= temp;
+  }
+
+    void bubble(vector<int> &unsorted) {
+    for (int i = 0; i < unsorted.size(); i++) {
+      for (int j = i + 1; j < unsorted.size(); j++) {
+        if (unsorted[i] > unsorted[j]) {
+          this->swap(&unsorted[i],&unsorted[j]);
+        }
+      }
+    }
   }
 
 private:
