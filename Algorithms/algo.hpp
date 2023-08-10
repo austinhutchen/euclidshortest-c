@@ -320,7 +320,6 @@ public:
       ans.push(check[i]);
     }
     i = 0;
-
     while (!ans.empty()) {
       if (ans.top() == check[i]) {
         i++;
@@ -332,6 +331,7 @@ public:
     }
     return true;
   }
+
   bool isPalindrome(ListNode *head) {
     if (head == NULL) {
       return true;
