@@ -196,9 +196,7 @@ public:
     for (int i = 0; i < unsorted.size(); i++) {
       for (int j = i + 1; j < unsorted.size(); j++) {
         if (unsorted[i] > unsorted[j]) {
-          char t = unsorted[j];
-          unsorted[j] = unsorted[i];
-          unsorted[i] = t;
+          this->swap(unsorted[i],unsorted[j]);
         }
       }
     }
@@ -366,6 +364,14 @@ public:
         i++;
       }
     }
+  }
+
+  void swap( char a, char b){
+  char * ptr = &a;
+    char * ptr2 = &b;
+    char temp=b;
+   *ptr2=*ptr;
+    *ptr= temp;
   }
 
 private:
