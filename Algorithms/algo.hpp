@@ -392,6 +392,7 @@ public:
     while (!nums.empty()) {
       if (nums.top() == s[i]) {
         i++;
+        nums.pop();
       } else {
         break;
       }
