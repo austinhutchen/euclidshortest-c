@@ -57,17 +57,6 @@ public:
     return index;
   }
 
-  void lowercase(char start) {
-    // convert all characters in c string to lowercasew with pointers;
-    char *p = &start;
-    while (*p != '\0') {
-      if (*p >= 97 && *p <= 122) {
-        *p -= 32;
-      }
-      p++;
-    }
-  }
-
   int removeElement(vector<int> &nums, int val) {
     // bubble up unique integers in numsß using fixed index iterator
     int k = 0;
@@ -354,21 +343,63 @@ public:
         i++;
       }
     }
+    bubble(nums1);
   }
 
-  void swap( int *a, int *b){
-    int temp=*b;
-   *b=*a;
-    *a= temp;
+  void swap(int *a, int *b) {
+    int temp = *b;
+    *b = *a;
+    *a = temp;
   }
 
-    void bubble(vector<int> &unsorted) {
+  void bubble(vector<int> &unsorted) {
     for (int i = 0; i < unsorted.size(); i++) {
       for (int j = i + 1; j < unsorted.size(); j++) {
         if (unsorted[i] > unsorted[j]) {
-          this->swap(&unsorted[i],&unsorted[j]);
+          this->swap(&unsorted[i], &unsorted[j]);
         }
       }
+    }
+  }
+
+  void lowercase(char start) {
+    // convert all characters in c string to lowercasew with pointers;
+    char *p = &start;
+    while (*p != '\0') {
+      if (*p >= 97 && *p <= 122) {
+        *p = tolower(static_cast<unsigned char>(*p));
+      }
+      p++;
+    }
+  }
+
+  bool alphastr(string check) {
+    // does check have all alphanumeric characters?
+    for (int i = 0; i < check.size(); i++) {
+      // check that char falls within range of alphanumeric
+    }
+    return false;
+  }
+
+  bool isPalindrome(string s) {
+    lowercase(s[0]);
+    std::stack<char> nums;
+    int i=0;
+    for (; i < s.size(); i++) {
+      nums.push(s[i]);
+    }
+    i = 0;
+    while (!nums.empty()) {
+      if (nums.top() == s[i]) {
+        i++;
+      } else {
+        break;
+      }
+    }
+    if (nums.empty()) {
+      return true;
+    } else {
+      return 0x0;
     }
   }
 
