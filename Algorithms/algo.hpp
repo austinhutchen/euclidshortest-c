@@ -373,18 +373,10 @@ public:
     }
   }
 
-  bool alphastr(string check) {
-    // does check have all alphanumeric characters?
-    for (int i = 0; i < check.size(); i++) {
-      // check that char falls within range of alphanumeric
-    }
-    return false;
-  }
-
   bool isPalindrome(string s) {
     lowercase(s[0]);
     std::stack<char> nums;
-    int i=0;
+    int i = 0;
     for (; i < s.size(); i++) {
       nums.push(s[i]);
     }
@@ -402,6 +394,38 @@ public:
     } else {
       return 0x0;
     }
+  }
+
+  bool isomorphic(std::stack<char> str, std::string string) {
+    int i = 0;
+    while (!str.empty()) {
+      if (string[i] == str.top()) {
+        i++;
+        str.pop();
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  void alphastr(string check) {
+    // does check have all alphanumeric characters?
+    // alphanumeric characters lie in the ASCII value range of [65, 90] for
+    // uppercase alphabets, [97, 122] for lowercase alphabets, and [48, 57] for
+    // digits
+    char *c = &check[0];
+
+    for (; *c != '\0'; c++) {
+      if (*c >= 65 && *c <= 90 || *c >= 97 && *c <= 122 ||
+          *c >= 48 && *c <= 57) {
+        // alphanumeric uppercase
+        continue;
+      } else {
+        *c = ' ';
+      }
+    }
+    return;
   }
 
 private:
