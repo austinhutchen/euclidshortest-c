@@ -419,8 +419,6 @@ public:
     }
     return isomorphic(nums, s);
   }
+  
 };
 
-private:
-}
-;
