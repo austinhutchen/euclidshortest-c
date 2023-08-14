@@ -367,37 +367,14 @@ public:
     char *p = &start;
     while (*p != '\0') {
       if (*p >= 97 && *p <= 122) {
-        *p = tolower(static_cast<unsigned char>(*p));
+        *p = tolower(*p);
       }
       p++;
     }
   }
 
-  bool isPalindrome(string s) {
-    lowercase(s[0]);
-    std::stack<char> nums;
-    int i = 0;
-    for (; i < s.size(); i++) {
-      nums.push(s[i]);
-    }
-    i = 0;
-    while (!nums.empty()) {
-      if (nums.top() == s[i]) {
-        i++;
-        nums.pop();
-      } else {
-        break;
-      }
-    }
-    if (nums.empty()) {
-      return true;
-    } else {
-      return 0x0;
-    }
-  }
-
   bool isomorphic(std::stack<char> str, std::string string) {
-    int i = 0;
+    uint i = 0;
     while (!str.empty()) {
       if (string[i] == str.top()) {
         i++;
@@ -415,18 +392,35 @@ public:
     // uppercase alphabets, [97, 122] for lowercase alphabets, and [48, 57] for
     // digits
     char *c = &check[0];
-
     for (; *c != '\0'; c++) {
       if (*c >= 65 && *c <= 90 || *c >= 97 && *c <= 122 ||
           *c >= 48 && *c <= 57) {
-        // alphanumeric uppercase
+        // alphanumeric
         continue;
       } else {
+        // will need to be changed to fully remove the nonalphanumeric indices
         *c = ' ';
       }
     }
     return;
   }
 
-private:
+  bool isPalindrome(string s) {
+
+    if (s.size() == 0) {
+      return false;
+    }
+    alphastr(s);
+    s.erase(remove(s.begin(), s.end(), ' '), s.end());
+    transform(s.begin(), s.end(), s.begin(), ::tolower);
+    std::stack<char> nums;
+    for (int i = 0; i < s.size(); i++) {
+      nums.push(s[i]);
+    }
+    return isomorphic(nums, s);
+  }
 };
+
+private:
+}
+;
