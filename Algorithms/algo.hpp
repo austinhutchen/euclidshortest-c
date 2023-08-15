@@ -362,7 +362,7 @@ public:
     }
   }
 
-  void lowercase(char start) {
+  void lowercase(char &start) {
     // convert all characters in c string to lowercasew with pointers;
     char *p = &start;
     while (*p != '\0') {
@@ -372,6 +372,7 @@ public:
       p++;
     }
   }
+
 
   bool isomorphic(std::stack<char> str, std::string string) {
     uint i = 0;
@@ -386,7 +387,7 @@ public:
     return true;
   }
 
-  void alphastr(string check) {
+  void alphastr(string& check) {
     // does check have all alphanumeric characters?
     // alphanumeric characters lie in the ASCII value range of [65, 90] for
     // uppercase alphabets, [97, 122] for lowercase alphabets, and [48, 57] for
@@ -398,7 +399,7 @@ public:
         // alphanumeric
         continue;
       } else {
-        // will need to be changed to fully remove the nonalphanumeric indices
+        // will need to be changed to45t3y fully remove the nonalphanumeric indices
         *c = ' ';
       }
     }
@@ -406,7 +407,6 @@ public:
   }
 
   bool isPalindrome(string s) {
-
     if (s.size() == 0) {
       return false;
     }
@@ -419,6 +419,6 @@ public:
     }
     return isomorphic(nums, s);
   }
-  
+
 };
 
