@@ -413,7 +413,7 @@ public:
     }
     alphastr(s);
     s.erase(remove(s.begin(), s.end(), ' '), s.end());
-    transform(s.begin(), s.end(), s.begin(), ::tolower);
+    lowercase(s[0]);
     std::stack<char> nums;
     for (int i = 0; i < s.size(); i++) {
       nums.push(s[i]);
