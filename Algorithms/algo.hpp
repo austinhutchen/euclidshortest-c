@@ -407,6 +407,7 @@ public:
   }
 
   bool isPalindrome(string s) {
+    // determine if string is a palindrome after removing non alphanumeric characters from str
     if (s.size() == 0) {
       return false;
     }
