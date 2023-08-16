@@ -427,17 +427,15 @@ public:
     if (sz == 1) {
       return nums[0];
     }
-    int counter = 0;
-    for (auto p = nums.begin(); p != nums.end(); p++) {
-      for (auto i = nums.begin(); i != nums.end(); i++) {
+    for (vector<int>::iterator p = nums.begin(); p != nums.end(); p++) {
+      uint counter = 1;
+      for (vector<int>::iterator i = nums.begin(); i != nums.end(); i++) {
         if (*i == *p && p != i) {
           counter++;
         }
       }
-      if (counter > round(sz / 2)) {
+      if (counter > sz / 2) {
         return *p;
-      } else {
-        continue;
       }
     }
     return 0x0;
