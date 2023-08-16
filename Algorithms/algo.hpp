@@ -373,7 +373,6 @@ public:
     }
   }
 
-
   bool isomorphic(std::stack<char> str, std::string string) {
     uint i = 0;
     while (!str.empty()) {
@@ -387,7 +386,7 @@ public:
     return true;
   }
 
-  void alphastr(string& check) {
+  void alphastr(string &check) {
     // does check have all alphanumeric characters?
     // alphanumeric characters lie in the ASCII value range of [65, 90] for
     // uppercase alphabets, [97, 122] for lowercase alphabets, and [48, 57] for
@@ -399,7 +398,8 @@ public:
         // alphanumeric
         continue;
       } else {
-        // will need to be changed to45t3y fully remove the nonalphanumeric indices
+        // will need to be changed to45t3y fully remove the nonalphanumeric
+        // indices
         *c = ' ';
       }
     }
@@ -407,7 +407,8 @@ public:
   }
 
   bool isPalindrome(string s) {
-    // determine if string is a palindrome after removing non alphanumeric characters from str
+    // determine if string is a palindrome after removing non alphanumeric
+    // characters from str
     if (s.size() == 0) {
       return false;
     }
@@ -421,5 +422,24 @@ public:
     return isomorphic(nums, s);
   }
 
+  int majorityElement(vector<int> &nums) {
+    uint sz = nums.size();
+    if (sz == 1) {
+      return nums[0];
+    }
+    int counter = 0;
+    for (auto p = nums.begin(); p != nums.end(); p++) {
+      for (auto i = nums.begin(); i != nums.end(); i++) {
+        if (*i == *p && p != i) {
+          counter++;
+        }
+      }
+      if (counter > round(sz / 2)) {
+        return *p;
+      } else {
+        continue;
+      }
+    }
+    return 0x0;
+  }
 };
-
