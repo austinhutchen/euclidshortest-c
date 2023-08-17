@@ -373,12 +373,12 @@ public:
     }
   }
 
-  bool isomorphic(std::stack<char> str, std::string string) {
+  bool isomorphic(std::stack<char> stck, std::string string) {
     uint i = 0;
-    while (!str.empty()) {
-      if (string[i] == str.top()) {
+    while (!stck.empty()) {
+      if (string[i] == stck.top()) {
         i++;
-        str.pop();
+        stck.pop();
       } else {
         return false;
       }
@@ -439,5 +439,27 @@ public:
       }
     }
     return 0x0;
+  }
+
+  void moveZeroes(vector<int> &nums) {
+    std::queue<int> ordered;
+    for (vector<int>::iterator i = nums.begin(); i != nums.end(); i++) {
+      if (*i == 0) {
+        continue;
+      } else {
+        ordered.push(*i);
+      }
+    }
+    uint sz = ordered.size();
+    uint i = 0;
+    while (!ordered.empty()) {
+      nums[i] = ordered.front();
+      ordered.pop();
+      i++;
+    }
+    for (; i < nums.size(); i++) {
+      nums[i] = 0;
+    }
+    return;
   }
 };
