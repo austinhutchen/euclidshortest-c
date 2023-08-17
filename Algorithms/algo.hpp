@@ -298,13 +298,12 @@ public:
   }
 
   bool isSubsequence(string s, string t) {
+
     if (s.size() == 0) {
       return true;
     }
-    if (t.size() == 0) {
-      return false;
-    }
-    if (s.size() > t.size()) {
+    if (s.size() > t.size() || s != t && s.size() == t.size() ||
+        t.size() == 0) {
       return false;
     }
     std::stack<char> stck;
