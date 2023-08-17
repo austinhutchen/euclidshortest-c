@@ -464,11 +464,14 @@ public:
   }
 
   bool isSubsequence(string s, string t) {
-    if (s.size() > t.size() || s.size() == 0 || t.size() == 0) {
+    if (s.size() == 0 || t.size() == 0) {
+      return true;
+    }
+    if (s.size() > t.size()) {
       return false;
     }
     std::stack<char> stck;
-    for (int i = s.size() - 1; i > 0; i--) {
+    for (int i = s.size() - 1; i >= 0; i--) {
       stck.push(s[i]);
     }
     for (int i = 0; i < t.size(); i++) {
@@ -481,4 +484,5 @@ public:
     }
     return false;
   }
+  
 };
