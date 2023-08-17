@@ -1,16 +1,18 @@
-#include <cstddef>
-#include <cstdint>
-#include <ctime>
 #include <iterator>
 #pragma ONCE
-#include "algo.h"
-#include <chrono>
-#include <cstring>
 #include <iostream>
 #include <queue>
 #include <stack>
 #include <vector>
 using namespace std;
+#define nullptr __nullptr
+struct ListNode {
+  int val;
+  ListNode *next;
+  ListNode() : val(0), next(nullptr) {}
+  ListNode(int x) : val(x), next(nullptr) {}
+  ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
 class Solution {
 public:
   Solution() {}
