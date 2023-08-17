@@ -469,7 +469,7 @@ public:
     }
     std::stack<char> stck;
     for (int i = s.size() - 1; i > 0; i--) {
-      stck.push(t[i]);
+      stck.push(s[i]);
     }
     for (int i = 0; i < t.size(); i++) {
       while (!stck.empty() && stck.top() == t[i]) {
