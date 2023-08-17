@@ -1,3 +1,5 @@
+#include <climits>
+#include <cstdint>
 #include <iterator>
 #pragma ONCE
 #include <iostream>
@@ -488,5 +490,37 @@ public:
         }
       }
     }
+  }
+  string gcdOfStrings(string str1, string str2) {
+    // attempt 2
+    std::queue<string> gcd;
+    if (str1 == str2) {
+      return str1;
+    }
+    for (int i = 0; i < str1.size(); i++) {
+      std::string ans;
+      for (int k = 0; k < str2.size(); k++) {
+        uint j = i;
+        uint m=k;
+        while (str1[j] == str2[m]) {
+          ans += str1[j];
+          j++;
+          m++;
+        }
+        // string is now a common divisor
+        gcd.push(ans);
+      }
+    }
+    int max = INT_MIN;
+    string temp;
+    while (!gcd.empty()) {
+      uint sz = gcd.front().size();
+      if (sz > max) {
+        temp = gcd.front();
+        max = sz;
+      }
+      gcd.pop();
+    }
+    return temp;
   }
 };

@@ -1,7 +1,6 @@
 #include "../Algorithms/algo.hpp"
 #include "../Algorithms/bits.hpp"
 #include <iostream>
-
 using namespace std;
 
 int main(int argc, char **argv) {
