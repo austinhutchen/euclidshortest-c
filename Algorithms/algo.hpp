@@ -462,4 +462,23 @@ public:
     }
     return;
   }
+
+  bool isSubsequence(string s, string t) {
+    if (s.size() > t.size() || s.size() == 0 || t.size() == 0) {
+      return false;
+    }
+    std::stack<char> stck;
+    for (int i = s.size() - 1; i > 0; i--) {
+      stck.push(t[i]);
+    }
+    for (int i = 0; i < t.size(); i++) {
+      while (!stck.empty() && stck.top() == t[i]) {
+        stck.pop();
+      }
+      if (stck.empty()) {
+        return true;
+      }
+    }
+    return false;
+  }
 };
