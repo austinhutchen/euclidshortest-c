@@ -311,7 +311,7 @@ public:
       stck.push(s[i]);
     }
     for (int i = 0; i < t.size(); i++) {
-      while (!stck.empty() && stck.top() == t[i]) {
+      if (!stck.empty() && stck.top() == t[i]) {
         stck.pop();
       }
       if (stck.empty()) {
