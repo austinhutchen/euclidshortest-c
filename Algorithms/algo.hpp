@@ -569,4 +569,42 @@ public:
     }
     return false;
   }
+  bool isPowerOfFour(int n) {
+    if (n == 0) {
+      return false;
+    }
+    if (n == 1) {
+      return true;
+    }
+    float max = pow(n, 0.5);
+    if (n % 4 == 0) {
+      // all powers of 3 are divisible by 3
+      for (int i = 1; i <= max; i++) {
+        if (pow(4, i) == n) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  class NumArray {
+  public:
+    vector<int> ans;
+    NumArray(vector<int> &nums) {
+      for (int i = 0; i < nums.size(); i++) {
+        ans.push_back(nums[i]);
+      }
+    }
+
+    int sumRange(int left, int right) {
+      uint sum = 0;
+      auto p = &ans.at(left);
+      auto end = &ans.at(right);
+      while (p != end) {
+        sum += *p;
+        p++;
+      }
+      return sum;
+    }
+  };
 };
