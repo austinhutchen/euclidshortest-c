@@ -536,9 +536,7 @@ public:
     return true;
   }
 
-  bool isBadVersion( int i){
-    return true;
-  }
+  bool isBadVersion(int i) { return true; }
   int firstBadVersion(int n) {
     if (n == 1)
       return n;
@@ -552,5 +550,23 @@ public:
         low = mid + 1;
     }
     return low;
+  }
+  bool isPowerOfThree(int n) {
+    if (n == 0) {
+      return false;
+    }
+    if (n == 1) {
+      return true;
+    }
+    int max = cbrt(n);
+    if (n % 3 == 0) {
+      // all powers of 3 are divisible by 3
+      for (int i = 1; i <= max; i++) {
+        if (pow(3, i) == n) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 };
