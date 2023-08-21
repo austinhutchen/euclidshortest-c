@@ -501,7 +501,7 @@ public:
       std::string ans;
       for (int k = 0; k < str2.size(); k++) {
         uint j = i;
-        uint m=k;
+        uint m = k;
         while (str1[j] == str2[m]) {
           ans += str1[j];
           j++;
@@ -522,5 +522,17 @@ public:
       gcd.pop();
     }
     return temp;
+  }
+  bool isUgly(int n) {
+    if (n == 0 || n == 1) {
+      return false;
+    }
+    bool ans = n % 2 || n % 3 || n % 5;
+    for (int i = 1; i < n / 2; i++) {
+      if (n % i == 0 && i != 2 && i != 3 && i != 5) {
+        return false;
+      }
+    }
+    return true;
   }
 };
