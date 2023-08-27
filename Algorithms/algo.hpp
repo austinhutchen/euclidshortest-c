@@ -29,6 +29,18 @@ struct TreeNode {
 class Solution {
 public:
   Solution() {}
+  uint32_t reverseBits(uint32_t n) {
+    uint32_t ans;
+    for (int i = 0; i < 32; i++) {
+      ans = ans << 1;
+      bool bit = n & 1;
+      ans = ans | bit;
+      n = n >> 1;
+      // cout << bit << " ";
+    }
+    return ans;
+  }
+
   TreeNode *createNode(int val) { return new TreeNode(val); }
 
   TreeNode *sortedArrayToBST(vector<int> &nums) {
@@ -220,7 +232,7 @@ public:
     *b = *a;
     *a = temp;
   }
-    void swap(char *a, char *b) {
+  void swap(char *a, char *b) {
     int temp = *b;
     *b = *a;
     *a = temp;
@@ -721,6 +733,7 @@ public:
       }
     }
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+      // find where LLA and LLB intersect
       ListNode *t1 = headA;
       ListNode *t2 = headB;
       std::vector<int> sol;
