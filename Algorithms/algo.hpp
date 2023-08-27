@@ -40,7 +40,16 @@ public:
     }
     return ans;
   }
-
+  int hammingWeight(uint32_t n) {
+    int counter = 0;
+    while (n > 0) {
+      if (n & 1) {
+        ++counter;
+      }
+      n = n >> 1;
+    }
+    return counter;
+  }
   TreeNode *createNode(int val) { return new TreeNode(val); }
 
   TreeNode *sortedArrayToBST(vector<int> &nums) {
