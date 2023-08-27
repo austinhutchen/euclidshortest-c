@@ -220,7 +220,11 @@ public:
     *b = *a;
     *a = temp;
   }
-
+    void swap(char *a, char *b) {
+    int temp = *b;
+    *b = *a;
+    *a = temp;
+  }
   void bubble(vector<int> &unsorted) {
     for (int i = 0; i < unsorted.size(); i++) {
       for (int j = i + 1; j < unsorted.size(); j++) {
@@ -515,9 +519,7 @@ public:
     for (int i = 0; i < unsorted.size(); i++) {
       for (int j = i + 1; j < unsorted.size(); j++) {
         if (unsorted[i] > unsorted[j]) {
-          char t = unsorted[j];
-          unsorted[j] = unsorted[i];
-          unsorted[i] = t;
+          swap(&unsorted[i], &unsorted[j]);
         }
       }
     }
@@ -636,6 +638,119 @@ public:
         p++;
       }
       return sum;
+    }
+    /**
+     * Definition for singly-linked list.
+     * struct ListNode {
+     *     int val;
+     *     ListNode *next;
+     *     ListNode(int x) : val(x), next(NULL) {}
+     * };
+     */
+    class Solution {
+    public:
+      int length(ListNode *head) {
+        int len = 0;
+        while (head) {
+          len++;
+          head = head->next;
+        }
+        return len;
+      }
+      int max(unsigned int1, unsigned int2) {
+        if (int1 > int2) {
+          return int1;
+        } else {
+          return int2;
+        }
+      }
+      ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode *t1 = headA;
+        ListNode *t2 = headB;
+        std::vector<int> sol;
+        if (!headA || !headB) {
+          return 0x0;
+        }
+        int len1 = length(t1);
+        int len2 = length(t2);
+        if (max(len1, len2) == len1) {
+          while (len1 > len2) {
+            t1 = t1->next;
+            len1--;
+          }
+        }
+
+        else if (max(len1, len2) == len2) {
+          while (len2 > len1) {
+            t2 = t2->next;
+            len2--;
+          }
+        }
+        while (t1 && t2) {
+          // heads are not synced for search
+          if (t1 == t2) {
+            return t1;
+          }
+          t1 = t1->next;
+          t2 = t2->next;
+        }
+        return 0x0;
+      }
+    }; /**
+        * Definition for singly-linked list.
+        * struct ListNode {
+        *     int val;
+        *     ListNode *next;
+        *     ListNode(int x) : val(x), next(NULL) {}
+        * };
+        */
+
+    int length(ListNode *head) {
+      int len = 0;
+      while (head) {
+        len++;
+        head = head->next;
+      }
+      return len;
+    }
+    int max(unsigned int1, unsigned int2) {
+      if (int1 > int2) {
+        return int1;
+      } else {
+        return int2;
+      }
+    }
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+      ListNode *t1 = headA;
+      ListNode *t2 = headB;
+      std::vector<int> sol;
+      if (!headA || !headB) {
+        return 0x0;
+      }
+      int len1 = length(t1);
+      int len2 = length(t2);
+      if (max(len1, len2) == len1) {
+        while (len1 > len2) {
+          t1 = t1->next;
+          len1--;
+        }
+      }
+
+      else if (max(len1, len2) == len2) {
+        while (len2 > len1) {
+          t2 = t2->next;
+          len2--;
+        }
+      }
+      while (t1 && t2) {
+        // heads are not synced for search
+        if (t1 == t2) {
+          return t1;
+        }
+        t1 = t1->next;
+        t2 = t2->next;
+      }
+      return 0x0;
     }
   };
 };
