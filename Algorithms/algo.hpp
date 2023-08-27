@@ -15,9 +15,38 @@ struct ListNode {
   ListNode(int x) : val(x), next(nullptr) {}
   ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
+struct TreeNode {
+  int val;
+  TreeNode *left;
+  TreeNode *right;
+  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
+};
 class Solution {
 public:
   Solution() {}
+  TreeNode *createNode(int val) { return new TreeNode(val); }
+
+  TreeNode *sortedArrayToBST(vector<int> &nums) {
+
+    // root would be lowest value in entire array
+    if (nums.size() == 0) {
+      return 0x0;
+    }
+    if (nums.size() == 1) {
+      return createNode(nums[0]);
+    } else {
+      // split array into two pieces and create left and right branches
+      vector<int> L(nums.begin(), nums.begin() + nums.size() / 2);
+      vector<int> R(nums.begin() + nums.size() / 2 + 1, nums.end());
+      TreeNode *root = createNode(nums[nums.size() / 2]);
+      root->left = sortedArrayToBST(L);
+      root->right = sortedArrayToBST(R);
+      return root;
+    }
+  }
 
   vector<int> abs(vector<int> &nums) {
     vector<int> ans;
