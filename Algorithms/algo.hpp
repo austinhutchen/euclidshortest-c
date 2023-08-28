@@ -29,6 +29,7 @@ struct TreeNode {
 class Solution {
 public:
   Solution() {}
+
   uint32_t reverseBits(uint32_t n) {
     uint32_t ans;
     for (int i = 0; i < 32; i++) {
@@ -40,6 +41,7 @@ public:
     }
     return ans;
   }
+
   int hammingWeight(uint32_t n) {
     int counter = 0;
     while (n > 0) {
@@ -50,6 +52,23 @@ public:
     }
     return counter;
   }
+  ListNode *reverseList(ListNode *head) {
+    if (head == NULL || head->next == NULL) {
+      return head;
+    }
+    ListNode *curr, *prev, *next = 0x0;
+    curr = head;
+    prev = nullptr;
+    while (curr != nullptr) {
+      next = curr->next;
+      curr->next = prev;
+      prev = curr;
+      curr = next;
+    }
+
+    return prev;
+  }
+
   TreeNode *createNode(int val) { return new TreeNode(val); }
 
   TreeNode *sortedArrayToBST(vector<int> &nums) {
