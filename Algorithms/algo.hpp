@@ -42,7 +42,7 @@ public:
     return ans;
   }
 
-  int hammingWeight(uint32_t n) {
+  int hammingWeight(unsigned n) {
     int counter = 0;
     while (n > 0) {
       if (n & 1) {
@@ -52,6 +52,14 @@ public:
     }
     return counter;
   }
+  vector<int> countBits(int n) {
+    vector<int> ans(n + 1);
+    for (int i = 0; i < ans.size(); i++) {
+      ans[i] = hammingWeight(i);
+    }
+    return ans;
+  }
+
   ListNode *reverseList(ListNode *head) {
     if (head == NULL || head->next == NULL) {
       return head;
