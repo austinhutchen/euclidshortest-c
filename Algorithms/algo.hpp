@@ -3,9 +3,9 @@
 #include <iterator>
 #pragma ONCE
 #include <iostream>
+#include <numeric>
 #include <queue>
 #include <stack>
-#include <numeric>
 #include <vector>
 using namespace std;
 #define nullptr __nullptr
@@ -31,18 +31,6 @@ class Solution {
 public:
   Solution() {}
 
-  uint32_t reverseBits(uint32_t n) {
-    uint32_t ans;
-    for (int i = 0; i < 32; i++) {
-      ans = ans << 1;
-      bool bit = n & 1;
-      ans = ans | bit;
-      n = n >> 1;
-      // cout << bit << " ";
-    }
-    return ans;
-  }
-
   int hammingWeight(unsigned n) {
     int counter = 0;
     while (n > 0) {
@@ -53,6 +41,7 @@ public:
     }
     return counter;
   }
+
   vector<int> countBits(int n) {
     vector<int> ans(n + 1);
     std::iota(std::begin(ans), std::end(ans), 0);
@@ -60,6 +49,18 @@ public:
     vector<int>::iterator end = ans.end();
     for (; p != end; p++) {
       *p = hammingWeight(*p);
+    }
+    return ans;
+  }
+
+  uint32_t reverseBits(uint32_t n) {
+    uint32_t ans;
+    for (int i = 0; i < 32; i++) {
+      ans = ans << 1;
+      bool bit = n & 1;
+      ans = ans | bit;
+      n = n >> 1;
+      // cout << bit << " ";
     }
     return ans;
   }
