@@ -5,6 +5,7 @@
 #include <iostream>
 #include <queue>
 #include <stack>
+#include <numeric>
 #include <vector>
 using namespace std;
 #define nullptr __nullptr
@@ -54,8 +55,11 @@ public:
   }
   vector<int> countBits(int n) {
     vector<int> ans(n + 1);
-    for (int i = 0; i < ans.size(); i++) {
-      ans[i] = hammingWeight(i);
+    std::iota(std::begin(ans), std::end(ans), 0);
+    vector<int>::iterator p = ans.begin();
+    vector<int>::iterator end = ans.end();
+    for (; p != end; p++) {
+      *p = hammingWeight(*p);
     }
     return ans;
   }
