@@ -30,6 +30,25 @@ struct TreeNode {
 class Solution {
 public:
   Solution() {}
+  bool searchKeyHelper(TreeNode *currNode, int targetSum, int prevsum) {
+    if (currNode == NULL)
+      return false;
+
+    if (currNode->val + prevsum == targetSum)
+      return currNode;
+
+    if (currNode->val + prevsum > targetSum)
+      return searchKeyHelper(currNode->left, targetSum, prevsum);
+
+    return searchKeyHelper(currNode->right, targetSum, prevsum);
+  }
+  
+  bool hasPathSum(TreeNode *root, int targetSum) {
+    // does the tree have a path that sums to targetSum?
+    unsigned prevsum = 0;
+    TreeNode *p = root;
+    return searchKeyHelper(root, targetSum, prevsum);
+  }
 
   bool searchMatrix(vector<vector<int> > &matrix, int target) {
     int n = matrix.size();
