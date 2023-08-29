@@ -32,7 +32,7 @@ public:
   Solution() {}
   bool searchKeyHelper(TreeNode *currNode, int targetSum, int prevsum) {
     if (currNode == NULL)
-      return false;
+      return 0;
 
     if (currNode->val + prevsum == targetSum)
       return currNode;
@@ -42,9 +42,7 @@ public:
 
     return searchKeyHelper(currNode->right, targetSum, prevsum);
   }
-  
   bool hasPathSum(TreeNode *root, int targetSum) {
-    // does the tree have a path that sums to targetSum?
     unsigned prevsum = 0;
     TreeNode *p = root;
     return searchKeyHelper(root, targetSum, prevsum);
