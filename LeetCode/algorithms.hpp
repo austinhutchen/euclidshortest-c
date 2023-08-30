@@ -33,11 +33,11 @@ public:
   bool searchKeyHelper(TreeNode *currNode, int targetSum, int *prevsum) {
     if (currNode == NULL)
       return 0;
-
-    if (*prevsum += currNode->val == targetSum)
+    *prevsum += currNode->val;
+    if (*prevsum == targetSum)
       return true;
 
-    if (*prevsum += currNode->val > targetSum) {
+    if (*prevsum > targetSum) {
       return searchKeyHelper(currNode->left, targetSum, prevsum);
     }
 
