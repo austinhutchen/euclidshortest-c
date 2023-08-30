@@ -34,10 +34,10 @@ public:
     if (currNode == NULL)
       return 0;
 
-    if (currNode->val + *prevsum == targetSum)
+    if (*prevsum += currNode->val == targetSum)
       return true;
 
-    if (currNode->val + *prevsum > targetSum) {
+    if (*prevsum += currNode->val > targetSum) {
       return searchKeyHelper(currNode->left, targetSum, prevsum);
     }
 
