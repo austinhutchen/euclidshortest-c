@@ -31,13 +31,17 @@ class Solution {
 public:
   Solution() {}
   bool searchKeyHelper(TreeNode *currNode, int targetSum, int *prevsum) {
-    if (currNode == NULL)
+    if (currNode == NULL) {
       return 0;
+    }
+
     *prevsum += currNode->val;
-    if (*prevsum == targetSum)
+    if (*prevsum == targetSum) {
       return true;
+    }
 
     if (*prevsum > targetSum) {
+
       return searchKeyHelper(currNode->left, targetSum, prevsum);
     }
 
