@@ -30,7 +30,7 @@ struct TreeNode {
 class Solution {
 public:
   Solution() {}
-  bool searchKeyHelper(TreeNode *currNode, int targetSum, int *prevsum) {
+  bool sumtree(TreeNode *currNode, int targetSum, int *prevsum) {
     if (currNode == NULL) {
       return 0;
     }
@@ -41,15 +41,14 @@ public:
     }
 
     if (*prevsum > targetSum) {
-
-      return searchKeyHelper(currNode->left, targetSum, prevsum);
+      return sumtree(currNode->left, targetSum, prevsum);
     }
 
-    return searchKeyHelper(currNode->right, targetSum, prevsum);
+    return sumtree(currNode->right, targetSum, prevsum);
   }
   bool hasPathSum(TreeNode *root, int targetSum) {
     int val = 0;
-    return searchKeyHelper(root, targetSum, &val);
+    return sumtree(root, targetSum, &val);
   }
 
   bool searchMatrix(vector<vector<int> > &matrix, int target) {
