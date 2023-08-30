@@ -281,6 +281,25 @@ public:
     }
     return strPal(result);
   }
+  int removeElement(vector<int> &nums, int val) {
+    // bubble up unique integers in numsß using fixed index iterator
+    int k = 0;
+    if (nums.size() == 0) {
+      return 0;
+    }
+    int sz = nums.size();
+    for (int i = 0; i < sz; i++) {
+      if (nums[i] != val) {
+        // bubble up the old values to end of array
+        nums[k] = nums[i];
+        k++;
+      } else {
+        nums[sz - 1] = nums[i];
+        nums[i] = 0;
+      }
+    }
+    return k;
+  }
 
   void merge(vector<int> &nums1, int m, vector<int> &nums2, int n) {
     // merge sorted array
