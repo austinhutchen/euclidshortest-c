@@ -41,7 +41,8 @@ public:
     }
 
     if (*prevsum > targetSum) {
-      return sumtree(currNode->left, targetSum, prevsum);
+      // recur up for another sum
+    return false;
     }
 
     return sumtree(currNode->right, targetSum, prevsum);
@@ -513,7 +514,7 @@ public:
     return index;
   }
 
-  int removeElement(vector<int> &nums, int val) {
+  int removeElementconst(vector<int> &nums, int val) {
     // bubble up unique integers in numsß using fixed index iterator
     int k = 0;
     for (int i = 0; i < nums.size(); i++) {
