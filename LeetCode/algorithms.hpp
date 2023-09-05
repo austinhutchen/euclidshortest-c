@@ -41,7 +41,7 @@ public:
     }
 
     if (*prevsum > targetSum) {
-      // recur up for another sum
+      // recur up for another sum, checkingz
     return false;
     }
 
