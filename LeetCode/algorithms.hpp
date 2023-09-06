@@ -86,12 +86,27 @@ public:
     // determine closest pair of points in plane represented by distance
     // function
     // sort nums
-    std::sort(nums.begin(),nums.end());
-    for(int i=0;i<nums.size();i++){
+    twoDimBubbleSort(nums, 0, 0);
+    // should now be sorted in terms of euclidian plane
+    for(int i =0;i<nums.size();i++){
       
     }
   }
 
+void twoDimBubbleSort(vector<vector<int> > nums, int row, int col) {
+  // REALLY inefficient but is easy to read
+    for (int i = 0; i < (row * col); ++i) {
+        for (int j = 0; j < (row * col) - 1; ++j) {
+            int cr = j / col; // current row
+            int cc = j % col; // current column
+            int nr = (j + 1) / col; // next item row
+            int nc = (j + 1) % col; // next item column
+
+            if (nums[cr][cc] > nums[nr][nc])
+                swap(&nums[cr][cc], &nums[nr][nc]); // any way you want to swap variables
+        }
+    }
+}
   Solution() {}
   bool sumtree(TreeNode *currNode, int targetSum, int *prevsum) {
     if (currNode == NULL) {
