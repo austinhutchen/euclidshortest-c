@@ -47,7 +47,7 @@ public:
     int index = 1;
     ifstream f;
     f.open(in);
-    vector<vector<double> > *nums = new vector<vector<double> >();
+    vector<vector<double> > nums ;
     string line;
     if (f.good()) {
       while (getline(f, line)) {
@@ -61,7 +61,7 @@ public:
           found++;
           index++;
         }
-        nums->push_back(coords);
+        nums.push_back(coords);
       }
     }
   }
