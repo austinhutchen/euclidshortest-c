@@ -42,7 +42,7 @@ public:
 
     if (*prevsum > targetSum) {
       // recur up for another sum, checkingz
-    return false;
+      return false;
     }
 
     return sumtree(currNode->right, targetSum, prevsum);
@@ -406,23 +406,50 @@ public:
     return isomorphic(nums, s);
   }
 
+  bool ismajority(int check, int sz, vector<int> nums) {
+    int counter = 0;
+    for (int *p = &nums[0]; p != &nums[nums.size() - 1]; p++) {
+      if (*p == check && p != &check) {
+        counter++;
+      } else if (counter > sz / 2) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   int majorityElement(vector<int> &nums) {
     uint sz = nums.size();
     if (sz == 1) {
       return nums[0];
     }
-    for (vector<int>::iterator p = nums.begin(); p != nums.end(); p++) {
-      uint counter = 1;
-      for (vector<int>::iterator i = nums.begin(); i != nums.end(); i++) {
-        if (*i == *p && p != i) {
-          counter++;
-        }
-      }
-      if (counter > sz / 2) {
-        return *p;
+    if (sz % 2 != 0) {
+      if (ismajority(nums[0], sz, nums)) {
+        return nums[0];
+      } else {
+        nums.erase(nums.begin());
+        sz--;
       }
     }
-    return 0x0;
+    if (sz % 2 == 0) {
+      vector<int>::iterator x2 = nums.begin();
+      std::advance(x2, nums.size() / 2 - 1);
+      vector<int>::iterator x1 = nums.begin();
+      int *R = &nums[nums.size() / 2];
+      int *L = &nums[0];
+      std::stack<int> stck;
+      for (; R != &nums[nums.size()] && L != &nums[nums.size() / 2];
+           R++ && L++) {
+        if (*R == *L) {
+          stck.push(*R);
+        }
+      }
+      if (stck.size() > sz / 4) {
+        return stck.top();
+      }
+    }
+
+    return 0;
   }
 
   void moveZeroes(vector<int> &nums) {
