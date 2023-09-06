@@ -63,11 +63,21 @@ public:
         }
         nums.push_back(coords);
       }
+
     }
   }
 
+float distance(float x1, float y1, float x2, float y2)
+{
+  // x1 nd x2 should be assigned to respective coordinates being tested
+    // Calculating distance
+    return sqrt(pow(x2 - x1, 2)
+                + pow(y2 - y1, 2) * 1.0);
+}
+  
   int closestpair(vector<vector<int> > nums) {
-    // determine closest pair of points in plane represented by vector
+    // determine closest pair of points in plane represented by distance function
+    
   }
 
   Solution() {}
@@ -93,7 +103,7 @@ public:
     return sumtree(root, targetSum, &val);
   }
 
-  bool searchMatrix(vector<vector<int>> &matrix, int target) {
+  bool searchMatrix(vector<vector<int> > &matrix, int target) {
     int n = matrix.size();
     int m = matrix[0].size();
     int low = 0, high = n * m - 1, mid, row, col;
@@ -485,8 +495,17 @@ public:
           stck.push(*R);
         }
       }
-      if (stck.size() > sz / 4) {
-        return stck.top();
+      if (stck.size() > sz / 2) {
+        while(stck.top()){
+          char a =stck.top();
+          if(ismajority(a,  sz, nums)){
+            return a;
+          }
+          else{
+          stck.pop();
+          }
+
+        }
       }
     }
 
