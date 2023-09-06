@@ -1,5 +1,6 @@
 #include <climits>
 #include <cstdint>
+#include <cstdlib>
 #include <iterator>
 #pragma ONCE
 #include <fstream>
@@ -40,44 +41,55 @@ public:
     }
     return nullptr;
   }
-
+  struct coordinate {
+      float x1;
+      float x2;
+      void setcoords(double x1, double x2){
+      this->x1=x1;
+      this->x2=x2;
+      }
+      float distance(float y1, float y2) {
+        // Calculating distance from y1 and y2
+        return sqrt(pow(this->x2 - this->x1, 2) + pow(y2 - y1, 2) * 1.0);
+      }
+    };
   // for CECS
   int numparse(string in) {
     // start AFTER first bracket
-    int index = 1;
+  
+     int index = 1;
     ifstream f;
+    const char *ind;
     f.open(in);
-    vector<vector<double> > nums ;
+    vector<vector<double> > nums;
     string line;
+    coordinate* current = new coordinate();
     if (f.good()) {
       while (getline(f, line)) {
-        vector<double> coords;
-        string need;
-        // main opening bracket
-        // look for two closing brackets on close
-        char *found = find(line, '{', index);
-        while (*found != '}') {
-          coords.push_back((double)*found);
-          found++;
-          index++;
+        string flt;
+        for (char *i = &line[0]; *i != ','; i++) {
+          while (int(*i) <= 9) {
+            
+            // float read
+            flt += *i;
+            i++;
+          }
+          if ((int(*i)) > 9) {
+            //nums.push_back(strtod(&flt[0], &flt));
+          }
         }
-        nums.push_back(coords);
       }
-
     }
   }
 
-float distance(float x1, float y1, float x2, float y2)
-{
-  // x1 nd x2 should be assigned to respective coordinates being tested
-    // Calculating distance
-    return sqrt(pow(x2 - x1, 2)
-                + pow(y2 - y1, 2) * 1.0);
-}
-  
   int closestpair(vector<vector<int> > nums) {
-    // determine closest pair of points in plane represented by distance function
-    
+    // determine closest pair of points in plane represented by distance
+    // function
+    // sort nums
+    std::sort(nums.begin(),nums.end());
+    for(int i=0;i<nums.size();i++){
+      
+    }
   }
 
   Solution() {}
@@ -496,15 +508,13 @@ float distance(float x1, float y1, float x2, float y2)
         }
       }
       if (stck.size() > sz / 2) {
-        while(stck.top()){
-          char a =stck.top();
-          if(ismajority(a,  sz, nums)){
+        while (stck.top()) {
+          char a = stck.top();
+          if (ismajority(a, sz, nums)) {
             return a;
+          } else {
+            stck.pop();
           }
-          else{
-          stck.pop();
-          }
-
         }
       }
     }
