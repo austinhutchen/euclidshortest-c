@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <iterator>
 #pragma ONCE
+#include <fstream>
 #include <iostream>
 #include <numeric>
 #include <queue>
@@ -29,6 +30,46 @@ struct TreeNode {
 
 class Solution {
 public:
+  char *find(string str, char a, int start) {
+    char *t = &str[start];
+    while (t != '\0') {
+      if (*t == a) {
+        return t;
+      }
+      t++;
+    }
+    return nullptr;
+  }
+
+  // for CECS
+  int numparse(string in) {
+    // start AFTER first bracket
+    int index = 1;
+    ifstream f;
+    f.open(in);
+    vector<vector<double> > *nums = new vector<vector<double> >();
+    string line;
+    if (f.good()) {
+      while (getline(f, line)) {
+        vector<double> coords;
+        string need;
+        // main opening bracket
+        // look for two closing brackets on close
+        char *found = find(line, '{', index);
+        while (*found != '}') {
+          coords.push_back((double)*found);
+          found++;
+          index++;
+        }
+        nums->push_back(coords);
+      }
+    }
+  }
+
+  int closestpair(vector<vector<int> > nums) {
+    // determine closest pair of points in plane represented by vector
+  }
+
   Solution() {}
   bool sumtree(TreeNode *currNode, int targetSum, int *prevsum) {
     if (currNode == NULL) {
@@ -52,7 +93,7 @@ public:
     return sumtree(root, targetSum, &val);
   }
 
-  bool searchMatrix(vector<vector<int> > &matrix, int target) {
+  bool searchMatrix(vector<vector<int>> &matrix, int target) {
     int n = matrix.size();
     int m = matrix[0].size();
     int low = 0, high = n * m - 1, mid, row, col;
