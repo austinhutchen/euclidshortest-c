@@ -82,10 +82,8 @@ public:
     // sort nums
     twoDimBubbleSort(nums, 0, 0);
     // should now be sorted in terms of euclidian plane
-    for (int i = 0; i < nums.size(); i++) {
-
-
-    }
+    // split nums into left and right halves using algorithm
+    vector<vector<double> > L,R;
     return vals;
   }
   void swap(double *a, double *b) {
