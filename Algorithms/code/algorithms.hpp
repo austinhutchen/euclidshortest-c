@@ -36,16 +36,15 @@ public:
   }
 
   // for CECS
-  int numparse(string in) {
+  double *numparse(string in) {
     // start AFTER first bracket
 
     int index = 1;
     ifstream f;
     const char *ind;
     f.open(in);
-    vector<vector<double> >  nums;
+    vector<vector<double> > nums;
     string line;
-    coordinate *current = new coordinate(0, 0);
     if (f.good()) {
       vector<double> buffarr;
       while (getline(f, line)) {
@@ -68,19 +67,24 @@ public:
         }
         nums.push_back(buffarr);
       }
+      // parse the vector here for an implementation of
       return closestpair(nums);
     }
-    return -1;
+    return 0x0;
   }
 
-  int closestpair(vector<vector<double> > nums) {
+  double *closestpair(vector<vector<double> > nums) {
     // determine closest pair of points in plane represented by distance
     // function
+    double vals[] = {0, 0};
+    coordinate *current = new coordinate(0, 0);
+    // return the pair as nums
     // sort nums
     twoDimBubbleSort(nums, 0, 0);
     // should now be sorted in terms of euclidian plane
     for (int i = 0; i < nums.size(); i++) {
     }
+    return vals;
   }
   void swap(double *a, double *b) {
     int temp = *b;
