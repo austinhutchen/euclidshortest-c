@@ -34,44 +34,54 @@ public:
     }
     return nullptr;
   }
-
-  // for CECS
-  double *numparse(string in) {
-    // start AFTER first bracket
-
-    int index = 1;
-    ifstream f;
-    const char *ind;
-    f.open(in);
-    vector<vector<double> > nums;
-    string line;
-    if (f.good()) {
-      vector<double> buffarr;
-      while (getline(f, line)) {
-        buffarr.clear();
-        string flt;
-        for (char *i = &line[0]; *i != '#'; i++) {
-
-          while (char(*i) <= 9) {
-
-            // float read
-            flt += *i;
-            i++;
-          }
-          const char *buffer = flt.c_str();
-          if ((int(*i)) > 9) {
-            double answer = atof(buffer);
-            // nums.push_back(strtod(&flt[0], &flt));
-            buffarr.push_back(answer);
-          }
-        }
-        nums.push_back(buffarr);
+  void printvec(vector<vector<double> > nums) {
+    for (int i = 0; i < nums.size(); i++) {
+      for (int k = 0; k < nums[i].size(); k++) {
+        cout << nums[i][k] << endl;
       }
-      // parse the vector here for an implementation of
-      return closestpair(nums);
     }
-    return 0x0;
   }
+    // for CECS
+    double *numparse(string in) {
+      // start AFTER first bracket
+
+      int index = 1;
+      ifstream f;
+      const char *ind;
+      f.open(in);
+      vector<vector<double> > nums;
+      string line;
+      if (f.good()) {
+        vector<double> buffarr;
+        while (getline(f, line)) {
+          buffarr.clear();
+          string flt;
+          for (char *i = &line[0]; *i != '#'; i++) {
+
+            while (char(*i) <= 9) {
+
+              // float read
+              flt += *i;
+              i++;
+            }
+            const char *buffer = flt.c_str();
+            if ((int(*i))  > 9 && int(--*i)<9) {
+              double answer = atof(buffer);
+              // nums.push_back(strtod(&flt[0], &flt));
+              buffarr.push_back(answer);
+            }
+          }
+          nums.push_back(buffarr);
+        }
+        // parse the vector here for              an implementation of
+      }
+      int *p2 = NULL;
+      printvec(nums);
+      //asdfsd
+      return {0};
+    }
+  
+  
 
   double *closestpair(vector<vector<double> > nums) {
     // determine closest pair of points in plane represented by distance
@@ -83,7 +93,7 @@ public:
     twoDimBubbleSort(nums, 0, 0);
     // should now be sorted in terms of euclidian plane
     // split nums into left and right halves using algorithm
-    vector<vector<double> > L,R (nums.size()/2);
+    vector<vector<double> > L, R(nums.size() / 2);
 
     return vals;
   }
@@ -101,9 +111,11 @@ public:
         int nr = (j + 1) / col; // next item row
         int nc = (j + 1) % col; // next item column
 
-        if (nums[cr][cc] > nums[nr][nc])
-          this->swap(&nums[cr][cc],
+        if (nums[cr][cc] > nums[nr][nc]){
+                     swap(&nums[cr][cc],
                      &nums[nr][nc]); // any way you want to swap variables
+        }
+       
       }
     }
   }
