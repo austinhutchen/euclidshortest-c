@@ -1,3 +1,4 @@
+#include <cstdlib>
 #pragma ONCE
 #include <fstream>
 #include <iostream>
@@ -7,6 +8,10 @@ using namespace std;
 struct coordinate {
   float x1;
   float x2;
+  coordinate(int x3, int x4) {
+    x1 = x3;
+    x2 = x4;
+  }
   void setcoords(double x1, double x2) {
     this->x1 = x1;
     this->x2 = x2;
@@ -40,26 +45,34 @@ public:
     f.open(in);
     vector<vector<double> > nums;
     string line;
-    coordinate *current = new coordinate();
+    coordinate *current = new coordinate(0, 0);
     if (f.good()) {
+      vector<double> buffarr;
       while (getline(f, line)) {
+        buffarr.clear();
         string flt;
-        for (char *i = &line[0]; *i != ','; i++) {
+        for (char *i = &line[0]; *i != '#'; i++) {
+
           while (int(*i) <= 9) {
 
             // float read
             flt += *i;
             i++;
           }
+          const char *buffer = flt.c_str();
           if ((int(*i)) > 9) {
+            double answer = atof(buffer);
             // nums.push_back(strtod(&flt[0], &flt));
+            buffarr.push_back(answer);
           }
         }
+        nums.push_back(buffarr);
       }
     }
+    return closestpair(nums);
   }
 
-  int closestpair(vector<vector<int> > nums) {
+  int closestpair(vector<vector<double> > nums) {
     // determine closest pair of points in plane represented by distance
     // function
     // sort nums
@@ -68,12 +81,12 @@ public:
     for (int i = 0; i < nums.size(); i++) {
     }
   }
-  void swap(int *a, int *b) {
+  void swap(double *a, double *b) {
     int temp = *b;
     *b = *a;
     *a = temp;
   }
-  void twoDimBubbleSort(vector<vector<int> > nums, int row, int col) {
+  void twoDimBubbleSort(vector<vector<double>  > nums, int row, int col) {
     // REALLY inefficient but is easy to read
     for (int i = 0; i < (row * col); ++i) {
       for (int j = 0; j < (row * col) - 1; ++j) {
