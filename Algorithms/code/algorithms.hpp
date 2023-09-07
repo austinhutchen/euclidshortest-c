@@ -43,7 +43,7 @@ public:
     ifstream f;
     const char *ind;
     f.open(in);
-    vector<vector<double> > nums;
+    vector<vector<double> >  nums;
     string line;
     coordinate *current = new coordinate(0, 0);
     if (f.good()) {
@@ -68,8 +68,9 @@ public:
         }
         nums.push_back(buffarr);
       }
+      return closestpair(nums);
     }
-    return closestpair(nums);
+    return -1;
   }
 
   int closestpair(vector<vector<double> > nums) {
@@ -86,7 +87,7 @@ public:
     *b = *a;
     *a = temp;
   }
-  void twoDimBubbleSort(vector<vector<double>  > nums, int row, int col) {
+  void twoDimBubbleSort(vector<vector<double> > nums, int row, int col) {
     // REALLY inefficient but is easy to read
     for (int i = 0; i < (row * col); ++i) {
       for (int j = 0; j < (row * col) - 1; ++j) {
