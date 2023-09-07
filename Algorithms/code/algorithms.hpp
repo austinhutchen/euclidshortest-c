@@ -52,7 +52,7 @@ public:
         string flt;
         for (char *i = &line[0]; *i != '#'; i++) {
 
-          while (int(*i) <= 9) {
+          while (char(*i) <= 9) {
 
             // float read
             flt += *i;
@@ -83,6 +83,8 @@ public:
     twoDimBubbleSort(nums, 0, 0);
     // should now be sorted in terms of euclidian plane
     for (int i = 0; i < nums.size(); i++) {
+
+
     }
     return vals;
   }
