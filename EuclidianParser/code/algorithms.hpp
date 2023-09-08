@@ -8,7 +8,6 @@ using namespace std;
 
 struct coordinate {
   // x is a vector in R^2
-
   coordinate(const char *x1) {
     x[0] = atof(x1);
     f1 = true;
@@ -186,6 +185,7 @@ public:
     // temp is used to measure distance from our current coordinate within nums
     // temp is FIXED and thus only other coordinates will be returned
     coordinate *temp;
+    #pragma omp parallel for
     for (int i = nums.size() / 2; i < nums.size(); i++) {
       int k = 0;
       temp = nums[i][k];
