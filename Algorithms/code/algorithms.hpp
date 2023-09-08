@@ -37,8 +37,7 @@ public:
   void printvec(vector<vector<double> > nums) {
     for (int i = 0; i < nums.size(); i++) {
       for (int k = 0; k < nums[i].size(); k++) {
-
-        cout << nums[i][k] ;
+        cout << nums[i][k] << " , " ;
       }
       cout << endl;
     }
@@ -59,11 +58,11 @@ public:
         vector<double> buffarr;
         while (getline(f, line)) {
           if(line!=""){
- buffarr.clear();
+          buffarr.clear();
           string flt;
           for (char *i = &line[0]; *i != '#'; i++) {
-
-            while (char(*i) <= 9) {
+            
+            while (char(*i) <= 57 && char(*i)>47) {
 
               // float read
               flt += *i;
@@ -71,7 +70,7 @@ public:
             }
             const char *buffer = flt.c_str();
 
-            if ((char(*i))  > 9 ) {
+            if (char(*i)>57 || char(*i)<47 ) {
 
               double answer = atof(buffer);
               // nums.push_back(strtod(&flt[0], &flt));
@@ -83,6 +82,7 @@ public:
         // parse the vector here for              an implementation of
       }
       int *p2 = NULL;
+      twoDimBubbleSort(nums, 0, 0);
       printvec(nums);
       //asdfsd
 
@@ -99,7 +99,6 @@ public:
     coordinate *current = new coordinate(0, 0);
     // return the pair as nums
     // sort nums
-    twoDimBubbleSort(nums, 0, 0);
     // should now be sorted in terms of euclidian plane
     // split nums into left and right halves using algorithm
 
