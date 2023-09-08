@@ -5,7 +5,7 @@ int main(int argc, char **argv){
 char* filename= argv[1];
 PlaneArithmetic *inst = new PlaneArithmetic();
 
-  inst->numparse("1.txt");
+  inst->numparse("in.txt");
   
 // good parse 
 
