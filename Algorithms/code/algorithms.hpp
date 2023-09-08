@@ -112,7 +112,7 @@ public:
           counter = 0;
           for (char *i = &line[1]; *i != '#'; i++) {
             string flt;
-            while (*i <= '9' && *i >= '0') {
+            while (*i <= '9' && *i >= '0'|| *i=='.') {
               // float read
               flt += char(*i);
               i++;
@@ -145,10 +145,8 @@ public:
               break;
             }
             case ' ': {
+              // ignore whitespaces
               break;
-            }
-            case '.': {
-              cout << "DECIMAL FOUND" << endl;
             }
             default: {
               cout << *i << "  {IN BUFFER} " << endl;
