@@ -37,12 +37,15 @@ public:
   void printvec(vector<vector<double> > nums) {
     for (int i = 0; i < nums.size(); i++) {
       for (int k = 0; k < nums[i].size(); k++) {
-        cout << nums[i][k] << endl;
+
+        cout << nums[i][k] ;
       }
+      cout << endl;
     }
   }
     // for CECS
-    double *numparse(string in) {
+    void numparse(string in) {
+
       // start AFTER first bracket
 
       int index = 1;
@@ -51,10 +54,12 @@ public:
       f.open(in);
       vector<vector<double> > nums;
       string line;
-      if (f.good()) {
+
+      if (!f.fail()) {
         vector<double> buffarr;
         while (getline(f, line)) {
-          buffarr.clear();
+          if(line!=""){
+ buffarr.clear();
           string flt;
           for (char *i = &line[0]; *i != '#'; i++) {
 
@@ -65,7 +70,9 @@ public:
               i++;
             }
             const char *buffer = flt.c_str();
-            if ((int(*i))  > 9 && int(--*i)<9) {
+
+            if ((char(*i))  > 9 ) {
+
               double answer = atof(buffer);
               // nums.push_back(strtod(&flt[0], &flt));
               buffarr.push_back(answer);
@@ -78,22 +85,30 @@ public:
       int *p2 = NULL;
       printvec(nums);
       //asdfsd
-      return {0};
+
+      return ;
+
     }
   
-  
+    }
 
   double *closestpair(vector<vector<double> > nums) {
     // determine closest pair of points in plane represented by distance
     // function
-    double vals[] = {0, 0};
+    double vals[] = {0.0, 0.0};
     coordinate *current = new coordinate(0, 0);
     // return the pair as nums
     // sort nums
     twoDimBubbleSort(nums, 0, 0);
     // should now be sorted in terms of euclidian plane
     // split nums into left and right halves using algorithm
-    vector<vector<double> > L, R(nums.size() / 2);
+
+    vector<double> f(nums[0].size());
+    for(int i=0;i<nums.size();i++){
+      vector<double> left = nums[0]; //closest points to assigned midpoint in left line
+       vector<double> right= nums[nums.size()] ; //closest points to assigned midpoint in right line
+              vector<double> mid= nums[nums.size()/2] ; 
+    }
 
     return vals;
   }
@@ -120,3 +135,5 @@ public:
     }
   }
 };
+
+
