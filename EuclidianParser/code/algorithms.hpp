@@ -169,11 +169,11 @@ public:
       }
     }
   }
-  int min = 0;
+  double min = 0.0;
   std::stack<coordinate *> MINSTACK;
   // in progress
-  void MIN(coordinate *coord, double val, std::stack<coordinate *> stck) {
-    if (val > min) {
+  void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
+    if (distance < min) {
       stck.push(coord);
     }
   }
@@ -190,7 +190,7 @@ public:
       temp = nums[i][k];
       // find a way to implement minimum function
       if (temp->distance(nums[i][k + 1]) > min) {
-        min = temp->distance(nums[i][k + 1]);
+        MIN(nums[i][k + 1], temp->distance(nums[i][k + 1]), MINSTACK);
       }
 
       k++;
