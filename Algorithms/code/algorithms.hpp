@@ -6,19 +6,18 @@
 using namespace std;
 
 struct coordinate {
-  float x1;
-  float x2;
-  coordinate(int x3, int x4) {
-    x1 = x3;
-    x2 = x4;
+  // x is a vector in R^2
+  double x[2] ={0.0,0.0};
+  coordinate(double x3, double x4) {
+    setcoords(x3, x4);
   }
   void setcoords(double x1, double x2) {
-    this->x1 = x1;
-    this->x2 = x2;
+    this->x[0] = x1;
+    this->x[1]= x2;
   }
   float distance(float y1, float y2) {
     // Calculating distance from y1 and y2
-    return sqrt(pow(this->x2 - this->x1, 2) + pow(y2 - y1, 2) * 1.0);
+    return sqrt(pow(this->x[1] - this->x[0], 2) + pow(y2 - y1, 2) * 1.0);
   }
 };
 // Assignment 1
