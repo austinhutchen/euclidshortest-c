@@ -190,7 +190,7 @@ public:
       int k = 0;
       temp = nums[i][k];
       // find a way to implement minimum function
-      if (temp->distance(nums[i][k + 1]) > min) {
+      if (temp->distance(nums[i][k + 1]) < min) {
         MIN(nums[i][k + 1], temp->distance(nums[i][k + 1]), MINSTACK);
       }
 
@@ -200,7 +200,7 @@ public:
       int k = 0;
       temp = nums[j][k];
       // find a way to implement minimum function
-      if (temp->distance(nums[j][k + 1]) > min) {
+      if (temp->distance(nums[j][k + 1])< min) {
         MIN(nums[j][k + 1], temp->distance(nums[j][k + 1]), MINSTACK);
       }
     }
