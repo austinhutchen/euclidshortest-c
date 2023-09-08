@@ -78,7 +78,7 @@ public:
           }
           nums.push_back(buffarr);
         }
-        // parse the vector here for              an implementation of
+        // float parse
       }
       int *p2 = NULL;
       twoDimBubbleSort(nums, 0, 0);
