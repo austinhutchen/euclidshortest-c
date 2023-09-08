@@ -7,7 +7,7 @@ PlaneArithmetic *inst = new PlaneArithmetic();
 
   inst->numparse("1.txt");
   
-
+// good parse 
 
 
 
