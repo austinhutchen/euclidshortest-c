@@ -25,9 +25,9 @@ struct coordinate {
     }
     return false;
   }
-  float distance(float y1, float y2) {
-    // Calculating distance from y1 and y2
-    return sqrt(pow(this->x[1] - this->x[0], 2) + pow(y2 - y1, 2) * 1.0);
+  double distance(coordinate *c ) {
+    // Calculating distance from the coordinate at c
+    return sqrt(pow(this->x[1] - this->x[0], 2) + pow(c->x0() - c->x1(), 2) * 1.0);
   }
   void printcoords(void) {
     cout << "( " << *x << " , " << *(x + 8) << " )" << endl;
@@ -169,10 +169,28 @@ public:
     }
   }
 
-  double *closestpair(vector<coordinate **> nums) {
-    // determine closest pair of points in plane represented by distance
-    // function
-    double temp[] = {0.0, 0.0};
+
+
+void MIN(double val){
+
+}
+  coordinate *closestpair(vector<coordinate **> nums) {
+    // temp is used to measure distance from our current coordinate within nums
+    coordinate* temp;
+    for(int i=nums.size()/2;i<nums.size();i++){
+    int k=0;
+    temp=nums[i][k];
+    // find a way to implement minimum function
+    if(MIN(temp->distance(nums[i][k+1]))){
+     
+    }
+    
+
+    k++;
+    }
+    for(int j=nums.size()/2;j>0;j--){
+          
+    }
     // temp used for nearest pair of points
     // return the pair as nums
     // sort nums
