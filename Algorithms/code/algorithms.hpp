@@ -8,22 +8,14 @@ using namespace std;
 
 struct coordinate {
   // x is a vector in R^2
+
+  coordinate(const char *x1) {
+    x[0] = atof(x1);
+    f1 = true;
+  }
   void setcoord(const char *x1) {
-    if(x1==nullptr){
-      return;
-    }
-    if (!f1 && !f2) {
-      x[0] = atof(x1);
-      f1 = true;
-    }
-    if (!f1 && f2) {
-      x[0] = atof(x1);
-      f1 = true;
-    }
-    if (!f2 && f1) {
-      x[1] = atof(x1);
-      f2 = true;
-    }
+    x[1] = atof(x1);
+    f2 = true;
   }
   double x0(void) { return x[0]; }
   double x1(void) { return x[1]; }
@@ -103,7 +95,6 @@ public:
 
     // start AFTER first bracket
 
-    int index = 1;
     ifstream f;
     const char *ind;
     f.open(in);
@@ -113,12 +104,13 @@ public:
     // array of "window" of coordinate pointers being compared at a time
     // max of 10 pairs of points per line.
     coordinate *points[10] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
+    unsigned x = 0;
     unsigned counter;
     if (!f.fail()) {
       while (getline(f, line)) {
         if (!line.empty()) {
           counter = 0;
-          for (char *i = &line[index]; *i != '#'; i++) {
+          for (char *i = &line[1]; *i != '#'; i++) {
             string flt;
 
             while (*i <= 57 && *i > 47) {
@@ -127,24 +119,32 @@ public:
               flt += char(*i);
               i++;
             }
-
+            coordinate *p = 0x0;
             switch (*i) {
-            case 123: {
+            case '{': {
               // open bracket
-              points[counter] = new coordinate();
+              cout << "starting bracket reached ..";
+              break;
             }
             // close bracket;
             case ',': {
-              // comma 
+              // comma
               const char *buffer = flt.c_str();
-              points[counter]->setcoord(buffer);
-              flt="";
+              p = new coordinate(buffer);
+              flt = "";
+              break;
             }
-            case 125:{
-              if (points[counter]->isfull()) {
+            case '}': {
+              const char *buffer = flt.c_str();
+              p->setcoord(buffer);
+              if (p->isfull()) {
                 counter++;
               }
+              flt = "";
               // closing bracket
+              points[x] = p;
+              x++;
+              break;
             }
               // will insert newline char at end of string
               // double answer = atof(buffer);
