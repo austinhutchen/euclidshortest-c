@@ -3,7 +3,7 @@
 #pragma ONCE
 #include <fstream>
 #include <iostream>
-
+#include <stack>
 using namespace std;
 
 struct coordinate {
@@ -169,16 +169,28 @@ public:
       }
     }
   }
+  int min = 0;
+  std::stack<coordinate *> MINSTACK;
   // in progress
-  void MIN(double val) {}
+  void MIN(coordinate *coord, double val, std::stack<coordinate *> stck) {
+    if (val > min) {
+      stck.push(coord);
+    }
+  }
+  // vector forms the rows of the two-dimensional euclidian plane
+  // coordinate ** represents a single line in the euclidian plane from left to
+  // right to look up or down, observe the respective row of nums and compare to
+  // MIN()
   coordinate *closestpair(vector<coordinate **> nums) {
     // temp is used to measure distance from our current coordinate within nums
+    // temp is FIXED and thus only other coordinates will be returned
     coordinate *temp;
     for (int i = nums.size() / 2; i < nums.size(); i++) {
       int k = 0;
       temp = nums[i][k];
       // find a way to implement minimum function
-      if (MIN(temp->distance(nums[i][k + 1]))) {
+      if (temp->distance(nums[i][k + 1]) > min) {
+        min = temp->distance(nums[i][k + 1]);
       }
 
       k++;
@@ -187,7 +199,8 @@ public:
       int k = 0;
       temp = nums[j][k];
       // find a way to implement minimum function
-      if (MIN(temp->distance(nums[j][k + 1]))) {
+      if (temp->distance(nums[j][k + 1]) > min) {
+        MIN(nums[j][k + 1], temp->distance(nums[j][k + 1]), MINSTACK);
       }
     }
     // temp used for nearest pair of points
@@ -195,6 +208,6 @@ public:
     // sort nums
     // should now be sorted in terms of euclidian plane
     // split nums into left and right halves using algorithm
-    return temp;
+    return MINSTACK.top();
   }
 };
