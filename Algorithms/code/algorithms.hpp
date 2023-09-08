@@ -39,8 +39,8 @@ public:
       for (int k = 0; k < nums[i].size(); k++) {
         cout << nums[i][k] << " , " ;
       }
-      cout << endl;
     }
+    cout <<endl;
   }
     // for CECS
     void numparse(string in) {
@@ -59,23 +59,22 @@ public:
         while (getline(f, line)) {
           if(line!=""){
           buffarr.clear();
-          string flt;
+          int count=0;
           for (char *i = &line[0]; *i != '#'; i++) {
-            
-            while (char(*i) <= 57 && char(*i)>47) {
+                  string flt;
+            while (*i <= 57 && *i>47) {
 
               // float read
-              flt += *i;
+              flt += char(*i);
               i++;
             }
-            const char *buffer = flt.c_str();
-
-            if (char(*i)>57 || char(*i)<47 ) {
-
+            
+          
+              const char *buffer = flt.c_str();
               double answer = atof(buffer);
               // nums.push_back(strtod(&flt[0], &flt));
               buffarr.push_back(answer);
-            }
+            
           }
           nums.push_back(buffarr);
         }
@@ -85,7 +84,6 @@ public:
       twoDimBubbleSort(nums, 0, 0);
       printvec(nums);
       //asdfsd
-
       return ;
 
     }
