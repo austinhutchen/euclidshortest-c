@@ -82,7 +82,7 @@ public:
         int nr = (j + 1) / col; // next item row
         int nc = (j + 1) % col; // next item column
 
-        if (nums[cr][cc]->x0() > nums[nr][nc]->x0()) {
+        if (nums[cr][cc]->x0() >= nums[nr][nc]->x0() && nums[cr][cc]->x1() > nums[nr][nc]->x1() ) {
           swap(&nums[cr][cc],
                &nums[nr][nc]); // any way you want to swap variables
         }
@@ -169,6 +169,7 @@ public:
       }
     }
   }
+
   double min = 0.0;
   std::stack<coordinate *> MINSTACK;
   // in progress
