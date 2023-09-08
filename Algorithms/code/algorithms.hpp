@@ -112,9 +112,7 @@ public:
           counter = 0;
           for (char *i = &line[1]; *i != '#'; i++) {
             string flt;
-
             while (*i <= 57 && *i > 47) {
-
               // float read
               flt += char(*i);
               i++;
@@ -123,7 +121,7 @@ public:
             switch (*i) {
             case '{': {
               // open bracket
-              cout << "starting bracket reached ..";
+              cout << "starting bracket reached .."<<endl;
               break;
             }
             // close bracket;
@@ -144,6 +142,16 @@ public:
               // closing bracket
               points[x] = p;
               x++;
+              break;
+            }
+            case ' ':{
+              break;
+            }
+            case '.':{
+            cout << "DECIMAL FOUND" <<endl;
+            }
+            default:{
+              cout << *i << "  {IN BUFFER} " <<endl;
               break;
             }
               // will insert newline char at end of string
