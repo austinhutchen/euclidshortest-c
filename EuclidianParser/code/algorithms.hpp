@@ -12,7 +12,14 @@ struct coordinate {
     x[0] = atof(x1);
     f1 = true;
   }
-  void setcoord(const char *x1) {
+  coordinate(){
+
+  }
+  void setcoord1(const char *x1) {
+    x[0] = atof(x1);
+    f1 = true;
+  }
+  void setcoord2(const char *x1) {
     x[1] = atof(x1);
     f2 = true;
   }
@@ -88,6 +95,25 @@ public:
       }
     }
   }
+   void alphastr(string &check) {
+    // does check have all alphanumeric characters?
+    // alphanumeric characters lie in the ASCII value range of [65, 90] for
+    // uppercase alphabets, [97, 122] for lowercase alphabets, and [48, 57] for
+    // digits
+    char *c = &check[0];
+    for (; *c != '\0'; c++) {
+      if (*c >= 65 && *c <= 90 || *c >= 97 && *c <= 122 ||
+          *c >= 48 && *c <= 57) {
+        // alphanumeric
+        continue;
+      } else {
+        // will need to be changed to45t3y fully remove the nonalphanumeric
+        // indices
+        *c = ' ';
+      }
+    }
+    return;
+  }
   // END HELPERS
   //  - -- - --- -- - - - - - - -- - -------------------->               FOR
   //  CECS            < ------ - - - - - - - - - -- - - - - -- - - -
@@ -110,39 +136,46 @@ public:
       while (getline(f, line)) {
         if (!line.empty()) {
           counter = 0;
-          for (char *i = &line[1]; *i != '#'; i++) {
+                  coordinate *p = 0x0;
+          for (char *i = &line[0]; *i != '#'; i++) {
             string flt;
+              
             while (*i <= '9' && *i >= '0' || *i == '.') {
               // float read
               flt += char(*i);
               i++;
             }
-            coordinate *p = 0x0;
             switch (*i) {
             case '{': {
               // open bracket
               cout << "starting bracket reached .." << endl;
+              p= new coordinate();
               break;
             }
             // close bracket;
             case ',': {
               // comma
+              alphastr(flt);
               const char *buffer = flt.c_str();
-              p = new coordinate(buffer);
+              p->setcoord1(buffer);
               flt = "";
               break;
             }
             case '}': {
+              alphastr(flt);
               const char *buffer = flt.c_str();
-              p->setcoord(buffer);
-              if (p->isfull()) {
+              // buffer is too big
+              p->setcoord2(buffer);
+               if(p->isfull())
+               {
                 counter++;
-              }
-              flt = "";
+                flt = "";
               // closing bracket
               points[x] = p;
               x++;
               break;
+              };
+             
             }
             case ' ': {
               // ignore whitespaces

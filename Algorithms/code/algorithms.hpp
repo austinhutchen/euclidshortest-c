@@ -9,13 +9,10 @@ using namespace std;
 struct coordinate {
   // x is a vector in R^2
 
-  coordinate(const char *x1) {
-    x[0] = atof(x1);
-    f1 = true;
-  }
-  void setcoord(const char *x1) {
-    x[1] = atof(x1);
-    f2 = true;
+  void setcoord(string x1, string x2) {
+    x[0] = stod(x1);
+    x[1] = stod(x2);
+    f2 = f1 = true;
   }
   double x0(void) { return x[0]; }
   double x1(void) { return x[1]; }
@@ -88,7 +85,7 @@ public:
       }
     }
   }
-    void numparse(string in) {
+  void numparse(string in) {
     // start AFTER first bracket
     ifstream f;
     const char *ind;
@@ -102,41 +99,45 @@ public:
     unsigned x = 0;
     unsigned counter;
     if (!f.fail()) {
+      coordinate *p = 0x0;
+
       while (getline(f, line)) {
         if (!line.empty()) {
           counter = 0;
-          for (char *i = &line[2]; *i != '#'; i++) {
-            string flt;
-            while (*i <= '9' && *i >= '0'|| *i=='.') {
-              // float read
-              flt += char(*i);
-              i++;
-            }
-            coordinate *p = 0x0;
+          for (char *i = &line[0]; *i != '#'; i++) {
+            p = new coordinate();
+            string flt1;
+            string flt2;
             switch (*i) {
             case '{': {
               // open bracket
               cout << "starting bracket reached .." << endl;
+              i++;
+              while (*i <= '9' && *i >= '0' || *i == '.') {
+                // float read
+                flt1 += char(*i);
+                i++;
+              }
               break;
             }
             // close bracket;
             case ',': {
               // comma
-              const char *buffer = flt.c_str();
-              p = new coordinate(buffer);
-              flt = "";
+              i++;
+              // flt1 set;
+              while (*i <= '9' && *i >= '0' || *i == '.') {
+                // float read
+                flt2 += char(*i);
+                i++;
+              }
+              p->setcoord(flt1, flt2);
+              p->printcoords();
+              flt2 = flt1 = "";
+              points[x] = p;
+              x++;
               break;
             }
             case '}': {
-              const char *buffer = flt.c_str();
-              p->setcoord(buffer);
-              if (p->isfull()) {
-                counter++;
-              }
-              flt = "";
-              // closing bracket
-              points[x] = p;
-              x++;
               break;
             }
             case ' ': {
@@ -162,8 +163,10 @@ public:
         return;
       }
     }
-    if(f.fail()){
-      cout << "ERROR reading from file. Please check your spelling and placement of filename within this directory." <<endl;
+    if (f.fail()) {
+      cout << "ERROR reading from file. Please check your spelling and "
+              "placement of filename within this directory."
+           << endl;
       return;
     }
   }
