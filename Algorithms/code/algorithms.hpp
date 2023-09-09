@@ -85,6 +85,25 @@ public:
       }
     }
   }
+  void alphastr(string &check) {
+    // does check have all alphanumeric characters?
+    // alphanumeric characters lie in the ASCII value range of [65, 90] for
+    // uppercase alphabets, [97, 122] for lowercase alphabets, and [48, 57] for
+    // digits
+    char *c = &check[0];
+    for (; *c != '\0'; c++) {
+      if (*c >= 65 && *c <= 90 || *c >= 97 && *c <= 122 ||
+          *c >= 48 && *c <= 57) {
+        // alphanumeric
+        continue;
+      } else {
+        // will need to be changed to45t3y fully remove the nonalphanumeric
+        // indices
+        *c = ' ';
+      }
+    }
+    return;
+  }
   void numparse(string in) {
     // start AFTER first bracket
     ifstream f;
@@ -105,17 +124,17 @@ public:
         if (!line.empty()) {
           counter = 0;
           for (char *i = &line[0]; *i != '#'; i++) {
-            p = new coordinate();
             string flt1;
             string flt2;
             switch (*i) {
             case '{': {
               // open bracket
               cout << "starting bracket reached .." << endl;
+              p = new coordinate();
               i++;
               while (*i <= '9' && *i >= '0' || *i == '.') {
                 // float read
-                flt1 += char(*i);
+                flt1.push_back(char(*i));
                 i++;
               }
               break;
@@ -127,7 +146,7 @@ public:
               // flt1 set;
               while (*i <= '9' && *i >= '0' || *i == '.') {
                 // float read
-                flt2 += char(*i);
+                flt2.push_back(char(*i));
                 i++;
               }
               p->setcoord(flt1, flt2);
@@ -145,7 +164,7 @@ public:
               break;
             }
             default: {
-              cout << *i << "  {IN BUFFER} " << endl;
+              cout << *i << " ";
               break;
             }
               // will insert newline char at end of string

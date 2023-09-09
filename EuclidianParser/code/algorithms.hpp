@@ -8,20 +8,10 @@ using namespace std;
 
 struct coordinate {
   // x is a vector in R^2
-  coordinate(const char *x1) {
-    x[0] = atof(x1);
-    f1 = true;
-  }
-  coordinate(){
-
-  }
-  void setcoord1(const char *x1) {
-    x[0] = atof(x1);
-    f1 = true;
-  }
-  void setcoord2(const char *x1) {
-    x[1] = atof(x1);
-    f2 = true;
+  void setcoord(string x1, string x2) {
+    x[0] = stod(x1);
+    x[1] = stod(x2);
+    f2 = f1 = true;
   }
   double x0(void) { return x[0]; }
   double x1(void) { return x[1]; }
@@ -88,14 +78,15 @@ public:
         int nr = (j + 1) / col; // next item row
         int nc = (j + 1) % col; // next item column
 
-        if (nums[cr][cc]->x0() >= nums[nr][nc]->x0() && nums[cr][cc]->x1() > nums[nr][nc]->x1() ) {
+        if (nums[cr][cc]->x0() >= nums[nr][nc]->x0() &&
+            nums[cr][cc]->x1() > nums[nr][nc]->x1()) {
           swap(&nums[cr][cc],
                &nums[nr][nc]); // any way you want to swap variables
         }
       }
     }
   }
-   void alphastr(string &check) {
+  void alphastr(string &check) {
     // does check have all alphanumeric characters?
     // alphanumeric characters lie in the ASCII value range of [65, 90] for
     // uppercase alphabets, [97, 122] for lowercase alphabets, and [48, 57] for
@@ -114,13 +105,12 @@ public:
     }
     return;
   }
+
   // END HELPERS
   //  - -- - --- -- - - - - - - -- - -------------------->               FOR
   //  CECS            < ------ - - - - - - - - - -- - - - - -- - - -
   void numparse(string in) {
-
     // start AFTER first bracket
-
     ifstream f;
     const char *ind;
     f.open(in);
@@ -133,56 +123,53 @@ public:
     unsigned x = 0;
     unsigned counter;
     if (!f.fail()) {
+      coordinate *p = 0x0;
+
       while (getline(f, line)) {
         if (!line.empty()) {
           counter = 0;
-                  coordinate *p = 0x0;
           for (char *i = &line[0]; *i != '#'; i++) {
-            string flt;
-              
-            while (*i <= '9' && *i >= '0' || *i == '.') {
-              // float read
-              flt += char(*i);
-              i++;
-            }
+            string flt1;
+            string flt2;
             switch (*i) {
             case '{': {
               // open bracket
               cout << "starting bracket reached .." << endl;
-              p= new coordinate();
+              p = new coordinate();
+              i++;
+              while (*i <= '9' && *i >= '0' || *i == '.') {
+                // float read
+                flt1.push_back(char(*i));
+                i++;
+              }
               break;
             }
             // close bracket;
             case ',': {
               // comma
-              alphastr(flt);
-              const char *buffer = flt.c_str();
-              p->setcoord1(buffer);
-              flt = "";
-              break;
-            }
-            case '}': {
-              alphastr(flt);
-              const char *buffer = flt.c_str();
-              // buffer is too big
-              p->setcoord2(buffer);
-               if(p->isfull())
-               {
-                counter++;
-                flt = "";
-              // closing bracket
+              i++;
+              // flt1 set;
+              while (*i <= '9' && *i >= '0' || *i == '.') {
+                // float read
+                flt2.push_back(char(*i));
+                i++;
+              }
+              p->setcoord(flt1, flt2);
+              p->printcoords();
+              flt2 = flt1 = "";
               points[x] = p;
               x++;
               break;
-              };
-             
+            }
+            case '}': {
+              break;
             }
             case ' ': {
               // ignore whitespaces
               break;
             }
             default: {
-              cout << *i << "  {IN BUFFER} " << endl;
+              cout << *i << " ";
               break;
             }
               // will insert newline char at end of string
@@ -199,6 +186,12 @@ public:
         // asdfsd
         return;
       }
+    }
+    if (f.fail()) {
+      cout << "ERROR reading from file. Please check your spelling and "
+              "placement of filename within this directory."
+           << endl;
+      return;
     }
   }
 
@@ -218,7 +211,7 @@ public:
     // temp is used to measure distance from our current coordinate within nums
     // temp is FIXED and thus only other coordinates will be returned
     coordinate *temp;
-    #pragma omp parallel for
+#pragma omp parallel for
     for (int i = nums.size() / 2; i < nums.size(); i++) {
       int k = 0;
       temp = nums[i][k];
@@ -233,7 +226,7 @@ public:
       int k = 0;
       temp = nums[j][k];
       // find a way to implement minimum function
-      if (temp->distance(nums[j][k + 1])< min) {
+      if (temp->distance(nums[j][k + 1]) < min) {
         MIN(nums[j][k + 1], temp->distance(nums[j][k + 1]), MINSTACK);
       }
     }
