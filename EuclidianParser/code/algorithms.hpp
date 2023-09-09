@@ -8,9 +8,9 @@ using namespace std;
 
 struct coordinate {
   // x is a vector in R^2
-  coordinate(string x1) { *x = stod(x1); }
-  void setcoord(string x2) {
 
+  void setcoord(string x1, string x2) {
+    *x = stod(x1);
     *(x + 8) = stod(x2);
     f2 = f1 = true;
   }
@@ -128,27 +128,24 @@ public:
     unsigned x = 0;
     unsigned counter;
     if (!f.fail()) {
-      coordinate *p = 0x0;
 
       while (getline(f, line)) {
         if (!line.empty()) {
           x = 0;
-          for (char *i = &line[0]; *i != '#'; i++) {
+          for (char *i = &line[1]; *i != '#'; i++) {
             string flt1;
             string flt2;
             switch (*i) {
             case '{': {
               // open bracket
-
+              points[x] = new coordinate();
               cout << "starting bracket reached .." << endl;
-              p->printcoords();
               i++;
               while ((*i <= '9' && *i >= '0') || *i == '.') {
                 // float read
-                flt1.push_back(char(*i));
+                flt1.push_back(*i);
                 i++;
               }
-              points[x] = new coordinate(flt1);
               break;
             }
             // close bracket;
@@ -158,10 +155,10 @@ public:
               // flt1 set;
               while (*i <= '9' && *i >= '0' || *i == '.') {
                 // float read
-                flt2.push_back(char(*i));
+                flt2.push_back(*i);
                 i++;
               }
-              points[x]->setcoord(flt2);
+              points[x]->setcoord(flt1,flt2);
               flt1.clear();
               flt2.clear();
               x++;
