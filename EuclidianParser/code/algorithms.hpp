@@ -8,9 +8,10 @@ using namespace std;
 
 struct coordinate {
   // x is a vector in R^2
-  void setcoord(string x1, string x2) {
-    x[0] = stod(x1);
-    x[1] = stod(x2);
+  coordinate(string x1) { *x = stod(x1); }
+  void setcoord(string x2) {
+
+    *(x + 8) = stod(x2);
     f2 = f1 = true;
   }
   double x0(void) { return x[0]; }
@@ -27,12 +28,17 @@ struct coordinate {
                 pow(c->x0() - c->x1(), 2) * 1.0);
   }
   void printcoords(void) {
-    cout << "( " << *x << " , " << *(x + 8) << " )" << endl;
+    if (*x!=0.0) {
+      cout << "( " << *x;
+    }
+    if (*(x + 8)!=0.0) {
+      cout << " , " << *(x + 8) << " )" << endl;
+    }
   }
 
 private:
   bool f1, f2;
-  double x[2];
+  double x[2]={0.0,0.0};
   size_t size;
 };
 // Assignment 1
@@ -112,7 +118,6 @@ public:
   void numparse(string in) {
     // start AFTER first bracket
     ifstream f;
-    const char *ind;
     f.open(in);
     // vector of rows of arrays of max size 20 representing coordinates
     vector<coordinate **> nums;
@@ -127,21 +132,23 @@ public:
 
       while (getline(f, line)) {
         if (!line.empty()) {
-          counter = 0;
+          x = 0;
           for (char *i = &line[0]; *i != '#'; i++) {
             string flt1;
             string flt2;
             switch (*i) {
             case '{': {
               // open bracket
+
               cout << "starting bracket reached .." << endl;
-              p = new coordinate();
+              p->printcoords();
               i++;
-              while (*i <= '9' && *i >= '0' || *i == '.') {
+              while ((*i <= '9' && *i >= '0') || *i == '.') {
                 // float read
                 flt1.push_back(char(*i));
                 i++;
               }
+              points[x] = new coordinate(flt1);
               break;
             }
             // close bracket;
@@ -154,10 +161,9 @@ public:
                 flt2.push_back(char(*i));
                 i++;
               }
-              p->setcoord(flt1, flt2);
-              p->printcoords();
-              flt2 = flt1 = "";
-              points[x] = p;
+              points[x]->setcoord(flt2);
+              flt1.clear();
+              flt2.clear();
               x++;
               break;
             }
@@ -177,6 +183,11 @@ public:
               //  temp.push_back(buffer)
               // each point in array represents a pair of coordinates
             }
+            for (int i = 0; i < 10; i++) {
+              points[i]->printcoords();
+              cout << " ";
+            }
+            cout << endl;
             // nums.push_back(points);
             nums.push_back(points);
           }
