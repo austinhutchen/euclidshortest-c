@@ -124,14 +124,13 @@ public:
     string line;
     // array of "window" of coordinate pointers being compared at a time
     // max of 10 pairs of points per line.
-    coordinate *points[10] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
     unsigned x = 0;
     unsigned counter;
     if (!f.fail()) {
-
       while (getline(f, line)) {
+            coordinate *points[15] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
         if (!line.empty()) {
-          x = 0;
+          coordinate *p = points[0];
           for (char *i = &line[1]; *i != '#'; i++) {
             string flt1;
             string flt2;
@@ -158,10 +157,10 @@ public:
                 flt2.push_back(*i);
                 i++;
               }
-              points[x]->setcoord(flt1,flt2);
+              p->setcoord(flt1,flt2);
               flt1.clear();
               flt2.clear();
-              x++;
+              p++;
               break;
             }
             case '}': {
