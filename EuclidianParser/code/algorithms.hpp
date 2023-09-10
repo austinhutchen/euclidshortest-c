@@ -1,6 +1,5 @@
 #include <cstdlib>
 #include <string>
-#include <sys/_types/_size_t.h>
 #pragma ONCE
 #include <fstream>
 #include <iostream>
@@ -108,8 +107,8 @@ public:
   double numparse(string line, char start) {
     string ans;
 
-    char *p = &line[line.find(start)];
-    while ((*p <= '9' && *p >= '0' || *p == '.')) {
+    char *p = &line[line.find(start) + 1];
+    while ((*p <= '9' && *p >= '0') || *p == '.') {
       ans += *p;
       p++;
     }
@@ -133,11 +132,11 @@ public:
     if (!f.fail()) {
       unsigned x = 0;
       coordinate *points[16] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
-                                  0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
+                                0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
       while (getline(f, line)) {
         if (!line.empty()) {
           // 9 is first number
-          char *i = &line[line.find(line, '{')];
+          char *i = &line[0];
           while (*i != ';') {
             switch (*i) {
             case '{': {
@@ -188,7 +187,9 @@ public:
       }
 
       if (f.fail()) {
-        cout << "ERROR reading from file. Please check your spelling and placement of filename within this directory."<< endl;
+        cout << "ERROR reading from file. Please check your spelling and "
+                "placement of filename within this directory."
+             << endl;
         return;
       }
     }
