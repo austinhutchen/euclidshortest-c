@@ -105,13 +105,17 @@ public:
   }
 
   double numparse(string line, char start) {
-    string ans;
+    string ans = string();
 
     char *p = &line[line.find(start) + 1];
+    if (*p == ' ') {
+      p++;
+    }
     while ((*p <= '9' && *p >= '0') || *p == '.') {
       ans += *p;
       p++;
     }
+
     return stod(ans);
   }
 
@@ -143,11 +147,11 @@ public:
               // open bracket
               // flt1 set;
               cout << "starting bracket reached .." << endl;
-              i++;
               points[x] = new coordinate();
-              points[x]->setcoord(numparse(line, '}'), numparse(line, ','));
+              points[x]->setcoord(numparse(line, '{'), numparse(line, ','));
               points[x]->printcoords();
               x++;
+              i++;
               break;
             }
             // close bracket;
