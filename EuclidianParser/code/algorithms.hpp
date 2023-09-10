@@ -11,7 +11,7 @@ class coordinate {
   public:
   // x is a vector in R^2
   coordinate() {
-    x = new double[16]();
+    x = new double[2]();
     *x = *(x + 8) = 0.0;
   }
   void setcoord(double x1, double x2) {
