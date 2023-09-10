@@ -61,29 +61,9 @@ public:
     }
     cout << endl;
   }
-  void swap(coordinate **a, coordinate **b) {
-    coordinate *temp = *b;
-    *b = *a;
-    *a = temp;
-  }
-  // adjust for sorting by coordinates
-  void twoDimBubbleSort(vector<coordinate **> nums, int row, int col) {
-    // REALLY inefficient but is easy to read
-    for (int i = 0; i < (row * col); ++i) {
-      for (int j = 0; j < (row * col) - 1; ++j) {
-        int cr = j / col;       // current row
-        int cc = j % col;       // current column
-        int nr = (j + 1) / col; // next item row
-        int nc = (j + 1) % col; // next item column
 
-        if (nums[cr][cc]->x0() >= nums[nr][nc]->x0() &&
-            nums[cr][cc]->x1() > nums[nr][nc]->x1()) {
-          swap(&nums[cr][cc],
-               &nums[nr][nc]); // any way you want to swap variables
-        }
-      }
-    }
-  }
+  // adjust for sorting by coordinates
+
   void alphastr(string &check) {
     // does check have all alphanumeric characters?
     // alphanumeric characters lie in the ASCII value range of [65, 90] for
@@ -122,7 +102,7 @@ public:
   // END HELPERS
   //  - -- - --- -- - - - - - - -- - -------------------->               FOR
   //  CECS            < ------ - - - - - - - - - -- - - - - -- - - -
-  void filein(string in) {
+  coordinate **filein(string in) {
     // start AFTER first bracket
     ifstream f;
     f.open(in);
@@ -137,11 +117,11 @@ public:
       unsigned x = 0;
       coordinate *points[16] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
                                 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
-      while (getline(f, line,'\n')) {
+      while (getline(f, line, '\n')) {
         if (!line.empty()) {
           // 9 is first number
           char *i = &line[0];
-          while (*i != ';') {
+          while (*i != ';' && x < 16) {
             switch (*i) {
             case '{': {
               // open bracket
@@ -176,63 +156,21 @@ public:
             // nums.push_back(points);
             i++;
           }
-    
+
           cout << endl;
           nums.push_back(points);
           // float parse
         }
         // asdfsd
       }
-        printvec(nums);
       if (f.fail()) {
         cout << "ERROR reading from file. Please check your spelling and "
                 "placement of filename within this directory."
              << endl;
-        return;
+        return 0x0;
       }
+      return points;
     }
-  }
-
-  double min = 0.0;
-  std::stack<coordinate *> MINSTACK;
-  // in progress
-  void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
-    if (distance < min) {
-      stck.push(coord);
-    }
-  }
-  // vector forms the rows of the two-dimensional euclidian plane
-  // coordinate ** represents a single line in the euclidian plane from left to
-  // right to look up or down, observe the respective row of nums and compare to
-  // MIN()
-  coordinate *closestpair(vector<coordinate **> nums) {
-    // temp is used to measure distance from our current coordinate within nums
-    // temp is FIXED and thus only other coordinates will be returned
-    coordinate *temp;
-#pragma omp parallel for
-    for (int i = nums.size() / 2; i < nums.size(); i++) {
-      int k = 0;
-      temp = nums[i][k];
-      // find a way to implement minimum function
-      if (temp->distance(nums[i][k + 1]) < min) {
-        MIN(nums[i][k + 1], temp->distance(nums[i][k + 1]), MINSTACK);
-      }
-
-      k++;
-    }
-    for (int j = nums.size() / 2; j > 0; j--) {
-      int k = 0;
-      temp = nums[j][k];
-      // find a way to implement minimum function
-      if (temp->distance(nums[j][k + 1]) < min) {
-        MIN(nums[j][k + 1], temp->distance(nums[j][k + 1]), MINSTACK);
-      }
-    }
-    // temp used for nearest pair of points
-    // return the pair as nums
-    // sort nums
-    // should now be sorted in terms of euclidian plane
-    // split nums into left and right halves using algorithm
-    return MINSTACK.top();
+    return 0x0;
   }
 };
