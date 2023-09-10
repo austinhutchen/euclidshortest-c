@@ -158,19 +158,16 @@ public:
           }
 
           cout << endl;
-          nums.push_back(points);
           // float parse
         }
         // asdfsd
       }
-      if (f.fail()) {
-        cout << "ERROR reading from file. Please check your spelling and "
-                "placement of filename within this directory."
-             << endl;
-        return 0x0;
-      }
       return points;
+    } else {
+      cout << "ERROR reading from file. Please check your spelling and "
+              "placement of filename within this directory."
+           << endl;
+      return 0x0;
     }
-    return 0x0;
   }
 };

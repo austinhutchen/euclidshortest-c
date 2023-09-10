@@ -2,12 +2,12 @@
 #include "./code/EuclidianArithmetic.hpp"
 
 double minim = 0.0;
-void swap(coordinate **a, coordinate **b) {
-  coordinate *temp = *b;
+void swap(coordinate *a, coordinate *b) {
+  coordinate temp = *b;
   *b = *a;
   *a = temp;
 }
-void twoDimBubbleSort(vector<coordinate **> nums, int row, int col) {
+void twoDimBubbleSort(coordinate ** nums, int row, int col) {
   // REALLY inefficient but is easy to read
   for (int i = 0; i < (row * col); ++i) {
     for (int j = 0; j < (row * col) - 1; ++j) {
@@ -16,8 +16,8 @@ void twoDimBubbleSort(vector<coordinate **> nums, int row, int col) {
       int nr = (j + 1) / col; // next item row
       int nc = (j + 1) % col; // next item column
 
-      if (nums[cr][cc]->x0() >= nums[nr][nc]->x0() &&
-          nums[cr][cc]->x1() > nums[nr][nc]->x1()) {
+      if (nums[cr][cc].x0() >= nums[nr][nc].x0() &&
+          nums[cr][cc].x1() > nums[nr][nc].x1()) {
         swap(&nums[cr][cc],
              &nums[nr][nc]); // any way you want to swap variables
       }
@@ -67,6 +67,9 @@ coordinate *closestpair(coordinate **nums) {
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   coordinate **array = inst->filein("in.txt");
+  twoDimBubbleSort(array, 8, 17);
+  coordinate* ans = closestpair(array);
+  ans->printcoords();
   // array of numbers is now set, now for sorting and
   // good parse
 }
