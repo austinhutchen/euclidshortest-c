@@ -45,7 +45,7 @@ coordinate *closestpair(coordinate **nums) {
     temp = &nums[i][k];
     // find away to implement minimum function
     if (temp->distance(&nums[i][k + 1]) < minim) {
-      MIN(&nums[i][k + 1], temp->distance(&nums[i][k + 1]), MINSTACK);
+      MIN(temp, temp->distance(&nums[i][k + 1]), MINSTACK);
     }
 
     k++;

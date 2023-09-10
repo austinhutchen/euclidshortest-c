@@ -9,7 +9,7 @@ using namespace std;
 class coordinate {
 public:
   // x is a vector in R^2
-  coordinate() {
+  coordinate() {                                                                                                                                
     x = new double[2]();
     *x = *(x + 8) = 0.0;
   }
@@ -25,7 +25,6 @@ public:
     return sqrt(pow(*(x + 8) - *x, 2) + pow(c->x0() - c->x1(), 2) * 1.0);
   }
   void printcoords() {
-
     cout << "( " << *x;
     cout << " , " << *(x + 8) << " )" << endl;
   }
