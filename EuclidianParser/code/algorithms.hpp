@@ -137,7 +137,7 @@ public:
       unsigned x = 0;
       coordinate *points[16] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
                                 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
-      while (getline(f, line)) {
+      while (getline(f, line,'\n')) {
         if (!line.empty()) {
           // 9 is first number
           char *i = &line[0];
@@ -176,20 +176,14 @@ public:
             // nums.push_back(points);
             i++;
           }
-          for (int i = 0; i < 10; i++) {
-            points[i]->printcoords();
-            cout << " ";
-          }
+    
           cout << endl;
           nums.push_back(points);
-
           // float parse
         }
-        printvec(nums);
         // asdfsd
-        return;
       }
-
+        printvec(nums);
       if (f.fail()) {
         cout << "ERROR reading from file. Please check your spelling and "
                 "placement of filename within this directory."
