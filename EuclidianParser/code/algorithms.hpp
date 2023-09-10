@@ -26,7 +26,7 @@ class coordinate {
     return sqrt(pow(*(x+8) - *x, 2) +
                 pow(c->x0() - c->x1(), 2) * 1.0);
   }
-  void printcoords(void) {
+  void printcoords() {
 
     cout << "( " << *x;
     cout << " , " << *(x+8) << " )" << endl;
@@ -110,7 +110,7 @@ public:
     string ans;
 
     char *p = &line[line.find(start)];
-    while (*p != ',' && *p!='}' && (*p <= '9' && *p >= '0' || *p == '.')) {
+    while ( (*p <= '9' && *p >= '0' || *p == '.')) {
       ans += *p;
       p++;
     }
