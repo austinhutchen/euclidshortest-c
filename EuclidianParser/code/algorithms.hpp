@@ -8,7 +8,7 @@
 using namespace std;
 
 class coordinate {
-  public:
+public:
   // x is a vector in R^2
   coordinate() {
     x = new double[2]();
@@ -19,21 +19,20 @@ class coordinate {
     *(x + 8) = x2;
   }
   double x0(void) { return *x; }
-  double x1(void) { return *(x+8); }
+  double x1(void) { return *(x + 8); }
 
   double distance(coordinate *c) {
     // Calculating distance from the coordinate at c
-    return sqrt(pow(*(x+8) - *x, 2) +
-                pow(c->x0() - c->x1(), 2) * 1.0);
+    return sqrt(pow(*(x + 8) - *x, 2) + pow(c->x0() - c->x1(), 2) * 1.0);
   }
   void printcoords() {
 
     cout << "( " << *x;
-    cout << " , " << *(x+8) << " )" << endl;
+    cout << " , " << *(x + 8) << " )" << endl;
   }
 
 private:
-  double *x ;
+  double *x;
 };
 // Assignment 1
 class PlaneArithmetic {
@@ -110,7 +109,7 @@ public:
     string ans;
 
     char *p = &line[line.find(start)];
-    while ( (*p <= '9' && *p >= '0' || *p == '.')) {
+    while ((*p <= '9' && *p >= '0' || *p == '.')) {
       ans += *p;
       p++;
     }
@@ -126,16 +125,16 @@ public:
     f.open(in);
     // vector of rows of arrays of max size 20 representing coordinates
     vector<coordinate **> nums;
-    
+
     string line;
     // array of "window" of coordinate pointers being compared at a time
     // max of 10 pairs of points per line.
 
     if (!f.fail()) {
       unsigned x = 0;
-      while (getline(f, line)) {
-        coordinate *points[16] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+      coordinate *points[16] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
                                   0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
+      while (getline(f, line)) {
         if (!line.empty()) {
           // 9 is first number
           char *i = &line[line.find(line, '{')];
@@ -147,7 +146,7 @@ public:
               cout << "starting bracket reached .." << endl;
               i++;
               points[x] = new coordinate();
-              points[x]->setcoord(numparse(line,'}'), numparse(line,','));
+              points[x]->setcoord(numparse(line, '}'), numparse(line, ','));
               points[x]->printcoords();
               x++;
               break;
@@ -170,16 +169,16 @@ public:
               //  temp.push_back(buffer)
               // each point in array represents a pair of coordinates
             }
-      
+
             // nums.push_back(points);
             i++;
           }
-              for (int i = 0; i < 10; i++) {
-              points[i]->printcoords();
-              cout << " ";
-            }
-            cout << endl;
-            nums.push_back(points);
+          for (int i = 0; i < 10; i++) {
+            points[i]->printcoords();
+            cout << " ";
+          }
+          cout << endl;
+          nums.push_back(points);
 
           // float parse
         }
@@ -189,9 +188,7 @@ public:
       }
 
       if (f.fail()) {
-        cout << "ERROR reading from file. Please check your spelling and "
-                "placement of filename within this directory."
-             << endl;
+        cout << "ERROR reading from file. Please check your spelling and placement of filename within this directory."<< endl;
         return;
       }
     }
