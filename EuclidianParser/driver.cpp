@@ -1,11 +1,11 @@
 
-#include "../Algorithms/code//algorithms.hpp"
+#include "./code/algorithms.hpp"
 
 int main(int argc, char **argv){
 char* filename= argv[1];
 PlaneArithmetic *inst = new PlaneArithmetic();
 
-  inst->numparse("in.txt");
+  inst->filein("in.txt");
   
 // good parse 
 

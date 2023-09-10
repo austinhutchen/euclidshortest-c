@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <string>
 #include <sys/_types/_size_t.h>
 #pragma ONCE
 #include <fstream>
@@ -6,40 +7,33 @@
 #include <stack>
 using namespace std;
 
-struct coordinate {
+class coordinate {
+  public:
   // x is a vector in R^2
+  coordinate() {
+    x = new double[16]();
+    *x = *(x + 8) = 0.0;
+  }
+  void setcoord(double x1, double x2) {
+    *x = x1;
+    *(x + 8) = x2;
+  }
+  double x0(void) { return *x; }
+  double x1(void) { return *(x+8); }
 
-  void setcoord(string x1, string x2) {
-    *x = stod(x1);
-    *(x + 8) = stod(x2);
-    f2 = f1 = true;
-  }
-  double x0(void) { return x[0]; }
-  double x1(void) { return x[1]; }
-  bool isfull(void) {
-    if (f1 && f2) {
-      return true;
-    }
-    return false;
-  }
   double distance(coordinate *c) {
     // Calculating distance from the coordinate at c
-    return sqrt(pow(this->x[1] - this->x[0], 2) +
+    return sqrt(pow(*(x+8) - *x, 2) +
                 pow(c->x0() - c->x1(), 2) * 1.0);
   }
   void printcoords(void) {
-    if (*x!=0.0) {
-      cout << "( " << *x;
-    }
-    if (*(x + 8)!=0.0) {
-      cout << " , " << *(x + 8) << " )" << endl;
-    }
+
+    cout << "( " << *x;
+    cout << " , " << *(x+8) << " )" << endl;
   }
 
 private:
-  bool f1, f2;
-  double x[2]={0.0,0.0};
-  size_t size;
+  double *x ;
 };
 // Assignment 1
 class PlaneArithmetic {
@@ -112,58 +106,55 @@ public:
     return;
   }
 
+  double numparse(string line, char start) {
+    string ans;
+
+    char *p = &line[line.find(start)];
+    while (*p != ',' && *p!='}' && (*p <= '9' && *p >= '0' || *p == '.')) {
+      ans += *p;
+      p++;
+    }
+    return stod(ans);
+  }
+
   // END HELPERS
   //  - -- - --- -- - - - - - - -- - -------------------->               FOR
   //  CECS            < ------ - - - - - - - - - -- - - - - -- - - -
-  void numparse(string in) {
+  void filein(string in) {
     // start AFTER first bracket
     ifstream f;
     f.open(in);
     // vector of rows of arrays of max size 20 representing coordinates
     vector<coordinate **> nums;
+    
     string line;
     // array of "window" of coordinate pointers being compared at a time
     // max of 10 pairs of points per line.
-    unsigned x = 0;
-    unsigned counter;
+
     if (!f.fail()) {
+      unsigned x = 0;
       while (getline(f, line)) {
-            coordinate *points[15] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
+        coordinate *points[16] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
+                                  0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
         if (!line.empty()) {
-          coordinate *p = points[0];
-          for (char *i = &line[1]; *i != '#'; i++) {
-            string flt1;
-            string flt2;
+          // 9 is first number
+          char *i = &line[line.find(line, '{')];
+          while (*i != ';') {
             switch (*i) {
             case '{': {
               // open bracket
-              points[x] = new coordinate();
+              // flt1 set;
               cout << "starting bracket reached .." << endl;
               i++;
-              while ((*i <= '9' && *i >= '0') || *i == '.') {
-                // float read
-                flt1.push_back(*i);
-                i++;
-              }
+              points[x] = new coordinate();
+              points[x]->setcoord(numparse(line,'}'), numparse(line,','));
+              points[x]->printcoords();
+              x++;
               break;
             }
             // close bracket;
-            case ',': {
-              // comma
-              i++;
-              // flt1 set;
-              while (*i <= '9' && *i >= '0' || *i == '.') {
-                // float read
-                flt2.push_back(*i);
-                i++;
-              }
-              p->setcoord(flt1,flt2);
-              flt1.clear();
-              flt2.clear();
-              p++;
-              break;
-            }
             case '}': {
+              cout << "end bracket reached" << endl;
               break;
             }
             case ' ': {
@@ -171,7 +162,7 @@ public:
               break;
             }
             default: {
-              cout << *i << " ";
+              cout << *i << " in buf ";
               break;
             }
               // will insert newline char at end of string
@@ -179,26 +170,30 @@ public:
               //  temp.push_back(buffer)
               // each point in array represents a pair of coordinates
             }
-            for (int i = 0; i < 10; i++) {
+      
+            // nums.push_back(points);
+            i++;
+          }
+              for (int i = 0; i < 10; i++) {
               points[i]->printcoords();
               cout << " ";
             }
             cout << endl;
-            // nums.push_back(points);
             nums.push_back(points);
-          }
+
           // float parse
         }
         printvec(nums);
         // asdfsd
         return;
       }
-    }
-    if (f.fail()) {
-      cout << "ERROR reading from file. Please check your spelling and "
-              "placement of filename within this directory."
-           << endl;
-      return;
+
+      if (f.fail()) {
+        cout << "ERROR reading from file. Please check your spelling and "
+                "placement of filename within this directory."
+             << endl;
+        return;
+      }
     }
   }
 
