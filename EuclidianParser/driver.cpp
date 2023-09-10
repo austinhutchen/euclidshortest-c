@@ -1,5 +1,5 @@
 
-#include "./code/algorithms.hpp"
+#include "./code/EuclidianArithmetic.hpp"
 
 double minim = 0.0;
 void swap(coordinate **a, coordinate **b) {
