@@ -81,8 +81,9 @@ void empty(void) {
   }
 }
 
-void printplane(coordinate **R) {
-  for (int i = 0; i < 16; i++) {
+void printplane(vector<coordinate*>R) {
+  for (int i = 0; i < R.size(); i++) {
+  R[i]->printcoords();
   }
 }
 int main(int argc, char **argv) {
@@ -95,6 +96,7 @@ int main(int argc, char **argv) {
       return -1;
     } else {
       sort1D(array);
+      printplane(array);  
       // printplane(array);
       closestdistance(array);
       cout << minim << " is shortest distance" << endl;
