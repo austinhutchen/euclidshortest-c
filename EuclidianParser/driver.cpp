@@ -37,7 +37,7 @@ void planesort(coordinate **nums, int col) {
   delete origin;
   origin = nullptr;
 }
-void sort1D(vector<coordinate*> arr) {
+void sort1D(vector<coordinate *> arr) {
   // consider x1 as 0 for all coordinates and sort only based on x0
   for (int i = 0; i < 16; i++) {
     for (int j = 0; j < 16; j++) {
@@ -55,7 +55,7 @@ void sort1D(vector<coordinate*> arr) {
 // coordinate ** represents a single line in the euclidian plane from left to
 // right to look up or down, observe the respective row of nums and compare to
 // MIN()
-void closestdistance(vector<coordinate*> nums) {
+void closestdistance(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
@@ -69,32 +69,34 @@ void closestdistance(vector<coordinate*> nums) {
   // split nums into left and right halves using algorithm
 }
 
-
 void empty(void) {
   while (!MINSTACK.empty()) {
     MINSTACK.pop();
   }
 }
 
-
-void printplane(coordinate ** R){
-  for(int i=0;i<16;i++){
-
+void printplane(coordinate **R) {
+  for (int i = 0; i < 16; i++) {
   }
 }
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char **t = argv;
   if (t[1] != nullptr) {
-    vector<coordinate*> array = inst->filein(t[1]);
-    sort1D(array);
-    cout << "MADE IT " << endl;
-    //printplane(array);
-    closestdistance(array);
-    cout << minim << " is shortest distance" << endl;
-    cout << "=END=" << endl;
-    empty();
-    return 1;
+    vector<coordinate *> array = inst->filein(t[1]);
+    if (array.empty()) {
+      cout << "EMPTY" << endl;
+      return -1;
+    } else {
+      sort1D(array);
+      cout << "MADE IT " << endl;
+      // printplane(array);
+      closestdistance(array);
+      cout << minim << " is shortest distance" << endl;
+      cout << "=END=" << endl;
+      empty();
+      return 1;
+    }
   } else {
     cout << "INVALID FILENAME" << endl;
     return -1;

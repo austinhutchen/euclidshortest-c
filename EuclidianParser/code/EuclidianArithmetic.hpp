@@ -161,12 +161,12 @@ public:
         }
         // asdfsd
       }
-      return vector<coordinate*>(0x0);
+      return vector<coordinate*>();
     } else {
       cout << "ERROR reading from file. Please check your spelling and "
               "placement of filename within this directory."
            << endl;
-      return vector<coordinate*>(0x0);;
+      return vector<coordinate*>();;
     }
   }
 };
