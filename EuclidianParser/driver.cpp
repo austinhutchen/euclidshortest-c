@@ -5,6 +5,7 @@ std::stack<coordinate *> MINSTACK;
 double minim = 0.0;
 void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
   if (distance < minim) {
+    minim=distance;
     stck.push(coord);
   }
 }
@@ -82,11 +83,9 @@ void printplane(coordinate **R) {
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   coordinate **array = inst->filein("in.txt");
-  planesort(array, 16);
-  
- coordinate * p = closestpair(array);
-  cout << minim << " is shortest distance" <<endl;
-  cout << "=END=" <<endl;
+  coordinate *p = closestpair(array);
+  cout << minim << " is shortest distance" << endl;
+  cout << "=END=" << endl;
   //  array set to array of points, now design sort below
   //  fix below
   /*
