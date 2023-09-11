@@ -114,7 +114,7 @@ public:
 
     if (!f.fail()) {
 
-      vector<coordinate *> points;
+      vector<coordinate *> *points = new vector<coordinate *>;
       while (getline(f, line, '\n')) {
         if (!line.empty()) {
           // 9 is first number
@@ -126,7 +126,7 @@ public:
               coordinate *p = new coordinate();
               p->setcoord(numparse(line, '{', i), numparse(line, ',', i));
               p->printcoords();
-              points.push_back(p);
+              points->push_back(p);
               break;
             }
             // close bracket;
@@ -158,7 +158,7 @@ public:
         }
         // asdfsd
       }
-      return points;
+      return *points;
     } else {
       cout << "ERROR reading from file. Please check your spelling and "
               "placement of filename within this directory."
