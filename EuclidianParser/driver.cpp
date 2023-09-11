@@ -5,7 +5,7 @@ std::stack<coordinate *> MINSTACK;
 double minim = 0.0;
 void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
   if (distance < minim) {
-    minim=distance;
+    minim = distance;
     stck.push(coord);
   }
 }
@@ -86,6 +86,10 @@ int main(int argc, char **argv) {
   coordinate *p = closestpair(array);
   cout << minim << " is shortest distance" << endl;
   cout << "=END=" << endl;
+  while (!MINSTACK.empty()) {
+    MINSTACK.pop();
+  }
+  
   //  array set to array of points, now design sort below
   //  fix below
   /*
