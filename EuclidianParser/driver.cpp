@@ -2,7 +2,7 @@
 #include "./code/EuclidianArithmetic.hpp"
 #include <iterator>
 std::stack<coordinate *> MINSTACK;
-double minim = 0.0;
+double minim = INT_MAX;
 
 void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
   if (distance < minim) {
@@ -60,8 +60,14 @@ void closestdistance(vector<coordinate *> nums) {
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
   coordinate *temp;
+      coordinate*p=0x0;
 #pragma omp parallel for
-
+  for(unsigned x=0; x<nums.size()/2;x++){
+    p=nums[x];
+    if(p->distance(nums[x+1]) <minim){
+    minim=p->distance(nums[x+1]);
+    }
+  }  
   // temp used for nearest pair of points
   // return the pair as nums
   // sort nums

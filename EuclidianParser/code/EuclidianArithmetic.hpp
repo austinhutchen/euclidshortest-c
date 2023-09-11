@@ -123,7 +123,6 @@ public:
               // open bracket
               coordinate *p = new coordinate();
               p->setcoord(numparse(line, '{', i), numparse(line, ',', i));
-              p->printcoords();
               points->push_back(p);
               break;
             }
