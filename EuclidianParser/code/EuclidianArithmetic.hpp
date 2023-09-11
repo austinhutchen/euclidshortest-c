@@ -124,8 +124,6 @@ public:
             switch (*i) {
             case '{': {
               // open bracket
-              // flt1 set;
-              cout << "starting bracket reached .." << endl;
               points[x] = new coordinate();
               points[x]->setcoord(numparse(line, '{'), numparse(line, ','));
               points[x]->printcoords();
@@ -135,7 +133,6 @@ public:
             }
             // close bracket;
             case '}': {
-              cout << "end bracket reached" << endl;
               break;
             }
             case ' ': {
@@ -146,7 +143,7 @@ public:
               return points;
             }
             default: {
-              cout << *i << " in buf ";
+              
               break;
             }
               // will insert newline char at end of string

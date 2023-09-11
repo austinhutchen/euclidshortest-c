@@ -67,17 +67,20 @@ coordinate *closestpair(coordinate **nums) {
 void printplane(coordinate **R) {
   for (int i = 0; i < 16; i++) {
     coordinate *p = R[i];
-    while (p != 0x0) {
+    if (p != 0x0) {
       p->printcoords();
-      p+=sizeof(coordinate);
     }
   }
 }
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   coordinate **array = inst->filein("in.txt");
-  printplane(array);
+  // fix below
+  /*
+    printplane(array);
   coordinate *ans = closestpair(array);
+  */
+
   // array of numbers is now set, now for sorting and
   // good parse
 }
