@@ -15,20 +15,24 @@ void swap(coordinate *a, coordinate *b) {
   *a = temp;
 }
 void planesort(coordinate **nums, int col) {
-  // REALLY inefficient but is easy to read
+  // sort points in plane by distance from origin on a one-dimensional real line
   coordinate *origin = new coordinate();
   origin->setcoord(0.0, 0.0);
   // sort all on distance from origin
   for (int i = 0; i < col; i++) {
-    if (nums[i]!=nullptr) {
-      if (nums[i]->distance(origin) > nums[i + 1]->distance(origin)) {
-        // i+1 is smaller
-        swap(nums[i], nums[i + 1]);
+    coordinate *temp = nums[i];
+    if (temp != nullptr) {
+      for (int j = 0; j < col; j++) {
+        if (nums[j] != temp &&
+            nums[i]->distance(origin) > nums[j]->distance(origin)) {
+          // i+1 is smaller
+          swap(nums[i], nums[j]);
+        }
       }
     }
   }
   delete origin;
-  origin=nullptr;
+  origin = nullptr;
 }
 
 // in progress
@@ -77,11 +81,11 @@ int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   coordinate **array = inst->filein("in.txt");
   planesort(array, 16);
-  //coordinate * p = closestpair(array);
-  //cout << "CLOSEST:"
-  //p->printcoords();
-  // array set to array of points, now design sort below
-  // fix below
+  // coordinate * p = closestpair(array);
+  // cout << "CLOSEST:"
+  // p->printcoords();
+  //  array set to array of points, now design sort below
+  //  fix below
   /*
     printplane(array);
   coordinate *ans = closestpair(array);
