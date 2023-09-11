@@ -1,36 +1,31 @@
 
 #include "./code/EuclidianArithmetic.hpp"
-
-double minim = 0.0;
-void swap(coordinate *a, coordinate *b) {
-  coordinate temp = *b;
-  *b = *a;
-  *a = temp;
-}
-void twoDimBubbleSort(coordinate **nums, int row, int col) {
-  // REALLY inefficient but is easy to read
-  for (int i = 0; i < (row * col); ++i) {
-    for (int j = 0; j < (row * col) - 1; ++j) {
-      int cr = j / col;       // current row
-      int cc = j % col;       // current column
-      int nr = (j + 1) / col; // next item row
-      int nc = (j + 1) % col; // next item column
-
-      if (nums[cr][cc].x0() >= nums[nr][nc].x0() &&
-          nums[cr][cc].x1() > nums[nr][nc].x1()) {
-        swap(&nums[cr][cc],
-             &nums[nr][nc]); // any way you want to swap variables
-      }
-    }
-  }
-}
+#include <iterator>
 std::stack<coordinate *> MINSTACK;
-// in progress
+double minim = 0.0;
 void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
   if (distance < minim) {
     stck.push(coord);
   }
 }
+void swap(coordinate *a, coordinate *b) {
+  coordinate temp = *b;
+  *b = *a;
+  *a = temp;
+}
+void planesort(coordinate **nums, int col) {
+  // REALLY inefficient but is easy to read
+  for (int i = 1; i < col; i++) {
+    if (nums[i] != 0x0) {
+      if (nums[i]->distance(nums[i - 1]) > nums[i + 1]->distance(nums[i - 1])) {
+        // i+1 is smaller
+        swap(nums[i + 1], nums[i]);
+      }
+    }
+  }
+}
+
+// in progress
 // vector forms the rows of the two-dimensional euclidian plane
 // coordinate ** represents a single line in the euclidian plane from left to
 // right to look up or down, observe the respective row of nums and compare to
@@ -75,6 +70,9 @@ void printplane(coordinate **R) {
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   coordinate **array = inst->filein("in.txt");
+  planesort(array, 16);
+  printplane(array);
+  // array set to array of points, now design sort below
   // fix below
   /*
     printplane(array);

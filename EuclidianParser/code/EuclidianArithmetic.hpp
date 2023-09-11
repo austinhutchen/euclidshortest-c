@@ -9,7 +9,7 @@ using namespace std;
 class coordinate {
 public:
   // x is a vector in R^2
-  coordinate() {
+  coordinate(void) {
     x = new double[2]();
     *x = *(x + 8) = 0.0;
   }
@@ -22,9 +22,9 @@ public:
 
   double distance(coordinate *c) {
     // Calculating distance from the coordinate at c
-    return sqrt(pow(*(x + 8) - *x, 2) + pow(c->x0() - c->x1(), 2) * 1.0);
+    return sqrt(pow(*(x)-c->x0(), 2) + pow(*(x + 8) - c->x1(), 2) * 1.0);
   }
-  void printcoords() {
+  void printcoords(void) {
     cout << "( " << *x;
     cout << " , " << *(x + 8) << " )" << endl;
   }
@@ -106,7 +106,7 @@ public:
     ifstream f;
     f.open(in);
     // vector of rows of arrays of max size 20 representing coordinates
-    vector<coordinate **> nums;
+    vector<coordinate *> nums;
 
     string line;
     // array of "window" of coordinate pointers being compared at a time
@@ -143,7 +143,7 @@ public:
               return points;
             }
             default: {
-              
+
               break;
             }
               // will insert newline char at end of string
