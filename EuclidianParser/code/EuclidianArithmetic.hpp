@@ -9,7 +9,7 @@ using namespace std;
 class coordinate {
 public:
   // x is a vector in R^2
-  coordinate() {                                                                                                                                
+  coordinate() {
     x = new double[2]();
     *x = *(x + 8) = 0.0;
   }
@@ -142,6 +142,9 @@ public:
               // ignore whitespaces
               break;
             }
+            case '#': {
+              return points;
+            }
             default: {
               cout << *i << " in buf ";
               break;
@@ -161,7 +164,7 @@ public:
         }
         // asdfsd
       }
-      return points;
+      return 0x0;
     } else {
       cout << "ERROR reading from file. Please check your spelling and "
               "placement of filename within this directory."

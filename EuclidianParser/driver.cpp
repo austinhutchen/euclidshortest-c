@@ -7,7 +7,7 @@ void swap(coordinate *a, coordinate *b) {
   *b = *a;
   *a = temp;
 }
-void twoDimBubbleSort(coordinate ** nums, int row, int col) {
+void twoDimBubbleSort(coordinate **nums, int row, int col) {
   // REALLY inefficient but is easy to read
   for (int i = 0; i < (row * col); ++i) {
     for (int j = 0; j < (row * col) - 1; ++j) {
@@ -64,12 +64,20 @@ coordinate *closestpair(coordinate **nums) {
   // split nums into left and right halves using algorithm
   return MINSTACK.top();
 }
+void printplane(coordinate **R) {
+  for (int i = 0; i < 16; i++) {
+    coordinate *p = R[i];
+    while (p != 0x0) {
+      p->printcoords();
+      p++;
+    }
+  }
+}
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   coordinate **array = inst->filein("in.txt");
-  twoDimBubbleSort(array, 8, 17);
-  coordinate* ans = closestpair(array);
-  ans->printcoords();
+  printplane(array);
+  coordinate *ans = closestpair(array);
   // array of numbers is now set, now for sorting and
   // good parse
 }
