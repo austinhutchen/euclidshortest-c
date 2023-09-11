@@ -14,6 +14,7 @@ void swap(coordinate *a, coordinate *b) {
   *b = *a;
   *a = temp;
 }
+
 void planesort(coordinate **nums, int col) {
   // sort points in plane by distance from origin on a one-dimensional real line
   coordinate *origin = new coordinate();
@@ -82,9 +83,10 @@ int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   coordinate **array = inst->filein("in.txt");
   planesort(array, 16);
-  // coordinate * p = closestpair(array);
-  // cout << "CLOSEST:"
-  // p->printcoords();
+  
+ coordinate * p = closestpair(array);
+  cout << minim << " is shortest distance" <<endl;
+  cout << "=END=" <<endl;
   //  array set to array of points, now design sort below
   //  fix below
   /*
