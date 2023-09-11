@@ -15,11 +15,14 @@ void swap(coordinate *a, coordinate *b) {
 }
 void planesort(coordinate **nums, int col) {
   // REALLY inefficient but is easy to read
-  for (int i = 1; i < col; i++) {
-    if (nums[i] != 0x0) {
-      if (nums[i]->distance(nums[i - 1]) > nums[i + 1]->distance(nums[i - 1])) {
+  coordinate * origin = new coordinate();
+  origin->setcoord(0.0, 0.0);
+  // sort all on distance from origin
+  for (int i = 0; i < col; i++) {
+    if (nums[i]) {
+      if (nums[i]->distance(origin) > nums[i + 1]->distance(origin)) {
         // i+1 is smaller
-        swap(nums[i + 1], nums[i]);
+        swap(nums[i], nums[i+1]);
       }
     }
   }
@@ -61,9 +64,8 @@ coordinate *closestpair(coordinate **nums) {
 }
 void printplane(coordinate **R) {
   for (int i = 0; i < 16; i++) {
-    coordinate *p = R[i];
-    if (p != 0x0) {
-      p->printcoords();
+    if (R[i] != 0x0) {
+      R[i]->printcoords();
     }
   }
 }

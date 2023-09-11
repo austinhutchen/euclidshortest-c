@@ -140,6 +140,7 @@ public:
               break;
             }
             case '#': {
+              cout << "==END OF FILE READ==" <<endl;
               return points;
             }
             default: {
