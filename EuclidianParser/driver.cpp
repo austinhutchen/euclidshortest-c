@@ -8,6 +8,7 @@ void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
     stck.push(coord);
   }
 }
+
 void swap(coordinate *a, coordinate *b) {
   coordinate temp = *b;
   *b = *a;
@@ -19,7 +20,7 @@ void planesort(coordinate **nums, int col) {
   origin->setcoord(0.0, 0.0);
   // sort all on distance from origin
   for (int i = 0; i < col; i++) {
-    if (nums[i]) {
+    if (nums[i]!=nullptr) {
       if (nums[i]->distance(origin) > nums[i + 1]->distance(origin)) {
         // i+1 is smaller
         swap(nums[i], nums[i + 1]);
@@ -74,7 +75,9 @@ int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   coordinate **array = inst->filein("in.txt");
   planesort(array, 16);
-  printplane(array);
+  //coordinate * p = closestpair(array);
+  //cout << "CLOSEST:"
+  //p->printcoords();
   // array set to array of points, now design sort below
   // fix below
   /*
