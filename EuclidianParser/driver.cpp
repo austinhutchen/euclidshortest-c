@@ -24,7 +24,7 @@ void planesort(coordinate **nums, int col) {
     if (temp != nullptr) {
       for (int j = 0; j < col; j++) {
         if (nums[j] != temp &&
-            nums[i]->distance(origin) > nums[j]->distance(origin)) {
+            nums[i]->distance(origin) > nums[j]->distance(origin) && i < j) {
           // i+1 is smaller
           swap(nums[i], nums[j]);
         }
@@ -41,8 +41,9 @@ void planesort(coordinate **nums, int col) {
 // right to look up or down, observe the respective row of nums and compare to
 // MIN()
 coordinate *closestpair(coordinate **nums) {
-  // take distance between all pairs using described algorithm splitting list into left and right after origin sort
-  // furthest distance should be between points on opposite end of splitted array
+  // take distance between all pairs using described algorithm splitting list
+  // into left and right after origin sort furthest distance should be between
+  // points on opposite end of splitted array
   coordinate *temp;
 #pragma omp parallel for
   for (int i = 8; i < 16; i++) {
