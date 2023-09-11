@@ -117,39 +117,35 @@ public:
         if (!line.empty()) {
           // 9 is first number
           char *i = &line[0];
-          if (*i != '\n') {
-            switch (*i) {
-            case '{': {
-              // open bracket
-              coordinate *p = new coordinate();
-              p->setcoord(numparse(line, '{', i), numparse(line, ',', i));
-              points->push_back(p);
-              break;
-            }
-            // close bracket;
-            case '}': {
-              i++;
-              break;
-            }
-            case ',': {
-              // end of line
-              break;
-            }
-
-            default: {
-
-              break;
-            }
-              // will insert newline char at end of string
-              // double answer = atof(buffer);
-              //  temp.push_back(buffer)
-              // each point in array represents a pair of coordinates
-            }
-
-            // nums.push_back(points);
+          switch (*i) {
+          case '{': {
+            // open bracket
+            coordinate *p = new coordinate();
+            p->setcoord(numparse(line, '{', i), numparse(line, ',', i));
+            points->push_back(p);
+            break;
+          }
+          // close bracket;
+          case '}': {
             i++;
+            break;
+          }
+          case ',': {
+            // end of line
+            break;
           }
 
+          default: {
+
+            break;
+          }
+            // will insert newline char at end of string
+            // double answer = atof(buffer);
+            //  temp.push_back(buffer)
+            // each point in array represents a pair of coordinates
+          }
+          // nums.push_back(points);
+          i++;
           cout << endl;
           // float parse
         }
