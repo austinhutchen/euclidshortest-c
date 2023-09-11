@@ -101,7 +101,7 @@ public:
   // END HELPERS
   //  - -- - --- -- - - - - - - -- - -------------------->               FOR
   //  CECS            < ------ - - - - - - - - - -- - - - - -- - - -
-  coordinate **filein(string in) {
+  vector<coordinate*>filein(string in) {
     // start AFTER first bracket
     ifstream f;
     f.open(in);
@@ -114,17 +114,16 @@ public:
 
     if (!f.fail()) {
       unsigned x = 0;
-      coordinate *points[16] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
-                                0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
+      vector<coordinate *> points;
       while (getline(f, line, '\n')) {
         if (!line.empty()) {
           // 9 is first number
           char *i = &line[0];
-          while (*i != ';' && x < 16) {
+          while (*i != '\n') {
             switch (*i) {
             case '{': {
               // open bracket
-              points[x] = new coordinate();
+              points.push_back(new coordinate());
               points[x]->setcoord(numparse(line, '{'), numparse(line, ','));
               points[x]->printcoords();
               x++;
@@ -139,10 +138,7 @@ public:
               // ignore whitespaces
               break;
             }
-            case '#': {
-              cout << "==END OF FILE READ==" <<endl;
-              return points;
-            }
+
             default: {
 
               break;
@@ -160,14 +156,17 @@ public:
           cout << endl;
           // float parse
         }
+        if (line.empty()) {
+          return points;
+        }
         // asdfsd
       }
-      return 0x0;
+      return vector<coordinate*>(0x0);
     } else {
       cout << "ERROR reading from file. Please check your spelling and "
               "placement of filename within this directory."
            << endl;
-      return 0x0;
+      return vector<coordinate*>(0x0);;
     }
   }
 };
