@@ -27,6 +27,8 @@ void planesort(coordinate **nums, int col) {
       }
     }
   }
+  delete origin;
+  origin=nullptr;
 }
 
 // in progress
