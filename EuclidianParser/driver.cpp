@@ -41,8 +41,8 @@ void planesort(coordinate **nums, int col) {
 // right to look up or down, observe the respective row of nums and compare to
 // MIN()
 coordinate *closestpair(coordinate **nums) {
-  // temp is used to measure distance from our current coordinate within nums
-  // temp is FIXED and thus only other coordinates will be returned
+  // take distance between all pairs using described algorithm splitting list into left and right after origin sort
+  // furthest distance should be between points on opposite end of splitted array
   coordinate *temp;
 #pragma omp parallel for
   for (int i = 8; i < 16; i++) {
