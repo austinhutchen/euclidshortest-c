@@ -83,7 +83,7 @@ void printplane(coordinate **R) {
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char** t = argv;
-  if(t+1!=nullptr){
+  if(t[1]!=nullptr){
   coordinate **array = inst->filein(t[1]);
   coordinate *p = closestpair(array);
   cout << minim << " is shortest distance" << endl;
