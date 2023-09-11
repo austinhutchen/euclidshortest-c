@@ -82,14 +82,21 @@ void printplane(coordinate **R) {
 }
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
-  coordinate **array = inst->filein("in.txt");
+  char** t = argv;
+  if(t+1!=nullptr){
+  coordinate **array = inst->filein(t[1]);
   coordinate *p = closestpair(array);
   cout << minim << " is shortest distance" << endl;
   cout << "=END=" << endl;
   while (!MINSTACK.empty()) {
     MINSTACK.pop();
   }
-  
+  return 1;
+  }
+  else{
+    cout << "INVALID FILENAME" <<endl;
+    return -1;
+  }
   //  array set to array of points, now design sort below
   //  fix below
   /*
