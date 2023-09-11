@@ -69,7 +69,7 @@ void printplane(coordinate **R) {
     coordinate *p = R[i];
     while (p != 0x0) {
       p->printcoords();
-      p++;
+      p+=sizeof(coordinate);
     }
   }
 }
