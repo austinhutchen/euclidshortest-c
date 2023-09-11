@@ -60,20 +60,27 @@ void closestdistance(vector<coordinate *> nums) {
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
   coordinate *temp;
-      coordinate*p=0x0;
+  coordinate *p = 0x0;
 #pragma omp parallel for
-  for(unsigned x=0; x<nums.size()/2;x++){
-    p=nums[x];
-    if(p->distance(nums[x+1]) <minim){
-    minim=p->distance(nums[x+1]);
+  for (unsigned x = 1; x < nums.size(); x++) {
+    p = nums[x];
+    if (nums[x + 1] == 0x0) {
+      return;
     }
-  }  
-  // temp used for nearest pair of points
-  // return the pair as nums
-  // sort nums
-  // should now be sorted in terms of euclidian plane
-  // split nums into left and right halves using algorithm
+    if (p != 0x0) {
+      p->distance(nums[x + 1]) < minim ? minim = p->distance(nums[x + 1])
+                                       : minim = minim;
+      p->distance(nums[x - 1]) < minim ? minim = p->distance(nums[x - 1])
+                                       : minim = minim;
+    }
+  }
 }
+// temp used for nearest pair of points
+// return the pair as nums
+// sort nums
+// should now be sorted in terms of euclidian plane
+// split nums into left and right halves using algorithm
+
 
 void empty(void) {
   while (!MINSTACK.empty()) {
@@ -81,9 +88,9 @@ void empty(void) {
   }
 }
 
-void printplane(vector<coordinate*>R) {
+void printplane(vector<coordinate *> R) {
   for (int i = 0; i < R.size(); i++) {
-  R[i]->printcoords();
+    R[i]->printcoords();
   }
 }
 int main(int argc, char **argv) {
@@ -96,7 +103,7 @@ int main(int argc, char **argv) {
       return -1;
     } else {
       sort1D(array);
-      printplane(array);  
+      printplane(array);
       // printplane(array);
       closestdistance(array);
       cout << minim << " is shortest distance" << endl;
