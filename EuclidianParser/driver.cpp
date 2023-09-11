@@ -89,7 +89,6 @@ int main(int argc, char **argv) {
       return -1;
     } else {
       sort1D(array);
-      cout << "MADE IT " << endl;
       // printplane(array);
       closestdistance(array);
       cout << minim << " is shortest distance" << endl;

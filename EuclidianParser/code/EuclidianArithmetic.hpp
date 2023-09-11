@@ -83,7 +83,7 @@ public:
     return;
   }
 
-  double numparse(string line, char start, char *&i ){
+  double numparse(string line, char start, char *&i) {
     string ans = string();
 
     char *p = &line[line.find(start) + 1];
@@ -94,7 +94,7 @@ public:
       ans += *p;
       p++;
     }
-    i=p;
+    i = p;
     return stod(ans);
   }
 
@@ -123,8 +123,8 @@ public:
             switch (*i) {
             case '{': {
               // open bracket
-               coordinate *p = new coordinate();
-              p->setcoord(numparse(line, '{',i), numparse(line, ',',i));
+              coordinate *p = new coordinate();
+              p->setcoord(numparse(line, '{', i), numparse(line, ',', i));
               p->printcoords();
               points.push_back(p);
               break;
@@ -156,12 +156,9 @@ public:
           cout << endl;
           // float parse
         }
-        if (line.empty()) {
-          return points;
-        }
         // asdfsd
       }
-      return vector<coordinate *>();
+      return points;
     } else {
       cout << "ERROR reading from file. Please check your spelling and "
               "placement of filename within this directory."
