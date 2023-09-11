@@ -107,13 +107,11 @@ public:
     f.open(in);
     // vector of rows of arrays of max size 20 representing coordinates
     vector<coordinate *> nums;
-
     string line;
     // array of "window" of coordinate pointers being compared at a time
     // max of 10 pairs of points per line.
-
     if (!f.fail()) {
-
+      // allocate on the heap, dealing with large collections of numbers
       vector<coordinate *> *points = new vector<coordinate *>;
       while (getline(f, line, '\n')) {
         if (!line.empty()) {
