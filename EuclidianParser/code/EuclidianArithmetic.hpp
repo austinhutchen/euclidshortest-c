@@ -83,7 +83,7 @@ public:
     return;
   }
 
-  double numparse(string line, char start) {
+  double numparse(string line, char start, char *&i ){
     string ans = string();
 
     char *p = &line[line.find(start) + 1];
@@ -94,14 +94,14 @@ public:
       ans += *p;
       p++;
     }
-
+    i=p;
     return stod(ans);
   }
 
   // END HELPERS
   //  - -- - --- -- - - - - - - -- - -------------------->               FOR
   //  CECS            < ------ - - - - - - - - - -- - - - - -- - - -
-  vector<coordinate*>filein(string in) {
+  vector<coordinate *> filein(string in) {
     // start AFTER first bracket
     ifstream f;
     f.open(in);
@@ -113,29 +113,29 @@ public:
     // max of 10 pairs of points per line.
 
     if (!f.fail()) {
-      unsigned x = 0;
+
       vector<coordinate *> points;
       while (getline(f, line, '\n')) {
         if (!line.empty()) {
           // 9 is first number
           char *i = &line[0];
-          while (*i != '\n') {
+          if (*i != '\n') {
             switch (*i) {
             case '{': {
               // open bracket
-              points.push_back(new coordinate());
-              points[x]->setcoord(numparse(line, '{'), numparse(line, ','));
-              points[x]->printcoords();
-              x++;
-              i++;
+               coordinate *p = new coordinate();
+              p->setcoord(numparse(line, '{',i), numparse(line, ',',i));
+              p->printcoords();
+              points.push_back(p);
               break;
             }
             // close bracket;
             case '}': {
+              i++;
               break;
             }
-            case ' ': {
-              // ignore whitespaces
+            case ',': {
+              // end of line
               break;
             }
 
@@ -161,12 +161,13 @@ public:
         }
         // asdfsd
       }
-      return vector<coordinate*>();
+      return vector<coordinate *>();
     } else {
       cout << "ERROR reading from file. Please check your spelling and "
               "placement of filename within this directory."
            << endl;
-      return vector<coordinate*>();;
+      return vector<coordinate *>();
+      ;
     }
   }
 };
