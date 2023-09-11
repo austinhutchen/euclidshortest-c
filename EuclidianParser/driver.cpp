@@ -17,26 +17,6 @@ void swap(coordinate *a, coordinate *b) {
   *a = temp;
 }
 
-void planesort(coordinate **nums, int col) {
-  // sort points in plane by distance from origin on a one-dimensional real line
-  coordinate *origin = new coordinate();
-  origin->setcoord(0.0, 0.0);
-  // sort all on distance from origin
-  for (int i = 0; i < col; i++) {
-    coordinate *temp = nums[i];
-    if (temp != nullptr) {
-      for (int j = 0; j < col; j++) {
-        if (nums[j] != temp &&
-            nums[i]->distance(origin) > nums[j]->distance(origin) && i < j) {
-          // i+1 is smaller
-          swap(nums[i], nums[j]);
-        }
-      }
-    }
-  }
-  delete origin;
-  origin = nullptr;
-}
 void sort1D(vector<coordinate *> arr) {
   // consider x1 as 0 for all coordinates and sort only based on x0
   for (int i = 0; i < 16; i++) {
@@ -80,7 +60,6 @@ void closestdistance(vector<coordinate *> nums) {
 // sort nums
 // should now be sorted in terms of euclidian plane
 // split nums into left and right halves using algorithm
-
 
 void empty(void) {
   while (!MINSTACK.empty()) {
