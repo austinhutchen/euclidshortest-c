@@ -16,7 +16,7 @@ void swap(coordinate *a, coordinate *b) {
   *b = *a;
   *a = temp;
 }
-
+void donothing() {}
 void sort1D(vector<coordinate *> arr) {
   // consider x1 as 0 for all coordinates and sort only based on x0
   for (int i = 0; i < 16; i++) {
@@ -24,6 +24,10 @@ void sort1D(vector<coordinate *> arr) {
       if (arr[i] != 0x0 && arr[j] != 0x0) {
         if (arr[i]->x0() > arr[j]->x0() && i != j) {
           swap(arr[i], arr[j]);
+        }
+
+        if (arr[i]->x0() == arr[j]->x0() && i != j) {
+          arr[i]->x1() > arr[j]->x1() ? swap(arr[i], arr[j]) : donothing();
         }
       }
     }
@@ -72,6 +76,19 @@ void printplane(vector<coordinate *> R) {
     R[i]->printcoords();
   }
 }
+class Comparex {
+public:
+  bool operator()(coordinate *e1, coordinate *e2) {
+    return e1->x0() < e2->x0(); // strict weak ordering required
+  }
+};
+
+class Comparey {
+public:
+  bool operator()(coordinate *e1, coordinate *e2) {
+    return e1->x1() < e2->x1(); // strict weak ordering required
+  }
+};
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char **t = argv;
@@ -81,7 +98,9 @@ int main(int argc, char **argv) {
       cout << "EMPTY" << endl;
       return -1;
     } else {
-      sort1D(array);
+      // two dimensional sort
+      std::stable_sort(array.begin(), array.end(), Comparex());
+      std::stable_sort(array.begin(), array.end(), Comparey());
       printplane(array);
       // printplane(array);
       closestdistance(array);

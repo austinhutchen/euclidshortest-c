@@ -87,7 +87,7 @@ public:
     string ans = string();
 
     char *p = &line[line.find(start) + 1];
-    if (*p == ' ') {
+    if (*p == ' ' || *p=='{') {
       p++;
     }
     while ((*p <= '9' && *p >= '0') || *p == '.') {
