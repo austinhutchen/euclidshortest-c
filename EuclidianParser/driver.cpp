@@ -19,23 +19,6 @@ void swap(coordinate *a, coordinate *b) {
   *a = temp;
 }
 void donothing() {}
-void sort1D(vector<coordinate *> arr) {
-  // consider x1 as 0 for all coordinates and sort only based on x0
-  for (int i = 0; i < 16; i++) {
-    for (int j = 0; j < 16; j++) {
-      if (arr[i] != 0x0 && arr[j] != 0x0) {
-        if (arr[i]->x0() > arr[j]->x0() && i != j) {
-          swap(arr[i], arr[j]);
-        }
-
-        if (arr[i]->x0() == arr[j]->x0() && i != j) {
-          arr[i]->x1() > arr[j]->x1() ? swap(arr[i], arr[j]) : donothing();
-        }
-      }
-    }
-  }
-}
-
 // in progress
 // vector forms the rows of the two-dimensional euclidian plane
 // coordinate ** represents a single line in the euclidian plane from left to

@@ -11,17 +11,17 @@ class coordinate {
 public:
   // x is a vector in R^2
   coordinate(void) {
-    x = new double[2]();
-    *x = *(x + 8) = 0.0;
+    x = new long double[2]();
+    *x = *(x + 10) = 0.0;
   }
-  void setcoord(double x1, double x2) {
+  void setcoord(long double x1, long double x2) {
     *x = x1;
     *(x + 8) = x2;
   }
-  double x0(void) { return *x; }
-  double x1(void) { return *(x + 8); }
+  long double x0(void) { return *x; }
+  long double x1(void) { return *(x + 8); }
 
-  double distance(coordinate *c) {
+  long double distance(coordinate *c) {
     // Calculating distance from the coordinate at c
     return sqrt(pow(*(x)-c->x0(), 2) + pow(*(x + 8) - c->x1(), 2) * 1.0);
   }
@@ -31,7 +31,7 @@ public:
   }
 
 private:
-  double *x;
+  long double *x;
 };
 // Assignment 1
 class PlaneArithmetic {
@@ -64,13 +64,15 @@ public:
 
   // adjust for sorting by coordinates
 
-  double numparse(string line, char *&i) {
+  long double numparse(string line, char *&i) {
     string ans = string();
 
     char *p = i;
-    while (*p == ' ' || *p == '{' || *p == '}' || *p == ',') {
+    // run away from non numeric characters
+    while (!(*p <= '9' && *p >= '0' || *p == '.') ) {
       p++;
     }
+    // start adding into double
     while ((*p <= '9' && *p >= '0') || *p == '.') {
       ans += *p;
       p++;
@@ -113,6 +115,7 @@ public:
             }
             break;
           }
+
           default: {
             break;
           }
