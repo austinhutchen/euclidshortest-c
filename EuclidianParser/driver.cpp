@@ -52,13 +52,15 @@ void closestdistance(vector<coordinate *> nums) {
       return;
     }
     if (p != 0x0) {
-      p->distance(nums[x + 1]) < minim ? minim = p->distance(nums[x + 1])
-                                       : minim = minim;
-      p->distance(nums[x - 1]) < minim ? minim = p->distance(nums[x - 1])
-                                       : minim = minim;
-    }
+    p->distance(nums[x + 1]) < minim ? minim = p->distance(nums[x + 1])
+                                     : minim = minim;
+    p->distance(nums[x - 1]) < minim ? minim = p->distance(nums[x - 1])
+                                     : minim = minim;
   }
+  }
+
 }
+
 // temp used for nearest pair of points
 // return the pair as nums
 // sort nums
@@ -102,7 +104,6 @@ int main(int argc, char **argv) {
       std::stable_sort(array.begin(), array.end(), Comparex());
       std::stable_sort(array.begin(), array.end(), Comparey());
       printplane(array);
-      // printplane(array);
       closestdistance(array);
       cout << minim << " is shortest distance" << endl;
       cout << "=END=" << endl;
