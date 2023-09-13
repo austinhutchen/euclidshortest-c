@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <stdexcept>
 #include <string>
 #include <system_error>
 #pragma ONCE
@@ -12,7 +13,7 @@ public:
   // x is a vector in R^2
   coordinate(void) {
     x = new long double[2]();
-    x[0]=x[1]=0.0;
+    x[0] = x[1] = 0.0;
   }
   void setcoord(double x1, double x2) {
     x[0] = x1;
@@ -47,26 +48,11 @@ public:
     }
     return nullptr;
   }
-  void printvec(vector<coordinate **> nums) {
-    for (int i = 0; i < nums.size(); i++) {
-      coordinate *p = nums[i][0];
-      unsigned short counter = 0;
-      do {
-        if (p != 0x0) {
-          p->printcoords();
-          p += sizeof(coordinate);
-          counter++;
-        }
-      } while (counter < 10);
-    }
-    cout << endl;
-  }
 
   // adjust for sorting by coordinates
 
   long double numparse(string line, char *&i) {
     string ans = string();
-
     char *p = i;
     // run away from non numeric characters
     while (!(*p <= '9' && *p >= '0' || *p == '.')) {
@@ -78,10 +64,15 @@ public:
       p++;
     }
     // i is now at next number index
-    i = p;
+
+    if (ans == "1" || ans == "0") {
+      i=p;
+      return -1;
+    }
     try {
+      i=p;
       return stold(ans);
-    } catch (errc) {
+    } catch (logic_error) {
       cout << "error converting" << endl;
       exit(0);
     }
@@ -105,28 +96,37 @@ public:
         if (!line.empty()) {
           // 9 is first number
           char *i = &line[0];
-          switch (*i) {
-          case '{': {
-            // change code to use i while newline character isnt reached to
-            // recursively call numparse on sets of coordinates
-            if (*i != '\n') {
-              coordinate *p = new coordinate();
-              p->setcoord(numparse(line, *&i), numparse(line, *&i));
-              points->push_back(p);
+          // MAIN PROGRAM
+          while (i < &line[line.size() - 1]) {
+            switch (*i) {
+            case '{': {
+              // change code to use i while newline character isnt reached to
+              // recursively call numparse on sets of coordinates
+              i++;
+                coordinate *p = new coordinate();
+                double x1 = numparse(line, *&i);
+                double x2 = numparse(line, *&i);
+                if (x1 == -1 && x2 == -1) {
+                  return points;
+                }
+                p->setcoord(x1, x2);
+                points->push_back(p);
+              
+              break;
             }
-            break;
-          }
 
-          default: {
-            break;
+            default: {
+              break;
+            }
+              // will insert newline char at end of string
+              // double answer = atof(buffer);
+              //  temp.push_back(buffer)
+              // each point in array represents a pair of coordinates
+            }
+            i++;
+            // nums.push_back(points);
+            // float parse
           }
-            // will insert newline char at end of string
-            // double answer = atof(buffer);
-            //  temp.push_back(buffer)
-            // each point in array represents a pair of coordinates
-          }
-          // nums.push_back(points);
-          // float parse
         }
       }
       return points;

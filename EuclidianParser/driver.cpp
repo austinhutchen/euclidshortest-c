@@ -16,7 +16,7 @@ void swap(coordinate *a, coordinate *b) {
   *b = *a;
   *a = temp;
 }
-void donothing() {}
+void donothing(void) {}
 // in progress
 // vector forms the rows of the two-dimensional euclidian plane
 // coordinate ** represents a single line in the euclidian plane from left to
@@ -37,7 +37,6 @@ void closestdistance(vector<coordinate *> nums) {
     if (R == 0x0) {
       return;
     }
-    // unsure why this does not work
     if (p != 0x0) {
       p->distance(R) < minim ? minim = p->distance(R) : minim = minim;
       p->distance(L) < minim ? minim = p->distance(L) : minim = minim;
