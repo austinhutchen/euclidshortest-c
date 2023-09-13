@@ -12,7 +12,7 @@ public:
   // x is a vector in R^2
   coordinate(void) {
     x = new long double[2]();
-    *x = *(x + 10) = 0.0;
+    *x = *(x + 8) = 0.0;
   }
   void setcoord(long double x1, long double x2) {
     *x = x1;
