@@ -111,7 +111,7 @@ public:
             // recursively call numparse on sets of coordinates
             if (*i != '\n') {
               coordinate *p = new coordinate();
-              p->setcoord(numparse(line, i), numparse(line, i));
+              p->setcoord(numparse(line, *&i), numparse(line, *&i));
               points->push_back(p);
             }
             break;
