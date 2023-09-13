@@ -69,7 +69,7 @@ public:
 
     char *p = i;
     // run away from non numeric characters
-    while (!(*p <= '9' && *p >= '0' || *p == '.') ) {
+    while (!(*p <= '9' && *p >= '0' || *p == '.')) {
       p++;
     }
     // start adding into double
@@ -82,14 +82,14 @@ public:
     try {
       return stold(ans);
     } catch (errc) {
-      cout << "error converting" <<endl;
+      cout << "error converting" << endl;
     }
   }
 
   // END HELPERS
   //  - -- - --- -- - - - - - - -- - -------------------->               FOR
   //  CECS            < ------ - - - - - - - - - -- - - - - -- - - -
-  vector<coordinate *> filein(string in) {
+  vector<coordinate *> *filein(string in) {
     // start AFTER first bracket
     ifstream f;
     f.open(in);
@@ -128,12 +128,12 @@ public:
           // float parse
         }
       }
-      return *points;
+      return points;
     } else {
       cout << "ERROR reading from file. Please check your spelling and "
               "placement of filename within this directory."
            << endl;
-      return vector<coordinate *>();
+      return new vector<coordinate *>();
       ;
     }
   }

@@ -68,7 +68,7 @@ void printplane(vector<coordinate *> R) {
 }
 class Compare {
 public:
-// a is less than b operator, used for sort in R^2
+  // a is less than b operator, used for sort in R^2
   bool operator()(coordinate *a, coordinate *b) {
     return a->x0() < b->x0() || (a->x0() == b->x0() && a->x1() < b->x1());
   }
@@ -78,18 +78,19 @@ int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char **t = argv;
   if (t[1] != nullptr) {
-    vector<coordinate *> array = inst->filein(t[1]);
-    if (array.empty()) {
+    vector<coordinate *> *array = inst->filein(t[1]);
+    if (array->empty()) {
       cout << "EMPTY" << endl;
       return -1;
     } else {
       // two dimensional sort
-      std::sort(array.begin(), array.end(), Compare());
-      printplane(array);
-      closestdistance(array);
+      std::sort(array->begin(), array->end(), Compare());
+      printplane(*array);
+      closestdistance(*array);
       cout << minim << " is shortest distance" << endl;
       cout << "=END=" << endl;
       empty();
+
       return 1;
     }
   } else {
