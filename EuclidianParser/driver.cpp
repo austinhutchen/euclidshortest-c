@@ -1,8 +1,10 @@
 
 #include "./code/EuclidianArithmetic.hpp"
+#include <algorithm>
 #include <iterator>
+
 std::stack<coordinate *> MINSTACK;
-double minim = 0xff;
+float minim = 0xff;
 
 void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
   if (distance < minim) {
@@ -47,14 +49,14 @@ void closestdistance(vector<coordinate *> nums) {
   coordinate *R = 0x0;
   coordinate *L = 0x0;
   // change into binary search?
-  for (unsigned x = 1; x < nums.size(); x++) {
+  for (unsigned x = 1; x + 1 < nums.size(); x++) {
     p = nums[x];
     R = nums[x + 1];
     L = nums[x - 1];
     if (R == 0x0) {
       return;
     }
-    // unsure why this does not work 
+    // unsure why this does not work
     if (p != 0x0) {
       p->distance(R) < minim ? minim = p->distance(R) : minim = minim;
       p->distance(L) < minim ? minim = p->distance(L) : minim = minim;
@@ -73,25 +75,22 @@ void empty(void) {
     MINSTACK.pop();
   }
 }
-
+bool less(coordinate *a, coordinate *b) {
+  return a->x0() < b->x0() || (a->x0() == b->x0() && a->x1() < b->x1());
+}
 void printplane(vector<coordinate *> R) {
   for (int i = 0; i < R.size(); i++) {
     R[i]->printcoords();
   }
 }
-class Comparex {
+class Compare {
 public:
-  bool operator()(coordinate *e1, coordinate *e2) {
-    return e1->x0() < e2->x0(); // strict weak ordering required
+// a is less than b operator, used for sort in R^2
+  bool operator()(coordinate *a, coordinate *b) {
+    return a->x0() < b->x0() || (a->x0() == b->x0() && a->x1() < b->x1());
   }
 };
 
-class Comparey {
-public:
-  bool operator()(coordinate *e1, coordinate *e2) {
-    return e1->x1() < e2->x1(); // strict weak ordering required
-  }
-};
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char **t = argv;
@@ -102,8 +101,7 @@ int main(int argc, char **argv) {
       return -1;
     } else {
       // two dimensional sort
-      std::stable_sort(array.begin(), array.end(), Comparey());
-      std::stable_sort(array.begin(), array.end(), Comparex());
+      std::sort(array.begin(), array.end(), Compare());
       printplane(array);
       closestdistance(array);
       cout << minim << " is shortest distance" << endl;
