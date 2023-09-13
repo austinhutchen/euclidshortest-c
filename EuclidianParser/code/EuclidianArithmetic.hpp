@@ -23,7 +23,7 @@ public:
 
   long double distance(coordinate *c) {
     // Calculating distance from the coordinate at c
-    return sqrt(pow(*(x)-c->x0(), 2) + pow(*(x + 8) - c->x1(), 2) * 1.0);
+    return sqrt(pow(*(x)-c->x0(), 2)*1.0 + pow(*(x + 8) - c->x1(), 2) * 1.0);
   }
   void printcoords(void) {
     cout << "( " << *x;
@@ -83,6 +83,7 @@ public:
       return stold(ans);
     } catch (errc) {
       cout << "error converting" << endl;
+      exit(0);
     }
   }
 
