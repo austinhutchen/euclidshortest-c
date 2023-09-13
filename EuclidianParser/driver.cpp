@@ -73,7 +73,7 @@ public:
     return a->x0() < b->x0() || (a->x0() == b->x0() && a->x1() < b->x1());
   }
 };
-
+  
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char **t = argv;
@@ -83,7 +83,8 @@ int main(int argc, char **argv) {
       cout << "EMPTY" << endl;
       return -1;
     } else {
-      // two dimensional sort
+      // split array into two equal subsets;
+      vector<coordinate*> L = array[array->size()/2];
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
       closestdistance(*array);
