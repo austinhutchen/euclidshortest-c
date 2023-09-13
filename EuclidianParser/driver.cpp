@@ -43,22 +43,22 @@ void closestdistance(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  coordinate *temp;
   coordinate *p = 0x0;
+  coordinate *R = 0x0;
+  coordinate *L = 0x0;
 #pragma omp parallel for
   for (unsigned x = 1; x < nums.size(); x++) {
     p = nums[x];
-    if (nums[x + 1] == 0x0) {
+    R = nums[x + 1];
+    L = nums[x - 1];
+    if (R == 0x0) {
       return;
     }
     if (p != 0x0) {
-    p->distance(nums[x + 1]) < minim ? minim = p->distance(nums[x + 1])
-                                     : minim = minim;
-    p->distance(nums[x - 1]) < minim ? minim = p->distance(nums[x - 1])
-                                     : minim = minim;
+      p->distance(R) < minim ? minim = p->distance(R) : minim = minim;
+      p->distance(L) < minim ? minim = p->distance(L) : minim = minim;
+    }
   }
-  }
-
 }
 
 // temp used for nearest pair of points
