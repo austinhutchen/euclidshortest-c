@@ -2,7 +2,7 @@
 #include "./code/EuclidianArithmetic.hpp"
 #include <iterator>
 std::stack<coordinate *> MINSTACK;
-double minim = INT_MAX;
+double minim = 0xff;
 
 void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
   if (distance < minim) {
@@ -46,7 +46,7 @@ void closestdistance(vector<coordinate *> nums) {
   coordinate *p = 0x0;
   coordinate *R = 0x0;
   coordinate *L = 0x0;
-#pragma omp parallel for
+  // change into binary search?
   for (unsigned x = 1; x < nums.size(); x++) {
     p = nums[x];
     R = nums[x + 1];
@@ -54,6 +54,7 @@ void closestdistance(vector<coordinate *> nums) {
     if (R == 0x0) {
       return;
     }
+    // unsure why this does not work 
     if (p != 0x0) {
       p->distance(R) < minim ? minim = p->distance(R) : minim = minim;
       p->distance(L) < minim ? minim = p->distance(L) : minim = minim;
@@ -101,8 +102,8 @@ int main(int argc, char **argv) {
       return -1;
     } else {
       // two dimensional sort
-      std::stable_sort(array.begin(), array.end(), Comparex());
       std::stable_sort(array.begin(), array.end(), Comparey());
+      std::stable_sort(array.begin(), array.end(), Comparex());
       printplane(array);
       closestdistance(array);
       cout << minim << " is shortest distance" << endl;
