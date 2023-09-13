@@ -3,13 +3,11 @@
 #include <algorithm>
 #include <iterator>
 
-std::stack<coordinate *> MINSTACK;
 double minim = 1.7976931348623157E+308;
 
 void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
   if (distance < minim) {
     minim = distance;
-    stck.push(coord);
   }
 }
 
@@ -53,11 +51,6 @@ void closestdistance(vector<coordinate *> nums) {
 // should now be sorted in terms of euclidian plane
 // split nums into left and right halves using algorithm
 
-void empty(void) {
-  while (!MINSTACK.empty()) {
-    MINSTACK.pop();
-  }
-}
 bool less(coordinate *a, coordinate *b) {
   return a->x0() < b->x0() || (a->x0() == b->x0() && a->x1() < b->x1());
 }
@@ -89,8 +82,6 @@ int main(int argc, char **argv) {
       closestdistance(*array);
       cout << minim << " is shortest distance" << endl;
       cout << "=END=" << endl;
-      empty();
-
       return 1;
     }
   } else {
