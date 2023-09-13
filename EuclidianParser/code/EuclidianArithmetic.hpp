@@ -11,27 +11,27 @@ class coordinate {
 public:
   // x is a vector in R^2
   coordinate(void) {
-    x = new long double[2]();
-    *x = *(x + 8) = 0.0;
+    x = new double[2]();
+    x[0]=x[1]=0.0;
   }
-  void setcoord(long double x1, long double x2) {
-    *x = x1;
-    *(x + 8) = x2;
+  void setcoord(double x1, double x2) {
+    x[0] = x1;
+    x[1] = x2;
   }
-  long double x0(void) { return *x; }
-  long double x1(void) { return *(x + 8); }
+  double x0(void) { return x[0]; }
+  double x1(void) { return x[1]; }
 
-  long double distance(coordinate *c) {
+  double distance(coordinate *c) {
     // Calculating distance from the coordinate at c
-    return sqrt(pow(*(x)-c->x0(), 2)*1.0 + pow(*(x + 8) - c->x1(), 2) * 1.0);
+    return sqrt(pow(x[0] - c->x0(), 2) * 1.0 + pow(x[1] - c->x1(), 2) * 1.0);
   }
   void printcoords(void) {
-    cout << "( " << *x;
-    cout << " , " << *(x + 8) << " )" << endl;
+    cout << "( " << x[0];
+    cout << " , " << x[1]<< " )" << endl;
   }
 
 private:
-  long double *x;
+  double *x;
 };
 // Assignment 1
 class PlaneArithmetic {

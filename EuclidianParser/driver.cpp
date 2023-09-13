@@ -4,7 +4,7 @@
 #include <iterator>
 
 std::stack<coordinate *> MINSTACK;
-float minim = 0xff;
+double minim = 1.7976931348623157E+308;
 
 void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
   if (distance < minim) {
@@ -31,7 +31,7 @@ void closestdistance(vector<coordinate *> nums) {
   coordinate *p = 0x0;
   coordinate *R = 0x0;
   coordinate *L = 0x0;
-  // change into binary search?
+  // split the array along our line at p, and then break array into left and right sets to recursively solve
   for (unsigned x = 1; x + 1 < nums.size(); x++) {
     p = nums[x];
     R = nums[x + 1];
@@ -84,7 +84,6 @@ int main(int argc, char **argv) {
       return -1;
     } else {
       // split array into two equal subsets;
-      vector<coordinate*> L = array[array->size()/2];
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
       closestdistance(*array);
