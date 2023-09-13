@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <string>
+#include <system_error>
 #pragma ONCE
 #include <fstream>
 #include <iostream>
@@ -63,39 +64,24 @@ public:
 
   // adjust for sorting by coordinates
 
-  void alphastr(string &check) {
-    // does check have all alphanumeric characters?
-    // alphanumeric characters lie in the ASCII value range of [65, 90] for
-    // uppercase alphabets, [97, 122] for lowercase alphabets, and [48, 57] for
-    // digits
-    char *c = &check[0];
-    for (; *c != '\0'; c++) {
-      if (*c >= 65 && *c <= 90 || *c >= 97 && *c <= 122 ||
-          *c >= 48 && *c <= 57) {
-        // alphanumeric
-        continue;
-      } else {
-        // will need to be changed to45t3y fully remove the nonalphanumeric
-        // indices
-        *c = ' ';
-      }
-    }
-    return;
-  }
-
-  double numparse(string line, char start, char *&i) {
+  double numparse(string line, char *&i) {
     string ans = string();
 
-    char *p = &line[line.find(start) + 1];
-    if (*p == ' ' || *p=='{') {
+    char *p = i;
+    while (*p == ' ' || *p == '{' || *p == '}' || *p == ',') {
       p++;
     }
     while ((*p <= '9' && *p >= '0') || *p == '.') {
       ans += *p;
       p++;
     }
+    // i is now at next number index
     i = p;
-    return stod(ans);
+    try {
+      return stold(ans);
+    } catch (errc) {
+      cout << "error converting" <<endl;
+    }
   }
 
   // END HELPERS
@@ -118,23 +104,16 @@ public:
           char *i = &line[0];
           switch (*i) {
           case '{': {
-            // open bracket
-            coordinate *p = new coordinate();
-            p->setcoord(numparse(line, '{', i), numparse(line, ',', i));
-            points->push_back(p);
+            // change code to use i while newline character isnt reached to
+            // recursively call numparse on sets of coordinates
+            if (*i != '\n') {
+              coordinate *p = new coordinate();
+              p->setcoord(numparse(line, i), numparse(line, i));
+              points->push_back(p);
+            }
             break;
           }
-          // close bracket;
-          case '}': {
-            break;
-          }
-          case ',': {
-            // end of line
-            break;
-          }
-
           default: {
-
             break;
           }
             // will insert newline char at end of string
@@ -143,11 +122,8 @@ public:
             // each point in array represents a pair of coordinates
           }
           // nums.push_back(points);
-          i++;
-          cout << endl;
           // float parse
         }
-        // asdfsd
       }
       return *points;
     } else {
