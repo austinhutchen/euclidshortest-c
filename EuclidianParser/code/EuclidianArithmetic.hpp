@@ -11,7 +11,7 @@ class coordinate {
 public:
   // x is a vector in R^2
   coordinate(void) {
-    x = new double[2]();
+    x = new long double[2]();
     x[0]=x[1]=0.0;
   }
   void setcoord(double x1, double x2) {
@@ -31,7 +31,7 @@ public:
   }
 
 private:
-  double *x;
+  long double *x;
 };
 // Assignment 1
 class PlaneArithmetic {
