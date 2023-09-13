@@ -27,7 +27,7 @@ public:
   }
   void printcoords(void) {
     cout << "( " << x[0];
-    cout << " , " << x[1]<< " )" << endl;
+    cout << " , " << x[1] << " )" << endl;
   }
 
 private:
