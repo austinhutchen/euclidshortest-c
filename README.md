@@ -1,4 +1,4 @@
-# CDSA
-An extensive online archive of C Data Structures and Algorithms coded by me, for reference and practice.
-Includes many leetcode solutions for viewing in Algorithms/LeetCode.
+# EUCLIDIANPARSER - WRITTEN in C by github.com/austinhutchen
+Algorithm to find the closest points given N coordinates in R^2, supplied in the form of a .txt file.
+
 
