@@ -26,21 +26,26 @@ void closestdistance(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  coordinate *p = 0x0;
+  coordinate *p = nums[nums.size() / 2];
   coordinate *R = 0x0;
   coordinate *L = 0x0;
-  // split the array along our line at p, and then break array into left and right sets to recursively solve
-  for (unsigned x = 1; x + 1 < nums.size(); x++) {
-    p = nums[x];
-    R = nums[x + 1];
-    L = nums[x - 1];
-    if (R == 0x0) {
-      return;
-    }
-    if (p != 0x0) {
-      p->distance(R) < minim ? minim = p->distance(R) : minim = minim;
-      p->distance(L) < minim ? minim = p->distance(L) : minim = minim;
-    }
+  // split the array along our line at p, and then break array into left and
+  // right sets to recursively solve might not work for all cases because we
+  // have converted 2d coordinates to 1d. will need to fix this
+
+#pragma omp parallel for
+  for (unsigned x = 2; x < nums.size() / 2; x += 2) {
+    R = nums[x - 1];
+    L = nums[x - 2];
+
+    p->distance(R) < minim ? minim = p->distance(R) : minim = minim;
+    p->distance(L) < minim ? minim = p->distance(L) : minim = minim;
+  }
+  for (unsigned x = nums.size() / 2 + 3; x < nums.size(); x += 2) {
+    R = nums[x - 1];
+    L = nums[x - 2];
+    p->distance(R) < minim ? minim = p->distance(R) : minim = minim;
+    p->distance(L) < minim ? minim = p->distance(L) : minim = minim;
   }
 }
 
@@ -65,7 +70,7 @@ public:
     return a->x0() < b->x0() || (a->x0() == b->x0() && a->x1() < b->x1());
   }
 };
-  
+
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char **t = argv;
