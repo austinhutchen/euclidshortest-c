@@ -15,14 +15,14 @@ public:
     x = new long double[2]();
     x[0] = x[1] = 0.0;
   }
-  void setcoord(double x1, double x2) {
+  void setcoord(long double x1, long double x2) {
     x[0] = x1;
     x[1] = x2;
   }
-  double x0(void) { return x[0]; }
-  double x1(void) { return x[1]; }
+  long double x0(void) { return x[0]; }
+  long double x1(void) { return x[1]; }
 
-  double distance(coordinate *c) {
+  long double distance(coordinate *c) {
     // Calculating distance from the coordinate at c
     return sqrt(pow(x[0] - c->x0(), 2) * 1.0 + pow(x[1] - c->x1(), 2) * 1.0);
   }
@@ -35,16 +35,16 @@ private:
   long double *x;
 };
 // Assignment 1
-//1 1.40118
-//2 1.00469 
-//3 2.68663
-//4 12.334
-//5 2.0259
-//6 5.82228
-//7 24.0436
-//8 12.2882
-//9 0.07
-//10 0
+// 1 1.40118
+// 2 1.00469
+// 3 2.68663
+// 4 12.334
+// 5 2.0259
+// 6 5.82228
+// 7 24.0436
+// 8 12.2882
+// 9 0.07
+// 10 0
 class PlaneArithmetic {
 public:
   // HELPERS
@@ -76,11 +76,11 @@ public:
     // i is now at next number index
 
     if (ans == "1" || ans == "0") {
-      i=p;
+      i = p;
       return -1;
     }
     try {
-      i=p;
+      i = p;
       return stold(ans);
     } catch (logic_error) {
       cout << "error converting" << endl;
@@ -113,15 +113,15 @@ public:
               // change code to use i while newline character isnt reached to
               // recursively call numparse on sets of coordinates
               i++;
-                coordinate *p = new coordinate();
-                double x1 = numparse(line, *&i);
-                double x2 = numparse(line, *&i);
-                if (x1 == -1 && x2 == -1) {
-                  return points;
-                }
-                p->setcoord(x1, x2);
-                points->push_back(p);
-              
+              coordinate *p = new coordinate();
+              double x1 = numparse(line, *&i);
+              double x2 = numparse(line, *&i);
+              if (x1 == -1 && x2 == -1) {
+                return points;
+              }
+              p->setcoord(x1, x2);
+              points->push_back(p);
+
               break;
             }
 
