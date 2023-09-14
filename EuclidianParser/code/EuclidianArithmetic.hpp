@@ -34,17 +34,7 @@ public:
 private:
   long double *x;
 };
-// Assignment 1
-// 1 1.40118
-// 2 1.00469
-// 3 2.68663
-// 4 12.334
-// 5 2.0259
-// 6 5.82228
-// 7 24.0436
-// 8 12.2882
-// 9 0.07
-// 10 0
+
 class PlaneArithmetic {
 public:
   // HELPERS
