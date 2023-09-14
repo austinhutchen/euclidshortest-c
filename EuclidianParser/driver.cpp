@@ -23,25 +23,25 @@ void donothing(void) {}
 // right to look up or down, observe the respective row of nums and compare to
 // MIN()
 
-void copyvecL(vector<coordinate *> src, vector<coordinate *> &dest,
-              vector<coordinate *>::iterator end) {
+void copyvecL(vector<coordinate *> src, vector<coordinate *> *&dest) {
   std::vector<coordinate *>::iterator p = src.begin();
-  unsigned counter = 0;
-  while (p != end) {
-    dest[counter] = (*p);
-    counter++;
+  std::vector<coordinate *>::iterator x = dest->begin();
+  while (x !=dest->end()  ) {
+    *x = (*p);
+    x++;
     p++;
   }
   return;
 }
-void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest,
-              vector<coordinate *>::const_iterator end) {
-  std::vector<coordinate *>::iterator p = src.begin() + src.size() / 2;
-  unsigned counter = 0;
-  while (p != end) {
-    dest[counter] = (*p);
+void copyvecR(vector<coordinate *> src, vector<coordinate *> *&dest) {
+  std::vector<coordinate *>::iterator p = src.begin() + (src.size() / 2) +1;
+  std::vector<coordinate *>::iterator x = dest->begin();
+  while (x !=dest->end() ) {
+    *x = (*p);
+    x++;
     p++;
   }
+
   return;
 }
 
@@ -49,13 +49,13 @@ void closestdistance(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2 - 1);
-  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2 - 1);
+  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2 );
+  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2 );
 
   coordinate *p = nums[nums.size() / 2];
-  copyvecL(nums, *L, nums.begin() + nums.size() / 2);
+  copyvecL(nums, *&L);
 
-  copyvecR(nums, *R, nums.end());
+  copyvecR(nums, *&R);
 
   // split the array along our line at p, and then break array into left and
   // right sets to recursively solve might not work for all cases because we
@@ -63,7 +63,7 @@ void closestdistance(vector<coordinate *> nums) {
 
   vector<coordinate *>::iterator r_itr = R->begin();
   vector<coordinate *>::iterator l_itr = L->begin();
-  for (unsigned x = 0; x < nums.size() / 2; x++) {
+  for (unsigned x = 0; x < nums.size() / 2; x+=2) {
     p->distance(*r_itr) < minim ? minim = p->distance(*r_itr) : minim = minim;
     p->distance(*l_itr) < minim ? minim = p->distance(*l_itr) : minim = minim;
     r_itr++;
