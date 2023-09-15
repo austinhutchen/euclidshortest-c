@@ -1,6 +1,7 @@
 
 #include "./code/EuclidianArithmetic.hpp"
 #include <algorithm>
+#include <climits>
 #include <iterator>
 
 double minim = 1.7976931348623157E+308;
@@ -56,23 +57,35 @@ void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
 // 9 0.07
 // 10 0
 
-double recur(vector<coordinate *> nums) {
+double recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
+             long double &ans2) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  double minimum;
+  double minimum = INT_MAX;
+  double ans = INT_MAX;
   coordinate *p = 0x0;
   coordinate *R = 0x0;
   coordinate *L = 0x0;
+  coordinate *p2 = 0x0;
+  coordinate *R2 = 0x0;
+  coordinate *L2 = 0x0;
   // split the array along our line at p, and then break array into left and
   // right sets to recursively solve
-  for (unsigned x = 1; x + 1 < nums.size(); x++) {
-    p = nums[x];
-    R = nums[x + 1];
-    L = nums[x - 1];
+  int size = std::min(nums1.size(), nums2.size());
+  for (unsigned x = 1; x + 1 < size; x++) {
+    p = nums1[x];
+    R = nums1[x + 1];
+    L = nums1[x - 1];
+    p2 = nums2[x];
+    R2 = nums2[x];
+    L2 = nums2[x];
     p->distance(R) < minimum ? minimum = p->distance(R) : minimum = minimum;
     p->distance(L) < minimum ? minimum = p->distance(L) : minimum = minimum;
+    p2->distance(R2) < ans ? ans = p2->distance(R2) : ans = ans;
+    p2->distance(L2) < ans ? ans = p2->distance(L2) : ans = ans;
   }
+  ans2 = ans;
   return minimum;
 }
 
@@ -86,10 +99,9 @@ closestdistance(vector<coordinate *> nums) {
   coordinate *p = nums[nums.size() / 2];
   copyvecL(nums, *L);
   copyvecR(nums, *R);
-  long double m1 = recur(*L);
-  long double m2 = recur(*R);
-  long double distance = std::min(m1, m2);
-
+  long double rmin;
+  long double m1 = recur(*L, *R, rmin);
+  long double distance = std::min(m1, rmin);
   // split the array along our line at p, and then break array into left and
   // right sets to recursively solve might not work for all cases because we
   // have converted 2d coordinates to 1d. will need to fix this
@@ -141,12 +153,7 @@ public:
   bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
 };
 
-void smallestdist(vector<vector<coordinate *>::iterator> *strip) {
-
-
-
-  
-}
+void smallestdist(vector<vector<coordinate *>::iterator> *strip) {}
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char **t = argv;
