@@ -57,8 +57,8 @@ void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
 // 9 0.07
 // 10 0
 
-double recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
-             long double &ans2) {
+void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
+           long double &ans1, long double &ans2) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
@@ -85,8 +85,8 @@ double recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
     p2->distance(R2) < ans ? ans = p2->distance(R2) : ans = ans;
     p2->distance(L2) < ans ? ans = p2->distance(L2) : ans = ans;
   }
+  ans1 = minimum;
   ans2 = ans;
-  return minimum;
 }
 
 vector<vector<coordinate *>::iterator> *
@@ -99,9 +99,9 @@ closestdistance(vector<coordinate *> nums) {
   coordinate *p = nums[nums.size() / 2];
   copyvecL(nums, *L);
   copyvecR(nums, *R);
-  long double rmin;
-  long double m1 = recur(*L, *R, rmin);
-  long double distance = std::min(m1, rmin);
+  long double minL, minR;
+  recur(*L, *R, minL, minR);
+  long double distance = std::min(minL, minR);
   // split the array along our line at p, and then break array into left and
   // right sets to recursively solve might not work for all cases because we
   // have converted 2d coordinates to 1d. will need to fix this
