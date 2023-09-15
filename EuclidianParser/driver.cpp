@@ -89,13 +89,12 @@ void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
   ans2 = ans;
 }
 
-vector<vector<coordinate *>::iterator> *
-closest_candiates(vector<coordinate *> nums) {
+vector<coordinate *> *closest_candiates(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2 );
-  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2 );
+  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2);
+  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2);
   coordinate *p = nums[nums.size() / 2];
   copyvecL(nums, *L);
   copyvecR(nums, *R);
@@ -108,17 +107,16 @@ closest_candiates(vector<coordinate *> nums) {
 
   vector<coordinate *>::iterator r_itr = R->begin();
   vector<coordinate *>::iterator l_itr = L->begin();
-  vector<vector<coordinate *>::iterator> *candidate =
-      new vector<vector<coordinate *>::iterator>();
+  vector<coordinate *> *candidate = new vector<coordinate *>();
   // array of iterators which contain our points of interest
-  for (unsigned x = 0; x < nums.size() / 2 -1; x++) {
+  for (unsigned x = 0; x < nums.size() / 2 - 1; x++) {
     long double leftdist = p->distance(*l_itr);
     if (leftdist < distance) {
-      candidate->push_back(l_itr);
+      candidate->push_back(*l_itr);
     }
     long double rightdist = p->distance(*r_itr);
     if (rightdist < distance) {
-      candidate->push_back(r_itr);
+      candidate->push_back(*r_itr);
     }
     r_itr++;
     l_itr++;
@@ -153,10 +151,15 @@ public:
   bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
 };
 
-void smallestdist(vector<vector<coordinate *>::iterator> *strip) {
-  //currently working
-  
-
+void smallestdist(vector<coordinate *> strip, long double minimum) {
+  // currently working
+  for (int i = 0; i < strip.size(); i += 2) {
+    // pick all points one by one, and check that their distance between points
+    // is lower than minimum distance d
+    if (strip[i]->distance(strip[i + 1]) < minimum) {
+      minimum = strip[i]->distance(strip[i + 1]);
+    }
+  }
 }
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
@@ -170,9 +173,9 @@ int main(int argc, char **argv) {
       // split array into two equal subsets;
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
-      vector<vector<coordinate *>::iterator> *strip = closest_candiates(*array);
+      vector<coordinate *> *strip = closest_candiates(*array);
       std::sort(strip->begin(), strip->end(), Comparey());
-      smallestdist(strip);
+      smallestdist(*strip,minim);
       cout << minim << " is shortest distance" << endl;
       cout << "=END=" << endl;
       return 1;
