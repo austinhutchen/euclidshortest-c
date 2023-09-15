@@ -90,7 +90,7 @@ void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
 }
 
 vector<vector<coordinate *>::iterator> *
-closestdistance(vector<coordinate *> nums) {
+closest_candiates(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
@@ -166,7 +166,7 @@ int main(int argc, char **argv) {
       // split array into two equal subsets;
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
-      vector<vector<coordinate *>::iterator> *strip = closestdistance(*array);
+      vector<vector<coordinate *>::iterator> *strip = closest_candiates(*array);
       std::sort(strip->begin(), strip->end(), Comparey());
       smallestdist(strip);
       cout << minim << " is shortest distance" << endl;
