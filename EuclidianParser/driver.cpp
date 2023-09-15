@@ -94,8 +94,8 @@ closest_candiates(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2 -1);
-  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2 -1);
+  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2 );
+  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2 );
   coordinate *p = nums[nums.size() / 2];
   copyvecL(nums, *L);
   copyvecR(nums, *R);
@@ -153,7 +153,11 @@ public:
   bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
 };
 
-void smallestdist(vector<vector<coordinate *>::iterator> *strip) {}
+void smallestdist(vector<vector<coordinate *>::iterator> *strip) {
+  //currently working
+  
+
+}
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char **t = argv;
