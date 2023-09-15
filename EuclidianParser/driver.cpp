@@ -76,7 +76,8 @@ double recur(vector<coordinate *> nums) {
   return minimum;
 }
 
-void closestdistance(vector<coordinate *> nums) {
+vector<vector<coordinate *>::iterator> *
+closestdistance(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
@@ -95,19 +96,22 @@ void closestdistance(vector<coordinate *> nums) {
 
   vector<coordinate *>::iterator r_itr = R->begin();
   vector<coordinate *>::iterator l_itr = L->begin();
-
+  vector<vector<coordinate *>::iterator> *candidate =
+      new vector<vector<coordinate *>::iterator>();
+  // array of iterators which contain our points of interest
   for (unsigned x = 0; x < nums.size() / 2; x++) {
-    if (p->distance(*l_itr) < distance) {
-      minim = p->distance(*l_itr);
-      return;
+    long double leftdist = p->distance(*l_itr);
+    if (leftdist < distance) {
+      candidate->push_back(l_itr);
     }
-    if (p->distance(*r_itr) < distance) {
-      minim = p->distance(*r_itr);
-      return;
+    long double rightdist = p->distance(*r_itr);
+    if (rightdist < distance) {
+      candidate->push_back(r_itr);
     }
     r_itr++;
     l_itr++;
   }
+  return candidate;
 }
 
 // temp used for nearest pair of points
@@ -131,7 +135,18 @@ public:
     return a->x0() < b->x0() || (a->x0() == b->x0() && a->x1() < b->x1());
   }
 };
+class Comparey {
+public:
+  // a is less than b operator, used for sort in R^2
+  bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
+};
 
+void smallestdist(vector<vector<coordinate *>::iterator> *strip) {
+
+
+
+  
+}
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char **t = argv;
@@ -144,7 +159,9 @@ int main(int argc, char **argv) {
       // split array into two equal subsets;
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
-      closestdistance(*array);
+      vector<vector<coordinate *>::iterator> *strip = closestdistance(*array);
+      std::sort(strip->begin(), strip->end(), Comparey());
+      smallestdist(strip);
       cout << minim << " is shortest distance" << endl;
       cout << "=END=" << endl;
       return 1;
