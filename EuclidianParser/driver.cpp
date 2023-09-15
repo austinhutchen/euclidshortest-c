@@ -4,13 +4,7 @@
 #include <climits>
 #include <iterator>
 
-double minim = 1.7976931348623157E+308;
 
-void MIN(coordinate *coord, double distance, std::stack<coordinate *> stck) {
-  if (distance < minim) {
-    minim = distance;
-  }
-}
 
 void swap(coordinate *a, coordinate *b) {
   coordinate temp = *b;
@@ -151,15 +145,17 @@ public:
   bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
 };
 
-void smallestdist(vector<coordinate *> strip, long double minimum) {
+long double smallestdist(vector<coordinate *> strip) {
   // currently working
-  for (int i = 0; i < strip.size(); i += 2) {
+  long double minimum=INT_MAX;
+  for (int i = 0; i < strip.size()/2; i ++) {
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
     if (strip[i]->distance(strip[i + 1]) < minimum) {
       minimum = strip[i]->distance(strip[i + 1]);
     }
   }
+  return minimum;
 }
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
@@ -175,8 +171,7 @@ int main(int argc, char **argv) {
       printplane(*array);
       vector<coordinate *> *strip = closest_candiates(*array);
       std::sort(strip->begin(), strip->end(), Comparey());
-      smallestdist(*strip,minim);
-      cout << minim << " is shortest distance" << endl;
+      cout << smallestdist(*strip) << " is shortest distance" << endl;
       cout << "=END=" << endl;
       return 1;
     }
