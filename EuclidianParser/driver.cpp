@@ -4,8 +4,6 @@
 #include <climits>
 #include <iterator>
 
-
-
 void swap(coordinate *a, coordinate *b) {
   coordinate temp = *b;
   *b = *a;
@@ -147,8 +145,8 @@ public:
 
 long double smallestdist(vector<coordinate *> strip) {
   // currently working
-  long double minimum=INT_MAX;
-  for (int i = 0; i < strip.size()/2; i ++) {
+  long double minimum = INT_MAX;
+  for (int i = 0; i < strip.size(); i++) {
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
     if (strip[i]->distance(strip[i + 1]) < minimum) {
@@ -170,7 +168,6 @@ int main(int argc, char **argv) {
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
       vector<coordinate *> *strip = closest_candiates(*array);
-      std::sort(strip->begin(), strip->end(), Comparey());
       cout << smallestdist(*strip) << " is shortest distance" << endl;
       cout << "=END=" << endl;
       return 1;
