@@ -57,7 +57,7 @@ void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
   // points on opposite end of splitted array
   long double minimum = std::numeric_limits<long double>::max();
   long double ans = std::numeric_limits<long double>::max();
-  coordinate *p =0x0;
+  coordinate *p = 0x0;
   coordinate *R = 0x0;
   coordinate *L = 0x0;
   coordinate *p2 = 0x0;
@@ -73,7 +73,7 @@ void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
     L = nums1[x - 1];
     p2 = nums2[x];
     R2 = nums2[x + 1];
-    L2 = nums2[x- 1] ;
+    L2 = nums2[x - 1];
     p->distance(R) < minimum ? minimum = p->distance(R) : minimum = minimum;
     p->distance(L) < minimum ? minimum = p->distance(L) : minimum = minimum;
     p2->distance(R2) < ans ? ans = p2->distance(R2) : ans = ans;
@@ -147,14 +147,21 @@ public:
   bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
 };
 
-long double smallestdist(vector<coordinate *>* strip) {
+long double smallestdist(vector<coordinate *> *strip) {
   // currently working
   long double minimum = std::numeric_limits<double>::max();
-  for (int i = 1; i < strip->size(); i ++) {
+  unsigned counter = 0;
+  for (int i = strip->size(); i - 1 > 0; i--) {
+    unsigned counter = 0;
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
-    if (strip->at(i)->distance(strip->at(i-1)) < minimum) {
-      minimum = strip->at(i)->distance(strip->at(i-1));
+    coordinate *cp = strip->at(i);
+    while (i - 1 >= 0 && counter < 8) {
+      if (strip->at(i)->distance(strip->at(i - 1)) < minimum) {
+        minimum = strip->at(i)->distance(strip->at(i - 1));
+        counter++;
+      }
+      i--;
     }
   }
   return minimum;
@@ -172,11 +179,9 @@ int main(int argc, char **argv) {
       // split array into two equal subsets;
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
+
       vector<coordinate *> *strip = closest_candidates(*array);
-      if(strip->size()==0){
-        cout << "CLOSESTCC FAIL" <<endl;
-        return 0;
-      }
+      std::sort(strip->begin(), strip->begin(), Comparey());
       cout << smallestdist(strip) << " is shortest distance" << endl;
       cout << "=END=" << endl;
       return 1;
