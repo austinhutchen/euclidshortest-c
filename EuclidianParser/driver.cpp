@@ -85,7 +85,7 @@ void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
   //  nums1.size() - nums2.size() == 0 ? run : return;
 }
 
-vector<coordinate *> *closest_candidates(vector<coordinate *> nums) {
+vector<coordinate *> closest_candidates(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
@@ -103,16 +103,16 @@ vector<coordinate *> *closest_candidates(vector<coordinate *> nums) {
 
   vector<coordinate *>::iterator r_itr = R->begin();
   vector<coordinate *>::iterator l_itr = L->begin();
-  vector<coordinate *> *candidate = new vector<coordinate *>();
+  vector<coordinate *> candidate =  vector<coordinate *>();
   // array of iterators which contain our points of interest
   for (unsigned x = 0; x < nums.size() / 2 - 1; x++) {
     long double leftdist = p->distance(*l_itr);
     if (leftdist < distance) {
-      candidate->push_back(*l_itr);
+      candidate.push_back(*l_itr);
     }
     long double rightdist = p->distance(*r_itr);
     if (rightdist < distance) {
-      candidate->push_back(*r_itr);
+      candidate.push_back(*r_itr);
     }
     r_itr++;
     l_itr++;
@@ -147,17 +147,18 @@ public:
   bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
 };
 
-long double smallestdist(vector<coordinate *> *strip) {
+long double smallestdist(vector<coordinate *> strip) {
   // currently working
   long double minimum = std::numeric_limits<long double>::max();
-  int k = strip->size() - 1;
+  int k = strip.size() - 1;
   for (; k > 0; k--) {
     unsigned counter = 0;
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
-    coordinate *cp = strip->at(k);
+
+    coordinate *cp = strip[k];
     for (int i = k; i - 1 > 0 && counter < 8; i--) {
-      long double currd = strip->at(i)->distance(strip->at(i - 1));
+      long double currd = cp->distance(strip[i-1]);
       if (currd < minimum) {
         minimum = currd;
       }
@@ -180,8 +181,8 @@ int main(int argc, char **argv) {
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
 
-      vector<coordinate *> *strip = closest_candidates(*array);
-      std::sort(strip->begin(), strip->end(), Comparey());
+      vector<coordinate *> strip = closest_candidates(*array);
+      std::sort(strip.begin(), strip.end(), Comparey());
       cout << smallestdist(strip) << " is shortest distance" << endl;
       cout << "=END=" << endl;
       return 1;
