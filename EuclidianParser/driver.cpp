@@ -73,7 +73,7 @@ void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
     L = nums1[x - 1];
     p2 = nums2[x];
     R2 = nums2[x + 1];
-    L2 = nums2[x] - 1;
+    L2 = nums2[x- 1] ;
     p->distance(R) < minimum ? minimum = p->distance(R) : minimum = minimum;
     p->distance(L) < minimum ? minimum = p->distance(L) : minimum = minimum;
     p2->distance(R2) < ans ? ans = p2->distance(R2) : ans = ans;
@@ -149,12 +149,12 @@ public:
 
 long double smallestdist(vector<coordinate *> strip) {
   // currently working
-  long double minimum = std::numeric_limits<long double>::max();
-  for (int i = 0; i < strip.size(); i += 2) {
+  long double minimum = 0;
+  for (int i = 1; i < strip.size(); i ++) {
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
-    if (strip[i]->distance(strip[i + 1]) < minimum) {
-      minimum = strip[i]->distance(strip[i + 1]);
+    if (strip[i]->distance(strip[i - 1]) < minimum) {
+      minimum = strip[i]->distance(strip[i - 1]);
     }
   }
   return minimum;
