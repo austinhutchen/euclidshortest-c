@@ -168,9 +168,8 @@ long double smallestdist(vector<coordinate *> *strip) {
 
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
-  char **t = argv;
-  if (t[1] != nullptr) {
-    vector<coordinate *> *array = inst->filein(t[1]);
+  if (argv[1] != nullptr) {
+    vector<coordinate *> *array = inst->filein(argv[1]);
     if (array->empty()) {
       cout << "EMPTY" << endl;
       return -1;
