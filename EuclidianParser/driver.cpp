@@ -66,7 +66,7 @@ void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
   // split the array along our line at p, and then break array into left and
   // right sets to recursively solve
   // should segfault if one array is not equal to other
-  int size = std::min(nums1.size(), nums2.size());
+  int size = std::max(nums1.size(), nums2.size());
   for (unsigned x = 1; x + 1 < size; x++) {
     p = nums1[x];
     R = nums1[x + 1];
@@ -147,14 +147,14 @@ public:
   bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
 };
 
-long double smallestdist(vector<coordinate *> strip) {
+long double smallestdist(vector<coordinate *>* strip) {
   // currently working
   long double minimum = std::numeric_limits<double>::max();
-  for (int i = 1; i < strip.size(); i ++) {
+  for (int i = 1; i < strip->size(); i ++) {
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
-    if (strip[i]->distance(strip[i - 1]) < minimum) {
-      minimum = strip[i]->distance(strip[i - 1]);
+    if (strip->at(i)->distance(strip->at(i-1)) < minimum) {
+      minimum = strip->at(i)->distance(strip->at(i-1));
     }
   }
   return minimum;
@@ -173,7 +173,11 @@ int main(int argc, char **argv) {
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
       vector<coordinate *> *strip = closest_candidates(*array);
-      cout << smallestdist(*strip) << " is shortest distance" << endl;
+      if(strip->size()==0){
+        cout << "CLOSESTCC FAIL" <<endl;
+        return 0;
+      }
+      cout << smallestdist(strip) << " is shortest distance" << endl;
       cout << "=END=" << endl;
       return 1;
     }
