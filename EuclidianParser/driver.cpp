@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <climits>
 #include <iterator>
+#include <limits>
 
 void swap(coordinate *a, coordinate *b) {
   coordinate temp = *b;
@@ -50,13 +51,13 @@ void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
 // 10 0
 
 void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
-           long double &ans1, long double &ans2) {
+           long double *ans1, long double *ans2) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  double minimum = INT_MAX;
-  double ans = INT_MAX;
-  coordinate *p = 0x0;
+  long double minimum = std::numeric_limits<long double>::max();
+  long double ans = std::numeric_limits<long double>::max();
+  coordinate *p =0x0;
   coordinate *R = 0x0;
   coordinate *L = 0x0;
   coordinate *p2 = 0x0;
@@ -64,34 +65,37 @@ void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
   coordinate *L2 = 0x0;
   // split the array along our line at p, and then break array into left and
   // right sets to recursively solve
+  // should segfault if one array is not equal to other
   int size = std::min(nums1.size(), nums2.size());
   for (unsigned x = 1; x + 1 < size; x++) {
     p = nums1[x];
     R = nums1[x + 1];
     L = nums1[x - 1];
     p2 = nums2[x];
-    R2 = nums2[x];
-    L2 = nums2[x];
+    R2 = nums2[x + 1];
+    L2 = nums2[x] - 1;
     p->distance(R) < minimum ? minimum = p->distance(R) : minimum = minimum;
     p->distance(L) < minimum ? minimum = p->distance(L) : minimum = minimum;
     p2->distance(R2) < ans ? ans = p2->distance(R2) : ans = ans;
     p2->distance(L2) < ans ? ans = p2->distance(L2) : ans = ans;
   }
-  ans1 = minimum;
-  ans2 = ans;
+  *ans1 = minimum;
+  *ans2 = ans;
+
+  //  nums1.size() - nums2.size() == 0 ? run : return;
 }
 
-vector<coordinate *> *closest_candiates(vector<coordinate *> nums) {
+vector<coordinate *> *closest_candidates(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2);
-  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2);
+  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2 - 1);
+  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2 - 1);
   coordinate *p = nums[nums.size() / 2];
   copyvecL(nums, *L);
   copyvecR(nums, *R);
   long double minL, minR;
-  recur(*L, *R, minL, minR);
+  recur(*L, *R, &minL, &minR);
   long double distance = std::min(minL, minR);
   // split the array along our line at p, and then break array into left and
   // right sets to recursively solve might not work for all cases because we
@@ -145,8 +149,8 @@ public:
 
 long double smallestdist(vector<coordinate *> strip) {
   // currently working
-  long double minimum = std::numeric_limits<double>::max();
-  for (int i = 0; i < strip.size(); i+=2) {
+  long double minimum = std::numeric_limits<long double>::max();
+  for (int i = 0; i < strip.size(); i += 2) {
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
     if (strip[i]->distance(strip[i + 1]) < minimum) {
@@ -155,6 +159,7 @@ long double smallestdist(vector<coordinate *> strip) {
   }
   return minimum;
 }
+
 int main(int argc, char **argv) {
   PlaneArithmetic *inst = new PlaneArithmetic();
   char **t = argv;
@@ -167,7 +172,7 @@ int main(int argc, char **argv) {
       // split array into two equal subsets;
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
-      vector<coordinate *> *strip = closest_candiates(*array);
+      vector<coordinate *> *strip = closest_candidates(*array);
       cout << smallestdist(*strip) << " is shortest distance" << endl;
       cout << "=END=" << endl;
       return 1;
