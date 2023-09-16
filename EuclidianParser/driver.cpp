@@ -151,17 +151,16 @@ long double smallestdist(vector<coordinate *> *strip) {
   // currently working
   long double minimum = std::numeric_limits<double>::max();
   unsigned counter = 0;
-  for (int i = strip->size(); i - 1 > 0; i--) {
+  for (int k = strip->size(); k - 1 > 0; k--) {
     unsigned counter = 0;
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
-    coordinate *cp = strip->at(i);
-    while (i - 1 >= 0 && counter < 8) {
+    coordinate *cp = strip->at(k);
+    for (int i = 0; i - 1 > 0 && counter < 8; i--) {
       if (strip->at(i)->distance(strip->at(i - 1)) < minimum) {
         minimum = strip->at(i)->distance(strip->at(i - 1));
         counter++;
       }
-      i--;
     }
   }
   return minimum;
