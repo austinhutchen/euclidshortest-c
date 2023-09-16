@@ -149,7 +149,7 @@ public:
 
 long double smallestdist(vector<coordinate *> strip) {
   // currently working
-  long double minimum = 0;
+  long double minimum = std::numeric_limits<double>::max();
   for (int i = 1; i < strip.size(); i ++) {
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
