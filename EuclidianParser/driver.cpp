@@ -155,16 +155,7 @@ long double smallestdist(vector<coordinate *> strip) {
   }
   long double minimum = std::numeric_limits<long double>::max();
   int k = strip.size() - 1;
-  if (strip.size() <= 3) {
-    for (int i = strip.size() - 1; i > 0; i--) {
-      coordinate *cp = strip[i];
-      long double currd = cp->distance(strip[i - 1]);
-      if (currd < minimum) {
-        minimum = currd;
-      }
-    }
-    return minimum;
-  }
+
   for (; k > 0; k--) {
     unsigned counter = 0;
     // pick all points one by one, and check that their distance between points
