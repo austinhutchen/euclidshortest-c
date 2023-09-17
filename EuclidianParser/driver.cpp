@@ -84,7 +84,7 @@ void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
 
   //  nums1.size() - nums2.size() == 0 ? run : return;
 }
-
+std::stack<coordinate *> comp;
 vector<coordinate *> closest_candidates(vector<coordinate *> nums) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
@@ -101,6 +101,7 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums) {
   // right sets to recursively solve might not work for all cases because we
   // have converted 2d coordinates to 1d. will need to fix this
 
+  comp.push(p);
   vector<coordinate *>::iterator r_itr = R->begin();
   vector<coordinate *>::iterator l_itr = L->begin();
   vector<coordinate *> candidate = vector<coordinate *>();
@@ -149,10 +150,13 @@ public:
 
 long double smallestdist(vector<coordinate *> strip) {
   // currently working
+  if (strip.size() == 1) {
+    return comp.top()->distance(strip[0]);
+  }
   long double minimum = std::numeric_limits<long double>::max();
   int k = strip.size() - 1;
   if (strip.size() <= 3) {
-    for (int i = strip.size()-1; i > 1; i--) {
+    for (int i = strip.size() - 1; i > 0; i--) {
       coordinate *cp = strip[i];
       long double currd = cp->distance(strip[i - 1]);
       if (currd < minimum) {
