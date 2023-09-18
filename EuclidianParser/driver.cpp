@@ -106,7 +106,7 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   // split the array along our line at p, and then break array into left and
   // right sets to recursively solve might not work for all cases because we
   // have converted 2d coordinates to 1d. will need to fix this
-
+  // save p for later comparison
   comp.push(p);
   vector<coordinate *>::iterator r_itr = R->begin();
   vector<coordinate *>::iterator l_itr = L->begin();
@@ -167,9 +167,8 @@ long double smallestdist(vector<coordinate *> strip, long double best) {
     unsigned counter = 0;
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
-    coordinate *cp = strip[k];
     for (int i = k; i  > 0 && counter < 8; i--) {
-      long double currd = cp->distance(strip[i - 1]);
+      long double currd = comp.top()->distance(strip[i - 1]);
       if (currd < best) {
         best = currd;
       }
