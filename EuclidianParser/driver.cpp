@@ -112,7 +112,7 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   vector<coordinate *>::iterator l_itr = L->begin();
   vector<coordinate *> candidate = vector<coordinate *>();
 // array of iterators which contain our points of interest
-#pragma OMP parallel for
+#pragma omp parallel for
   for (unsigned x = 0; x < nums.size() / 2; x++) {
     long double leftdist = p->distance(*l_itr);
     if (leftdist <= distance) {
@@ -154,7 +154,7 @@ public:
 class Comparey {
 public:
   // a is less than b operator, used for sort in R^2
-  bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
+  bool operator()(coordinate *a, coordinate *b) { return a->x1() - b->x1(); }
 };
 
 long double smallestdist(vector<coordinate *> strip, long double best) {
