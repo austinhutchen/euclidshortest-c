@@ -1,9 +1,5 @@
 
 #include "./code/NumParse.hpp"
-#include <algorithm>
-#include <climits>
-#include <iterator>
-#include <limits>
 
 void swap(coordinate *a, coordinate *b) {
   coordinate temp = *b;
@@ -30,7 +26,7 @@ void copyvecL(vector<coordinate *> src, vector<coordinate *> &dest) {
 }
 
 void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
-  std::vector<coordinate *>::iterator p = src.begin() + (src.size() / 2) + 1;
+  std::vector<coordinate *>::iterator p = src.begin() + (src.size() / 2) ;
   std::vector<coordinate *>::iterator x = dest.begin();
   while (x != dest.end()) {
     *x = (*p);
@@ -96,8 +92,8 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2 - 1);
-  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2 - 1);
+  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2 );
+  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2 );
   coordinate *p = nums[nums.size() / 2];
   copyvecL(nums, *L);
   copyvecR(nums, *R);
@@ -115,7 +111,7 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   vector<coordinate *> candidate = vector<coordinate *>();
 // array of iterators which contain our points of interest
 #pragma OMP parallel for
-  for (unsigned x = 0; x < nums.size() / 2 - 1; x++) {
+  for (unsigned x = 0; x < nums.size() / 2 ; x++) {
     long double leftdist = p->distance(*l_itr);
     if (leftdist <= distance) {
       candidate.push_back(*l_itr);
@@ -164,12 +160,16 @@ long double smallestdist(vector<coordinate *> strip, long double best) {
   if (strip.size() == 0) {
     return best;
   }
-  unsigned counter = 0;
-  for (int i = 0; i < strip.size(); ++i)
-    for (int j = i + 1; j < strip.size() && (strip[j]->x1() - strip[i]->x1()) < best; ++j) {
+  for (int i = 0; i < strip.size(); ++i) {
+    unsigned counter = 0;
+    for (int j = i + 1; j < strip.size() &&
+                        (strip[j]->x1() - strip[i]->x1()) < best && counter < 8;
+         ++j) {
       if (strip[i]->distance(strip[j]) < best)
         best = strip[i]->distance(strip[j]);
+      counter++;
     }
+  }
 
   // coordinate * p = strip[strip.size()/2]; ??
   // pick all points one by one, and check that their distance between points

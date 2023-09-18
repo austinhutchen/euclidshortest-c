@@ -1,15 +1,19 @@
+
+#include <algorithm>
+#include <climits>
+#include <cmath>
 #include <cstdlib>
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <limits>
+#include <stack>
 #include <stdexcept>
 #include <string>
 #include <system_error>
-#pragma ONCE
-#include <cmath>
 #include <vector>
-#include <fstream>
-#include <iostream>
-#include <stack>
 using namespace std;
-
+#pragma ONCE
 class coordinate {
 public:
   // x is a vector in R^2
