@@ -26,7 +26,7 @@ void copyvecL(vector<coordinate *> src, vector<coordinate *> &dest) {
 }
 
 void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
-  std::vector<coordinate *>::iterator p = src.begin() + (src.size() / 2) ;
+  std::vector<coordinate *>::iterator p = src.begin() + (src.size() / 2);
   std::vector<coordinate *>::iterator x = dest.begin();
   while (x != dest.end()) {
     *x = (*p);
@@ -51,8 +51,9 @@ void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
 // g++ driver.cpp && ./a.out 1.txt && ./a.out 2.txt && ./a.out 3.txt &&
 // ./a.out 4.txt && ./a.out 5.txt && ./a.out 6.txt && ./a.out 7.txt &&
 // ./a.out 8.txt && ./a.out 9.txt for parallel - -fopenmp
-void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
-           long double *ans1, long double *ans2) {
+void minimum_distance_split(vector<coordinate *> nums1,
+                            vector<coordinate *> nums2, long double *ans1,
+                            long double *ans2) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
@@ -92,13 +93,13 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2 );
-  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2 );
+  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2);
+  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2);
   coordinate *p = nums[nums.size() / 2];
   copyvecL(nums, *L);
   copyvecR(nums, *R);
   long double minL, minR;
-  recur(*L, *R, &minL, &minR);
+  minimum_distance_split(*L, *R, &minL, &minR);
   long double distance = std::min(minL, minR);
   _distance = distance;
   // split the array along our line at p, and then break array into left and
@@ -111,7 +112,7 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   vector<coordinate *> candidate = vector<coordinate *>();
 // array of iterators which contain our points of interest
 #pragma OMP parallel for
-  for (unsigned x = 0; x < nums.size() / 2 ; x++) {
+  for (unsigned x = 0; x < nums.size() / 2; x++) {
     long double leftdist = p->distance(*l_itr);
     if (leftdist <= distance) {
       candidate.push_back(*l_itr);
