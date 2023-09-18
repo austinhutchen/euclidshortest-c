@@ -3,6 +3,8 @@
 #include <string>
 #include <system_error>
 #pragma ONCE
+#include <cmath>
+#include <vector>
 #include <fstream>
 #include <iostream>
 #include <stack>
