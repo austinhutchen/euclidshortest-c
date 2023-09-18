@@ -1,5 +1,5 @@
 
-#include "./code/EuclidianArithmetic.hpp"
+#include "./code/NumParse.hpp"
 #include <algorithm>
 #include <climits>
 #include <iterator>
