@@ -39,17 +39,21 @@ void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
   return;
 }
 // Assignment 1
+// score 4/10
 // 1 1.40118
-// 2 1.00469
-// 3 2.68663
-// 4 12.334
-// 5 2.0259
-// 6 5.82228
-// 7 24.0436
-// 8 12.2882
-// 9 0.07
-// 10 0
+// 2 1.511
+// 3 2.702
+// 4 1.252
+// 5 3.1585
+// 6 0.549
+// 7 0.413
+// 8 0.41
+// 9 0.07 good 
+// 10 0 good
 
+
+
+// for parallel - -fopenmp
 void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
            long double *ans1, long double *ans2) {
   // take distance between all pairs using described algorithm splitting list
@@ -108,6 +112,7 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   vector<coordinate *>::iterator l_itr = L->begin();
   vector<coordinate *> candidate = vector<coordinate *>();
   // array of iterators which contain our points of interest
+  #pragma OMP parallel for
   for (unsigned x = 0; x < nums.size() / 2 - 1; x++) {
     long double leftdist = p->distance(*l_itr);
     if (leftdist <= distance) {
@@ -150,7 +155,7 @@ public:
   bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
 };
 
-long double smallestdist(vector<coordinate *> strip, long double &best) {
+long double smallestdist(vector<coordinate *> strip, long double best) {
   // currently working
   if (strip.size() == 0) {
     return best;
@@ -163,7 +168,7 @@ long double smallestdist(vector<coordinate *> strip, long double &best) {
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
     coordinate *cp = strip[k];
-    for (int i = k; i - 1 > 0 && counter < 8; i--) {
+    for (int i = k; i  > 0 && counter < 8; i--) {
       long double currd = cp->distance(strip[i - 1]);
       if (currd < best) {
         best = currd;
