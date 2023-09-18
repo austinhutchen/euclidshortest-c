@@ -161,17 +161,16 @@ long double smallestdist(vector<coordinate *> strip, long double best) {
   if (strip.size() == 1) {
     return comp.top()->distance(strip[0]);
   }
-  for (int k = strip.size() - 1; k > 0; k--) {
-    unsigned counter = 0;
-    // pick all points one by one, and check that their distance between points
-    // is lower than minimum distance d
-    for (int i = k; i > 0 && counter < 8; i--) {
-      long double currd = comp.top()->distance(strip[i - 1]);
-      if (currd < best) {
-        best = currd;
-      }
-      counter++;
+
+  unsigned counter = 0;
+  // pick all points one by one, and check that their distance between points
+  // is lower than minimum distance d
+  for (int i = strip.size() - 1; i > 0 && counter < 8; i--) {
+    long double currd = comp.top()->distance(strip[i - 1]);
+    if (currd < best) {
+      best = currd;
     }
+    counter++;
   }
   return best;
 }
