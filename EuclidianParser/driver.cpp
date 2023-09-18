@@ -10,6 +10,7 @@ void swap(coordinate *a, coordinate *b) {
   *b = *a;
   *a = temp;
 }
+
 void donothing(void) {}
 // in progress
 // vector forms the rows of the two-dimensional euclidian plane
@@ -27,6 +28,7 @@ void copyvecL(vector<coordinate *> src, vector<coordinate *> &dest) {
   }
   return;
 }
+
 void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
   std::vector<coordinate *>::iterator p = src.begin() + (src.size() / 2) + 1;
   std::vector<coordinate *>::iterator x = dest.begin();
@@ -50,8 +52,9 @@ void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
 // 8 0.41
 // 9 0.07 good
 // 10 0 good
-
-// for parallel - -fopenmp
+// g++ driver.cpp && ./a.out 1.txt && ./a.out 2.txt && ./a.out 3.txt &&
+// ./a.out 4.txt && ./a.out 5.txt && ./a.out 6.txt && ./a.out 7.txt &&
+// ./a.out 8.txt && ./a.out 9.txt for parallel - -fopenmp
 void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
            long double *ans1, long double *ans2) {
   // take distance between all pairs using described algorithm splitting list
@@ -86,6 +89,7 @@ void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
 
   //  nums1.size() - nums2.size() == 0 ? run : return;
 }
+
 std::stack<coordinate *> comp;
 vector<coordinate *> closest_candidates(vector<coordinate *> nums,
                                         long double &_distance) {
@@ -135,6 +139,7 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
 bool less(coordinate *a, coordinate *b) {
   return a->x0() < b->x0() || (a->x0() == b->x0() && a->x1() < b->x1());
 }
+
 void printplane(vector<coordinate *> R) {
   for (int i = 0; i < R.size(); i++) {
     R[i]->printcoords();
@@ -147,6 +152,7 @@ public:
     return a->x0() < b->x0() || (a->x0() == b->x0() && a->x1() < b->x1());
   }
 };
+
 class Comparey {
 public:
   // a is less than b operator, used for sort in R^2
@@ -158,20 +164,17 @@ long double smallestdist(vector<coordinate *> strip, long double best) {
   if (strip.size() == 0) {
     return best;
   }
-  if (strip.size() == 1) {
-    return comp.top()->distance(strip[0]);
-  }
-
   unsigned counter = 0;
+  for (int i = 0; i < strip.size(); ++i)
+    for (int j = i + 1; j < strip.size() && (strip[j]->x1() - strip[i]->x1()) < best; ++j) {
+      if (strip[i]->distance(strip[j]) < best)
+        best = strip[i]->distance(strip[j]);
+    }
+
+  // coordinate * p = strip[strip.size()/2]; ??
   // pick all points one by one, and check that their distance between points
   // is lower than minimum distance d
-  for (int i = strip.size() - 1; i > 0 && counter < 8; i--) {
-    long double currd = comp.top()->distance(strip[i - 1]);
-    if (currd < best) {
-      best = currd;
-    }
-    counter++;
-  }
+
   return best;
 }
 
