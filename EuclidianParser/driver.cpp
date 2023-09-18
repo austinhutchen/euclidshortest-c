@@ -44,14 +44,12 @@ void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
 // 2 1.511
 // 3 2.702
 // 4 1.252
-// 5 3.1585
+// 5 3.15855
 // 6 0.549
 // 7 0.413
 // 8 0.41
-// 9 0.07 good 
+// 9 0.07 good
 // 10 0 good
-
-
 
 // for parallel - -fopenmp
 void recur(vector<coordinate *> nums1, vector<coordinate *> nums2,
@@ -111,8 +109,8 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   vector<coordinate *>::iterator r_itr = R->begin();
   vector<coordinate *>::iterator l_itr = L->begin();
   vector<coordinate *> candidate = vector<coordinate *>();
-  // array of iterators which contain our points of interest
-  #pragma OMP parallel for
+// array of iterators which contain our points of interest
+#pragma OMP parallel for
   for (unsigned x = 0; x < nums.size() / 2 - 1; x++) {
     long double leftdist = p->distance(*l_itr);
     if (leftdist <= distance) {
@@ -163,18 +161,18 @@ long double smallestdist(vector<coordinate *> strip, long double best) {
   if (strip.size() == 1) {
     return comp.top()->distance(strip[0]);
   }
-  for (int k = strip.size()-1; k > 0; k--) {
+  for (int k = strip.size() - 1; k > 0; k--) {
     unsigned counter = 0;
     // pick all points one by one, and check that their distance between points
     // is lower than minimum distance d
-    for (int i = k; i  > 0 && counter < 8; i--) {
+    for (int i = k; i > 0 && counter < 8; i--) {
       long double currd = comp.top()->distance(strip[i - 1]);
       if (currd < best) {
         best = currd;
       }
       counter++;
     }
-  } 
+  }
   return best;
 }
 
@@ -190,9 +188,9 @@ int main(int argc, char **argv) {
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
       long double dist;
-      vector<coordinate *> strip = closest_candidates(*array,dist);
+      vector<coordinate *> strip = closest_candidates(*array, dist);
       std::sort(strip.begin(), strip.end(), Comparey());
-      cout << smallestdist(strip,dist) << " is shortest distance" << endl;
+      cout << smallestdist(strip, dist) << " is shortest distance" << endl;
       cout << "=END=" << endl;
       return 1;
     }
