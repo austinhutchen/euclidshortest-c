@@ -45,7 +45,7 @@ void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
 // 5 3.15855
 // 6 0.549
 // 7 0.413
-// 8 0.41 
+// 8 0.41
 // 9 0.07 good
 // 10 0 good
 // g++ driver.cpp && ./a.out 1.txt && ./a.out 2.txt && ./a.out 3.txt &&
@@ -65,10 +65,10 @@ void minimum_distance_split(vector<coordinate *> nums1,
   coordinate *p2 = 0x0;
   coordinate *R2 = 0x0;
   coordinate *L2 = 0x0;
-  // split the array along our line at p, and then break array into left and
-  // right sets to recursively solve
-  // should segfault if one array is not equal to other
-  #pragma omp parallel for
+// split the array along our line at p, and then break array into left and
+// right sets to recursively solve
+// should segfault if one array is not equal to other
+#pragma omp parallel for
   int size = std::max(nums1.size(), nums2.size());
   for (unsigned x = 1; x + 1 < size; x++) {
     p = nums1[x];
@@ -164,8 +164,8 @@ long double smallestdist(vector<coordinate *> strip, long double best) {
   }
   for (int i = 0; i < strip.size(); ++i) {
     unsigned counter = 0;
-    for (int j = i + 1; j < strip.size() &&
-                        (strip[j]->x1() - strip[i]->x1()) < best && counter < 8;
+    for (int j = ++i; j < strip.size() &&
+                      (strip[j]->x1() - strip[i]->x1()) < best && counter < 8;
          ++j) {
       if (strip[i]->distance(strip[j]) < best)
         best = strip[i]->distance(strip[j]);
