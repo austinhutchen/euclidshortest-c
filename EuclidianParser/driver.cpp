@@ -69,8 +69,7 @@ void minimum_distance_split(vector<coordinate *> nums1,
 // right sets to recursively solve
 // should segfault if one array is not equal to other
 #pragma omp parallel for
-  int size = std::max(nums1.size(), nums2.size());
-  for (unsigned x = 1; x + 1 < size; x++) {
+  for (unsigned x = 1; x + 1 < std::max(nums1.size(), nums2.size()); x++) {
     p = nums1[x];
     R = nums1[x + 1];
     L = nums1[x - 1];
@@ -113,19 +112,25 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   vector<coordinate *> candidate = vector<coordinate *>();
 // array of iterators which contain our points of interest
 #pragma omp parallel for
-  for (unsigned x = 0; x < nums.size() / 2; x++) {
+  for (unsigned x = 0; x < nums.size() / 2 - 1; x++) {
     long double leftdist = p->distance(*l_itr);
-    if (leftdist <= distance) {
+    if (leftdist <= distance && leftdist != 0) {
       candidate.push_back(*l_itr);
     }
     long double rightdist = p->distance(*r_itr);
-    if (rightdist <= distance) {
+    if (rightdist <= distance && rightdist != 0) {
       candidate.push_back(*r_itr);
     }
     r_itr++;
     l_itr++;
   }
+  if(candidate.size()!=0){
   return candidate;
+  }
+  else{
+    cout << "CANDIDATE NOT FOUND" <<endl;
+    return candidate;
+  }
 }
 
 // temp used for nearest pair of points
@@ -154,7 +159,7 @@ public:
 class Comparey {
 public:
   // a is less than b operator, used for sort in R^2
-  bool operator()(coordinate *a, coordinate *b) { return a->x1() - b->x1(); }
+  bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
 };
 
 long double smallestdist(vector<coordinate *> strip, long double best) {
