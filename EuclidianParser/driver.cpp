@@ -69,7 +69,7 @@ void minimum_distance_split(vector<coordinate *> nums1,
 // right sets to recursively solve
 // should segfault if one array is not equal to other
 #pragma omp parallel for
-  for (unsigned x = 1; x + 1 < std::max(nums1.size(), nums2.size()); x++) {
+  for (unsigned x = 1; x + 1 < nums2.size(); x++) {
     p = nums1[x];
     R = nums1[x + 1];
     L = nums1[x - 1];
@@ -93,9 +93,11 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
-  vector<coordinate *> *R = new vector<coordinate *>(nums.size() / 2);
-  vector<coordinate *> *L = new vector<coordinate *>(nums.size() / 2);
-  coordinate *p = nums[nums.size() / 2];
+  // R and L wont always be the same size, how to ensure they are?
+  unsigned  mid=nums.size()/2;
+    coordinate *p = nums[mid];
+  vector<coordinate *> *R = new vector<coordinate *>(mid -1);
+  vector<coordinate *> *L = new vector<coordinate *>(mid -1);
   copyvecL(nums, *L);
   copyvecR(nums, *R);
   long double minL, minR;
@@ -112,7 +114,7 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   vector<coordinate *> candidate = vector<coordinate *>();
 // array of iterators which contain our points of interest
 #pragma omp parallel for
-  for (unsigned x = 0; x < nums.size() / 2 - 1; x++) {
+  for (unsigned x = 0; x < mid-1; x++) {
     long double leftdist = p->distance(*l_itr);
     if (leftdist <= distance && leftdist != 0) {
       candidate.push_back(*l_itr);
@@ -124,13 +126,7 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
     r_itr++;
     l_itr++;
   }
-  if(candidate.size()!=0){
   return candidate;
-  }
-  else{
-    cout << "CANDIDATE NOT FOUND" <<endl;
-    return candidate;
-  }
 }
 
 // temp used for nearest pair of points
