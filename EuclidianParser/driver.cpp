@@ -2,9 +2,9 @@
 #include "./code/NumParse.hpp"
 // TESTS 
 // 1 1.40118 good
-// 2 1.511 wrong
+// 2 1.51069 wrong
 // 3 2.702 wrong 
-// 4 1.252 wrong 
+// 4 1.25196 wrong 
 // 5 3.15855 wrong 
 // 6 0.549 wrong 
 // 7 0.412554 wrong
@@ -18,19 +18,12 @@ void swap(coordinate *a, coordinate *b) {
   *a = temp;
 }
 
-void donothing(void) {}
-// in progress
-// vector forms the rows of the two-dimensional euclidian plane
-// coordinate ** represents a single line in the euclidian plane from left to
-// right to look up or down, observe the respective row of nums and compare to
-// MIN()
 
 vector<vector<coordinate *> *> copyVec(vector<coordinate *> src) {
   vector<vector<coordinate *> *> ans;
   __wrap_iter<coordinate **> mid = src.begin() + src.size() / 2;
   vector<coordinate *> *L = new vector<coordinate *>(src.begin(), mid);
   vector<coordinate *> *R = new vector<coordinate *>(mid, src.end());
-
   ans.push_back(L);
   ans.push_back(R);
   return ans;
