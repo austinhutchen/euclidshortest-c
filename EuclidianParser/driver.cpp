@@ -1,14 +1,14 @@
 
 #include "./code/NumParse.hpp"
-// TESTS
+// TESTS 
 // 1 1.40118 good
 // 2 1.511 wrong
-// 3 2.702 wrong
-// 4 1.252 wrong
-// 5 3.15855 wrong
-// 6 0.549 wrong
+// 3 2.702 wrong 
+// 4 1.252 wrong 
+// 5 3.15855 wrong 
+// 6 0.549 wrong 
 // 7 0.412554 wrong
-// 8 0.41 good
+// 8 0.41 good 
 // 9 0.07 good
 // 10 0 good
 // g++ driver.cpp && ./a.out 1.txt
@@ -152,6 +152,8 @@ public:
     return a->x1() < b->x1() ? a->x1() : b->x1();
   }
 };
+
+
 
 long double smallestdist(vector<coordinate *> strip, long double best) {
   // currently working
