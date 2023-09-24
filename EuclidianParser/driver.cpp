@@ -30,16 +30,7 @@ vector<vector<coordinate *> *> copyVec(vector<coordinate *> src) {
   __wrap_iter<coordinate **> mid = src.begin() + src.size() / 2;
   vector<coordinate *> *L = new vector<coordinate *>(src.begin(), mid);
   vector<coordinate *> *R = new vector<coordinate *>(mid, src.end());
-  std::vector<coordinate *>::iterator p = src.begin();
-  std::vector<coordinate *>::iterator x = L->begin();
-  std::vector<coordinate *>::iterator y = R->begin();
-  while (p != src.end()) {
-    *x = (*p);
-    *y = *(p + src.size() / 2);
-    x++;
-    y++;
-    p++;
-  }
+
   ans.push_back(L);
   ans.push_back(R);
   return ans;
