@@ -1,6 +1,17 @@
 
 #include "./code/NumParse.hpp"
-
+// TESTS
+// 1 1.40118 good
+// 2 1.511 wrong
+// 3 2.702 wrong
+// 4 1.252 wrong
+// 5 3.15855 wrong
+// 6 0.549 wrong
+// 7 0.412554 wrong
+// 8 0.41 good
+// 9 0.07 good
+// 10 0 good
+// g++ driver.cpp && ./a.out 1.txt
 void swap(coordinate *a, coordinate *b) {
   coordinate temp = *b;
   *b = *a;
@@ -14,43 +25,26 @@ void donothing(void) {}
 // right to look up or down, observe the respective row of nums and compare to
 // MIN()
 
-void copyvecL(vector<coordinate *> src, vector<coordinate *> &dest) {
+vector<vector<coordinate *> *> copyVec(vector<coordinate *> src) {
+  vector<vector<coordinate *> *> ans;
+  __wrap_iter<coordinate **> mid = src.begin() + src.size() / 2;
+  vector<coordinate *> *L = new vector<coordinate *>(src.begin(), mid);
+  vector<coordinate *> *R = new vector<coordinate *>(mid, src.end());
   std::vector<coordinate *>::iterator p = src.begin();
-  std::vector<coordinate *>::iterator x = dest.begin();
-  while (x != dest.end()) {
+  std::vector<coordinate *>::iterator x = L->begin();
+  std::vector<coordinate *>::iterator y = R->begin();
+  while (p != src.end()) {
     *x = (*p);
+    *y = *(p + src.size() / 2);
     x++;
+    y++;
     p++;
   }
-  return;
+  ans.push_back(L);
+  ans.push_back(R);
+  return ans;
 }
 
-void copyvecR(vector<coordinate *> src, vector<coordinate *> &dest) {
-  std::vector<coordinate *>::iterator p = src.begin() + (src.size() / 2);
-  std::vector<coordinate *>::iterator x = dest.begin();
-  while (x != dest.end()) {
-    *x = (*p);
-    x++;
-    p++;
-  }
-
-  return;
-}
-// Assignment 1
-// score 4/10
-// 1 1.40118
-// 2 1.511
-// 3 2.702
-// 4 1.252
-// 5 3.15855
-// 6 0.549
-// 7 0.413
-// 8 0.41
-// 9 0.07 good
-// 10 0 good
-// g++ driver.cpp && ./a.out 1.txt && ./a.out 2.txt && ./a.out 3.txt &&
-// ./a.out 4.txt && ./a.out 5.txt && ./a.out 6.txt && ./a.out 7.txt &&
-// ./a.out 8.txt && ./a.out 9.txt for parallel - -fopenmp
 void minimum_distance_split(vector<coordinate *> nums1,
                             vector<coordinate *> nums2, long double *ans1,
                             long double *ans2) {
@@ -69,7 +63,7 @@ void minimum_distance_split(vector<coordinate *> nums1,
 // right sets to recursively solve
 // should segfault if one array is not equal to other
 #pragma omp parallel for
-  for (unsigned x = 1; x + 1 < nums2.size(); x++) {
+  for (unsigned x = 1; x + 1 < nums1.size(); x++) {
     p = nums1[x];
     R = nums1[x + 1];
     L = nums1[x - 1];
@@ -94,12 +88,11 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
   // R and L wont always be the same size, how to ensure they are?
-  unsigned  mid=nums.size()/2;
-    coordinate *p = nums[mid];
-  vector<coordinate *> *R = new vector<coordinate *>(mid -1);
-  vector<coordinate *> *L = new vector<coordinate *>(mid -1);
-  copyvecL(nums, *L);
-  copyvecR(nums, *R);
+  unsigned mid = nums.size() / 2;
+  coordinate *p = nums[mid];
+  vector<vector<coordinate *> *> split = copyVec(nums);
+  vector<coordinate *> *R = split[0];
+  vector<coordinate *> *L = split[1];
   long double minL, minR;
   minimum_distance_split(*L, *R, &minL, &minR);
   long double distance = std::min(minL, minR);
@@ -114,7 +107,7 @@ vector<coordinate *> closest_candidates(vector<coordinate *> nums,
   vector<coordinate *> candidate = vector<coordinate *>();
 // array of iterators which contain our points of interest
 #pragma omp parallel for
-  for (unsigned x = 0; x < mid-1; x++) {
+  for (unsigned x = 0; x < mid; x++) {
     long double leftdist = p->distance(*l_itr);
     if (leftdist <= distance && leftdist != 0) {
       candidate.push_back(*l_itr);
@@ -155,7 +148,9 @@ public:
 class Comparey {
 public:
   // a is less than b operator, used for sort in R^2
-  bool operator()(coordinate *a, coordinate *b) { return a->x1() < b->x1(); }
+  bool operator()(coordinate *a, coordinate *b) {
+    return a->x1() < b->x1() ? a->x1() : b->x1();
+  }
 };
 
 long double smallestdist(vector<coordinate *> strip, long double best) {
@@ -173,11 +168,9 @@ long double smallestdist(vector<coordinate *> strip, long double best) {
       counter++;
     }
   }
-
   // coordinate * p = strip[strip.size()/2]; ??
   // pick all points one by one, and check that their distance between points
   // is lower than minimum distance d
-
   return best;
 }
 

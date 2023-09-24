@@ -78,7 +78,7 @@ public:
     try {
       i = p;
       return stold(ans);
-    } catch (logic_error) {
+    } catch (errc) {
       cout << "error converting" << endl;
       exit(0);
     }
