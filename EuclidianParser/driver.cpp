@@ -2,11 +2,11 @@
 std::stack<coordinate *> comp;
 // TESTS
 // 1 1.40118 good
-// 2 1.51069 wrong
+// 2 1.0047 good
 // 3 2.702 wrong
-// 4 1.25196 wrong
-// 5 3.15855 wrong
-// 6 0.651304 wrong
+// 4 1.252 wrong
+// 5 2.0259 wrong
+// 6 0.5488 wrong
 // 7 0.82 wrong
 // 8 0.41 good
 // 9 0.07 good
@@ -22,7 +22,7 @@ vector<vector<coordinate *> *> copyVec(vector<coordinate *> src) {
   vector<vector<coordinate *> *> ans;
   __wrap_iter<coordinate **> mid = src.begin() + (src.size() / 2);
   vector<coordinate *> *L = new vector<coordinate *>(src.begin(), mid);
-  vector<coordinate *> *R = new vector<coordinate *>(mid, src.end());
+  vector<coordinate *> *R = new vector<coordinate *>(mid+1, src.end()-1);
   ans.push_back(L);
   ans.push_back(R);
   return ans;
@@ -46,21 +46,22 @@ void minimum_distance_split(vector<coordinate *> nums1,
 // right sets to recursively solve
 // should segfault if one array is not equal to other
 #pragma omp parallel for
-  for (unsigned x = 1; x + 1 < nums1.size(); x ++) {
+  for (unsigned x = 1; x + 1 < nums1.size(); x++) {
     p = nums1[x];
     R = nums1[x + 1];
     L = nums1[x - 1];
-    p2 = nums2[x];
-    R2 = nums2[x + 1];
-    L2 = nums2[x - 1];
     p->distance(R) < minimum ? minimum = p->distance(R) : minimum = minimum;
     p->distance(L) < minimum ? minimum = p->distance(L) : minimum = minimum;
+  }
+  for (unsigned x = 1; x + 1 < nums2.size(); x++) {
+    p2 = nums1[x];
+    R2 = nums1[x + 1];
+    L2 = nums1[x - 1];
     p2->distance(R2) < ans ? ans = p2->distance(R2) : ans = ans;
     p2->distance(L2) < ans ? ans = p2->distance(L2) : ans = ans;
   }
   *ans1 = minimum;
   *ans2 = ans;
-
   //  nums1.size() - nums2.size() == 0 ? run : return;
 }
 
@@ -71,10 +72,10 @@ vector<coordinate *> generate_candidate_strip(vector<coordinate *> nums,
   // points on opposite end of splitted array
   // R and L wont always be the same size, how to ensure they are?
   unsigned mid = nums.size() / 2;
-   coordinate *const p = nums[mid];
+  coordinate *const p = nums[nums.size() / 2];
   vector<vector<coordinate *> *> split = copyVec(nums);
-  vector<coordinate *> *R = split[0];
-  vector<coordinate *> *L = split[1];
+  vector<coordinate *> *L = split.at(0);
+  vector<coordinate *> *R = split.at(1);
   comp.push(p);
   vector<coordinate *>::iterator r_itr = R->begin();
   vector<coordinate *>::iterator l_itr = L->begin();
@@ -90,12 +91,11 @@ vector<coordinate *> generate_candidate_strip(vector<coordinate *> nums,
 // array of iterators which contain our points of interest
 #pragma omp parallel for
   for (unsigned x = 0; x < mid; x++) {
-    long double leftdist = p->distance(*l_itr);
-    if (leftdist <= distance) {
+    // find X COORDINATES closer than distance
+    if (fabs((*l_itr)->x0() - p->x0()) <= distance) {
       candidate.push_back(*l_itr);
     }
-    long double rightdist = p->distance(*r_itr);
-    if (rightdist <= distance) {
+    if (fabs((*r_itr)->x0() - p->x0()) <= distance) {
       candidate.push_back(*r_itr);
     }
     r_itr++;
@@ -103,7 +103,6 @@ vector<coordinate *> generate_candidate_strip(vector<coordinate *> nums,
   }
   return candidate;
 }
-
 // temp used for nearest pair of points
 // return the pair as nums
 // sort nums

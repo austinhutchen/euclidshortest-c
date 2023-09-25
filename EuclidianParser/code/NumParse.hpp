@@ -1,4 +1,3 @@
-
 #include <algorithm>
 #include <climits>
 #include <cmath>
@@ -14,6 +13,19 @@
 #include <vector>
 using namespace std;
 #pragma ONCE
+// will be used for strassen's algorithm implementation
+class matrixrow {
+  matrixrow(void) { row = new vector<int>(); }
+
+  void fill(string in, unsigned start, size_t count) {
+    for (int i = start; i < count; i++) {
+      row->push_back(in[i]);
+    }
+  }
+
+private:
+  vector<int> *row;
+};
 class coordinate {
 public:
   // x is a vector in R^2
