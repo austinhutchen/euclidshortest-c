@@ -22,7 +22,7 @@ vector<vector<coordinate *> *> copyVec(vector<coordinate *> src) {
   vector<vector<coordinate *> *> ans;
   __wrap_iter<coordinate **> mid = src.begin() + (src.size() / 2);
   vector<coordinate *> *L = new vector<coordinate *>(src.begin(), mid);
-  vector<coordinate *> *R = new vector<coordinate *>(mid+1, src.end()-1);
+  vector<coordinate *> *R = new vector<coordinate *>(mid + 1, src.end() - 1);
   ans.push_back(L);
   ans.push_back(R);
   return ans;
@@ -90,17 +90,20 @@ vector<coordinate *> generate_candidate_strip(vector<coordinate *> nums,
   vector<coordinate *> candidate = vector<coordinate *>();
 // array of iterators which contain our points of interest
 #pragma omp parallel for
-  for (unsigned x = 0; x < mid; x++) {
+  for (unsigned x = 0; x < L->size(); x++) {
     // find X COORDINATES closer than distance
     if (fabs((*l_itr)->x0() - p->x0()) <= distance) {
       candidate.push_back(*l_itr);
     }
+    l_itr++;
+  }
+  for (unsigned x = 0; x < R->size(); x++) {
     if (fabs((*r_itr)->x0() - p->x0()) <= distance) {
       candidate.push_back(*r_itr);
     }
     r_itr++;
-    l_itr++;
   }
+
   return candidate;
 }
 // temp used for nearest pair of points
