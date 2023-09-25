@@ -1,14 +1,14 @@
-
 #include "./code/NumParse.hpp"
-// TESTS 
+std::stack<coordinate *> comp;
+// TESTS
 // 1 1.40118 good
 // 2 1.51069 wrong
-// 3 2.702 wrong 
-// 4 1.25196 wrong 
-// 5 3.15855 wrong 
-// 6 0.549 wrong 
-// 7 0.412554 wrong
-// 8 0.41 good 
+// 3 2.702 wrong
+// 4 1.25196 wrong
+// 5 3.15855 wrong
+// 6 0.651304 wrong
+// 7 0.82 wrong
+// 8 0.41 good
 // 9 0.07 good
 // 10 0 good
 // g++ driver.cpp && ./a.out 1.txt
@@ -18,10 +18,9 @@ void swap(coordinate *a, coordinate *b) {
   *a = temp;
 }
 
-
 vector<vector<coordinate *> *> copyVec(vector<coordinate *> src) {
   vector<vector<coordinate *> *> ans;
-  __wrap_iter<coordinate **> mid = src.begin() + src.size() / 2;
+  __wrap_iter<coordinate **> mid = src.begin() + (src.size() / 2);
   vector<coordinate *> *L = new vector<coordinate *>(src.begin(), mid);
   vector<coordinate *> *R = new vector<coordinate *>(mid, src.end());
   ans.push_back(L);
@@ -47,7 +46,7 @@ void minimum_distance_split(vector<coordinate *> nums1,
 // right sets to recursively solve
 // should segfault if one array is not equal to other
 #pragma omp parallel for
-  for (unsigned x = 1; x + 1 < nums1.size(); x++) {
+  for (unsigned x = 1; x + 1 < nums1.size(); x ++) {
     p = nums1[x];
     R = nums1[x + 1];
     L = nums1[x - 1];
@@ -65,39 +64,38 @@ void minimum_distance_split(vector<coordinate *> nums1,
   //  nums1.size() - nums2.size() == 0 ? run : return;
 }
 
-std::stack<coordinate *> comp;
-vector<coordinate *> closest_candidates(vector<coordinate *> nums,
-                                        long double &_distance) {
+vector<coordinate *> generate_candidate_strip(vector<coordinate *> nums,
+                                              long double *_distance) {
   // take distance between all pairs using described algorithm splitting list
   // into left and right after origin sort furthest distance should be between
   // points on opposite end of splitted array
   // R and L wont always be the same size, how to ensure they are?
   unsigned mid = nums.size() / 2;
-  coordinate *p = nums[mid];
+   coordinate *const p = nums[mid];
   vector<vector<coordinate *> *> split = copyVec(nums);
   vector<coordinate *> *R = split[0];
   vector<coordinate *> *L = split[1];
+  comp.push(p);
+  vector<coordinate *>::iterator r_itr = R->begin();
+  vector<coordinate *>::iterator l_itr = L->begin();
   long double minL, minR;
   minimum_distance_split(*L, *R, &minL, &minR);
   long double distance = std::min(minL, minR);
-  _distance = distance;
+  *_distance = distance;
   // split the array along our line at p, and then break array into left and
   // right sets to recursively solve might not work for all cases because we
   // have converted 2d coordinates to 1d. will need to fix this
   // save p for later comparison
-  comp.push(p);
-  vector<coordinate *>::iterator r_itr = R->begin();
-  vector<coordinate *>::iterator l_itr = L->begin();
   vector<coordinate *> candidate = vector<coordinate *>();
 // array of iterators which contain our points of interest
 #pragma omp parallel for
   for (unsigned x = 0; x < mid; x++) {
     long double leftdist = p->distance(*l_itr);
-    if (leftdist <= distance && leftdist != 0) {
+    if (leftdist <= distance) {
       candidate.push_back(*l_itr);
     }
     long double rightdist = p->distance(*r_itr);
-    if (rightdist <= distance && rightdist != 0) {
+    if (rightdist <= distance) {
       candidate.push_back(*r_itr);
     }
     r_itr++;
@@ -137,13 +135,7 @@ public:
   }
 };
 
-
-
 long double smallestdist(vector<coordinate *> strip, long double best) {
-  // currently working
-  if (strip.size() == 0) {
-    return best;
-  }
   for (int i = 0; i < strip.size(); ++i) {
     unsigned counter = 0;
     for (int j = ++i; j < strip.size() &&
@@ -172,7 +164,7 @@ int main(int argc, char **argv) {
       std::sort(array->begin(), array->end(), Compare());
       printplane(*array);
       long double dist;
-      vector<coordinate *> strip = closest_candidates(*array, dist);
+      vector<coordinate *> strip = generate_candidate_strip(*array, &dist);
       std::sort(strip.begin(), strip.end(), Comparey());
       cout << smallestdist(strip, dist) << " is shortest distance" << endl;
       cout << "=END=" << endl;
@@ -182,13 +174,4 @@ int main(int argc, char **argv) {
     cout << "INVALID FILENAME" << endl;
     return -1;
   }
-  //  array set to array of points, now design sort below
-  //  fix below
-  /*
-    printplane(array);
-  coordinate *ans = closestpair(array);
-  */
-
-  // array of numbers is now set, now for sorting and
-  // good parse
 }
