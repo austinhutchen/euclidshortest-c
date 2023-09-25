@@ -22,7 +22,7 @@ vector<vector<coordinate *> *> copyVec(vector<coordinate *> src) {
   vector<vector<coordinate *> *> ans;
   __wrap_iter<coordinate **> mid = src.begin() + (src.size() / 2);
   vector<coordinate *> *L = new vector<coordinate *>(src.begin(), mid);
-  vector<coordinate *> *R = new vector<coordinate *>(mid + 1, src.end() - 1);
+  vector<coordinate *> *R = new vector<coordinate *>(mid+1, src.end()-1);
   ans.push_back(L);
   ans.push_back(R);
   return ans;
@@ -97,8 +97,8 @@ vector<coordinate *> generate_candidate_strip(vector<coordinate *> nums,
     }
     l_itr++;
   }
-  for (unsigned x = 0; x < R->size(); x++) {
-    if (fabs((*r_itr)->x0() - p->x0()) <= distance) {
+  for(unsigned x=0; x<R->size();x++){
+if (fabs((*r_itr)->x0() - p->x0()) <= distance) {
       candidate.push_back(*r_itr);
     }
     r_itr++;
