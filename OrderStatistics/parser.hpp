@@ -13,7 +13,6 @@
 #include <vector>
 using namespace std;
 #pragma ONCE
-// will be used for Order Statistic implementation
 
 class coordinate {
 public:
